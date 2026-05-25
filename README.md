@@ -13,8 +13,8 @@ Users can browse futuristic space trips, view destinations, and book journeys to
 
 ## Tech Stack
 
-- Frontend: React
-- Backend: Node.js / Express
+- Frontend: 
+- Backend: 
 - Database: SQL database
 
 ## Project Status
