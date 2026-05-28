@@ -25,14 +25,8 @@ public class Flight {
 
     private enum FlightStatus {
         Scheduled,
-        Launching,
-        Exiting,
-        Orbiting,
-        Cruising,
-        Entering,
-        Landing,
-        Parking,
-        Cancelled
+        Delayed,
+        Cancelled,
     }
 
     @Column(nullable = false)

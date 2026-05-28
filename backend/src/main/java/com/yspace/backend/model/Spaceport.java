@@ -16,7 +16,6 @@ public class Spaceport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -36,5 +35,4 @@ public class Spaceport {
         MOON,
         STATION,
     }
-
 }

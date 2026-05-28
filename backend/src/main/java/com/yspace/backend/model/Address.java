@@ -22,8 +22,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private User userId;
+    @Column(nullable = false, name = "user_id", columnDefinition = "BIGINT")
+    private User user;
 
     @Column(nullable = false)
     private String Street;

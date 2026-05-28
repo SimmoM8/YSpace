@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,11 +23,11 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role = Role.SpaceTourist;
+    private Role role = Role.SPACE_TOURIST;
 
     public enum Role {
-        Admin,
-        SpaceTourist,
+        ADMIN,
+        SPACE_TOURIST,
     }
 
     @Column(nullable = false)
@@ -39,6 +41,12 @@ public class User {
 
     @Column(nullable = false)
     private String passwordHash;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Phone> phones = new ArrayList<>();
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

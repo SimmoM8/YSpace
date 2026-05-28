@@ -18,8 +18,9 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private User userId;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private int CountryCode;
