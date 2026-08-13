@@ -33,8 +33,8 @@ public class SpacecraftModel {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
-    private Double range;
+    @Column(name = "max_range", nullable = false)
+    private Double maxRange;
 
     @Column(nullable = false)
     private Double velocity;

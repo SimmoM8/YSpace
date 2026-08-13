@@ -17,7 +17,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -46,6 +48,7 @@ public class Spacecraft {
     private SpacecraftStatus status = SpacecraftStatus.UNDER_MAINTENANCE;
 
     @Column(name = "is_operational", nullable = false)
+    @JdbcTypeCode(SqlTypes.TINYINT)
     @Builder.Default
     private Boolean operational = true;
 

@@ -17,7 +17,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -60,6 +62,7 @@ public class Flight {
     private FlightStatus status = FlightStatus.SCHEDULED;
 
     @Column(name = "is_delayed", nullable = false)
+    @JdbcTypeCode(SqlTypes.TINYINT)
     @Builder.Default
     private Boolean delayed = false;
 

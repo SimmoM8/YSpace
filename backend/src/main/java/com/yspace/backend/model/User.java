@@ -71,8 +71,11 @@ public class User {
     @Builder.Default
     private List<Booking> bookings = new ArrayList<>();
 
-    public enum Role {
-        ADMIN,
-        SPACE_TOURIST
+    public User(String firstName, String lastName, String email, String password, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 }
