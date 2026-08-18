@@ -4,17 +4,21 @@ import com.yspace.backend.dto.RegisterRequestDto;
 import com.yspace.backend.model.Role;
 import com.yspace.backend.model.User;
 import com.yspace.backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
-        //this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User register(RegisterRequestDto dto) {
@@ -23,10 +27,13 @@ public class UserService {
         }
 
         User user = new User();
+
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setPassword(dto.getPassword());
+
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
         user.setRole(Role.SPACE_TOURIST);
 
         return userRepository.save(user);
