@@ -19,11 +19,22 @@ public class RouteService {
         this.routeMapper = routeMapper;
     }
 
-    public List<FetchRouteResponseDto> fetchAllRoutes() {
-        return routeRepository.findAll()
+    public List<FetchRouteResponseDto> fetchAllRoutes(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return routeRepository.findAll()
+                    .stream()
+                    .map(routeMapper::toDto)
+                    .collect(Collectors.toList());
+        } else {
+            return searchRoutes(keyword);
+        }
+
+    }
+
+    public List<FetchRouteResponseDto> searchRoutes(String keyword) {
+        return routeRepository.fetchByKeyword(keyword)
                 .stream()
                 .map(routeMapper::toDto)
                 .collect(Collectors.toList());
-
     }
 }

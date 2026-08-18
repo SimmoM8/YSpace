@@ -36,8 +36,8 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 45)
-    private String number;
+    @Column(name = "code", nullable = false, unique = true)
+    private String code;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "route_id", nullable = false)
