@@ -1,0 +1,656 @@
+/* ================================================================
+   YSPACE REGISTRATION
+   ----------------------------------------------------------------
+   Page-specific styles only.
+   Shared colours, typography, buttons and layout are inherited
+   from style.css.
+================================================================ */
+
+
+/* ================================================================
+   PAGE
+================================================================ */
+
+.register-page {
+    min-height: 100vh;
+
+    background: var(--color-space);
+    color: var(--color-white);
+}
+
+
+/* ================================================================
+   HEADER
+================================================================ */
+
+.register-header {
+    position: absolute;
+    z-index: 100;
+
+    width: 100%;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.register-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 84px;
+}
+
+.register-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    color: #8e939a;
+
+    font-size: 0.78rem;
+}
+
+
+/* ================================================================
+   MAIN
+================================================================ */
+
+.register-main {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 100vh;
+    padding-block: 150px 90px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 18% 52%,
+            #161d27 0%,
+            #0b0f15 31%,
+            var(--color-space) 62%);
+}
+
+
+/* ================================================================
+   BACKGROUND
+================================================================ */
+
+.register-stars {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0.25;
+
+    background-image:
+        radial-gradient(circle, #fff 0 1px, transparent 1px),
+        radial-gradient(circle, #fff 0 1px, transparent 1px),
+        radial-gradient(circle, #fff 0 1px, transparent 1px);
+
+    background-position:
+        20px 40px,
+        100px 170px,
+        210px 90px;
+
+    background-size:
+        260px 260px,
+        340px 340px,
+        430px 430px;
+}
+
+.register-orbit {
+    position: absolute;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+}
+
+.register-orbit-large {
+    top: 12%;
+    left: -240px;
+
+    width: 780px;
+    aspect-ratio: 1;
+}
+
+.register-orbit-small {
+    top: 27%;
+    left: 30px;
+
+    width: 420px;
+    aspect-ratio: 1;
+}
+
+.register-orbit-small::after {
+    position: absolute;
+    top: 18%;
+    right: 8%;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--color-accent);
+
+    box-shadow:
+        0 0 18px rgba(217, 255, 67, 0.55);
+
+    content: "";
+}
+
+.register-planet {
+    position: absolute;
+    bottom: -190px;
+    left: -190px;
+
+    width: 500px;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 62% 25%,
+            rgba(255, 255, 255, 0.2),
+            transparent 9%),
+        radial-gradient(circle at 45% 35%,
+            #6f7d85,
+            #31424d 40%,
+            #111a21 67%);
+
+    box-shadow:
+        25px -15px 90px rgba(110, 157, 180, 0.1),
+        inset -70px -40px 110px rgba(0, 0, 0, 0.72);
+
+    opacity: 0.7;
+}
+
+
+/* ================================================================
+   LAYOUT
+================================================================ */
+
+.register-layout {
+    position: relative;
+    z-index: 10;
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr) minmax(430px, 520px);
+
+    gap: 110px;
+    align-items: center;
+}
+
+
+/* ================================================================
+   INTRODUCTION
+================================================================ */
+
+.register-intro {
+    max-width: 610px;
+}
+
+.register-title {
+    margin-bottom: 34px;
+
+    font-size: clamp(4rem, 7vw, 7.3rem);
+}
+
+.register-description {
+    max-width: 510px;
+    margin-bottom: 60px;
+
+    color: #9da2a9;
+
+    font-size: 1.03rem;
+    line-height: 1.75;
+}
+
+
+/* ================================================================
+   STEPS
+================================================================ */
+
+.register-steps {
+    max-width: 520px;
+
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.register-step {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    gap: 16px;
+
+    padding-block: 20px;
+
+    border-bottom: 1px solid var(--color-border-dark);
+}
+
+.register-step-number {
+    padding-top: 2px;
+
+    color: #60666d;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.register-step strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #d5d7d8;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.register-step p {
+    max-width: 360px;
+    margin-bottom: 0;
+
+    color: #6f757c;
+
+    font-size: 0.76rem;
+    line-height: 1.55;
+}
+
+
+/* ================================================================
+   REGISTRATION PANEL
+================================================================ */
+
+.register-panel {
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+
+    background: var(--color-white);
+    color: var(--color-text);
+
+    box-shadow:
+        0 35px 90px rgba(0, 0, 0, 0.32);
+}
+
+
+/* ================================================================
+   PANEL HEADER
+================================================================ */
+
+.register-panel-header {
+    padding: 42px 42px 32px;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.register-panel-code {
+    margin-bottom: 22px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.register-panel-header h2 {
+    margin-bottom: 12px;
+
+    font-size: 2.6rem;
+    letter-spacing: -0.04em;
+}
+
+.register-panel-header>p:last-child {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.88rem;
+}
+
+
+/* ================================================================
+   FORM
+================================================================ */
+
+.register-form {
+    padding: 34px 42px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #41454a;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.form-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-hint {
+    margin-bottom: 8px;
+
+    color: #989ca1;
+
+    font-size: 0.65rem;
+}
+
+.form-group input {
+    width: 100%;
+    height: 54px;
+
+    padding-inline: 16px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    outline: none;
+
+    background: #fafaf7;
+    color: var(--color-text);
+
+    font-size: 0.85rem;
+
+    transition:
+        border var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.form-group input::placeholder {
+    color: #a5a9ad;
+}
+
+.form-group input:hover {
+    border-color: #b6bab7;
+}
+
+.form-group input:focus {
+    border-color: #858a8f;
+
+    background: var(--color-white);
+
+    box-shadow:
+        0 0 0 3px rgba(21, 24, 27, 0.06);
+}
+
+
+/* ================================================================
+   SUBMIT
+================================================================ */
+
+.register-submit {
+    width: 100%;
+    min-height: 58px;
+
+    margin-top: 4px;
+
+    cursor: pointer;
+}
+
+.register-terms {
+    margin: 18px 10px 0;
+
+    color: #8b8f94;
+
+    font-size: 0.67rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.register-terms a {
+    color: #50545a;
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.register-terms a:hover {
+    color: var(--color-text);
+}
+
+
+/* ================================================================
+   LOGIN
+================================================================ */
+
+.register-login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px 42px;
+
+    border-top: 1px solid var(--color-border);
+
+    background: #eeeeea;
+
+    font-size: 0.75rem;
+}
+
+.register-login>span {
+    color: var(--color-text-muted);
+}
+
+.register-login a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-weight: 700;
+
+    transition:
+        gap var(--transition-fast);
+}
+
+.register-login a:hover {
+    gap: 17px;
+}
+
+
+/* ================================================================
+   FOOTER
+================================================================ */
+
+.register-footer {
+    position: absolute;
+    z-index: 50;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.register-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 58px;
+
+    color: #555b62;
+
+    font-size: 0.64rem;
+}
+
+.register-footer-inner p {
+    margin: 0;
+}
+
+.register-network-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.register-network-status span {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: var(--color-accent);
+}
+
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+
+@media (max-width: 1000px) {
+
+    .register-main {
+        align-items: flex-start;
+
+        min-height: auto;
+        padding-block: 140px 130px;
+    }
+
+    .register-layout {
+        grid-template-columns: 1fr;
+
+        gap: 70px;
+    }
+
+    .register-intro {
+        max-width: 700px;
+    }
+
+    .register-title {
+        max-width: 650px;
+    }
+
+    .register-description {
+        max-width: 570px;
+    }
+
+    .register-steps {
+        max-width: 650px;
+    }
+
+    .register-panel {
+        width: min(100%, 570px);
+    }
+
+    .register-footer {
+        position: relative;
+
+        background: var(--color-space);
+    }
+
+    .register-planet {
+        top: 250px;
+        right: -250px;
+        bottom: auto;
+        left: auto;
+
+        opacity: 0.35;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .register-header-inner {
+        height: 72px;
+    }
+
+    .register-header-actions>span {
+        display: none;
+    }
+
+    .register-main {
+        padding-block: 115px 80px;
+    }
+
+    .register-layout {
+        gap: 48px;
+    }
+
+    .register-title {
+        font-size: clamp(3.7rem, 18vw, 5rem);
+    }
+
+    .register-description {
+        margin-bottom: 40px;
+
+        font-size: 0.92rem;
+    }
+
+    .register-step {
+        grid-template-columns: 42px 1fr;
+    }
+
+    .register-panel {
+        border-radius: var(--radius-small);
+    }
+
+    .register-panel-header {
+        padding: 30px 24px 26px;
+    }
+
+    .register-panel-header h2 {
+        font-size: 2.15rem;
+    }
+
+    .register-form {
+        padding: 28px 24px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .register-login {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 10px;
+
+        padding: 22px 24px;
+    }
+
+    .register-footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 8px;
+
+        padding-block: 20px;
+    }
+
+    .register-orbit-large {
+        left: -430px;
+    }
+
+    .register-orbit-small {
+        left: -170px;
+    }
+
+}
