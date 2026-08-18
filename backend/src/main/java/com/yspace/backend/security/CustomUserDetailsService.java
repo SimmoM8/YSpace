@@ -1,6 +1,5 @@
 package com.yspace.backend.security;
 
-import com.yspace.backend.dto.AuthResponseDto;
 import com.yspace.backend.model.User;
 import com.yspace.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

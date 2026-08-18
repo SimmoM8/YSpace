@@ -14,14 +14,14 @@
 4. **View available flights**  
    *As a visitor, I want to see a list of available scheduled flights for a route, with price, departure time, and available seats*
 
-5. **Register an account**  
+5. ~~**Register an account**~~  
    *As a visitor, I want to create an account with my email and password so that I can make bookings.*
 
 ---
 
 ## 👩‍🚀 Space Tourist *(logged in)*
 
-5. **Log in**  
+5. ~~**Log in**~~  
    *As a registered user, I want to log in so that I can access my bookings and make new ones.*
 
 6. **Book a flight**  
