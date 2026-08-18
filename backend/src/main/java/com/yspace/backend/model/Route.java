@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
         name = "routes",
         uniqueConstraints = @UniqueConstraint(
                 name = "uqx_origin_spaceport_id_departure_spaceport_id",
-                columnNames = {"origin_spaceport_id", "departure_spaceport_id"}
+                columnNames = {"origin_spaceport_id", "destination_spaceport_id"}
         )
 )
 @Getter
@@ -46,8 +46,8 @@ public class Route {
     private Spaceport originSpaceport;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "departure_spaceport_id", nullable = false)
-    private Spaceport departureSpaceport;
+    @JoinColumn(name = "destination_spaceport_id", nullable = false)
+    private Spaceport destinationSpaceport;
 
     private Double distance;
 

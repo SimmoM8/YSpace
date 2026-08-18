@@ -37,7 +37,8 @@ class SecurityConfig {
 
                         .requestMatchers(
                                 "/api/auth/login",
-                                "/api/users/register"
+                                "/api/users/register",
+                                "/routes/**"
                         ).permitAll()
 
                         .requestMatchers(

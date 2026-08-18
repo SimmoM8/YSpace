@@ -1,12 +1,10 @@
 package com.yspace.backend.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AuthResponseDto {
     private String token;
 }
