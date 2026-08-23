@@ -7,8 +7,9 @@ import com.yspace.backend.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +18,23 @@ public class FlightService {
     private final FlightRepository flightRepository;
     private final FlightMapper flightMapper;
 
-    public List<FlightSearchResponseDto> searchFlights(Integer departureId, Integer destinationId) {
-        return flightRepository.searchFlights(departureId, destinationId)
+    public List<FlightSearchResponseDto> searchFlights(
+            Integer originId,
+            Integer destinationId,
+            LocalDate date
+    ) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime startOfNextDay = date.plusDays(1).atStartOfDay();
+
+        return flightRepository.searchFlights(
+                        originId,
+                        destinationId,
+                        startOfDay,
+                        startOfNextDay
+                )
                 .stream()
                 .map(flightMapper::toSearchDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 

@@ -6,14 +6,30 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
-    @Query("SELECT f FROM Flight f " +
-            "WHERE (:departureId IS NULL OR f.route.originSpaceport.id = :departureId) " +
-            "AND (:destinationId IS NULL OR f.route.destinationSpaceport.id = :destinationId)")
-    List<Flight> searchFlights(@Param("departureId") Integer originId,
-                               @Param("destinationId") Integer destinationId);
+    @Query("""
+        SELECT f
+        FROM Flight f
+        JOIN FETCH f.route r
+        JOIN FETCH r.originSpaceport origin
+        JOIN FETCH r.destinationSpaceport destination
+        JOIN FETCH f.spacecraft spacecraft
+        WHERE origin.id = :originId
+        AND destination.id = :destinationId
+        AND f.departureTime >= :startOfDay
+        AND f.departureTime < :startOfNextDay
+        AND f.status <> com.yspace.backend.model.Flight.FlightStatus.CANCELLED
+        ORDER BY f.departureTime ASC
+    """)
+    List<Flight> searchFlights(
+            @Param("originId") Integer originId,
+            @Param("destinationId") Integer destinationId,
+            @Param("startOfDay") LocalDateTime startOfDay,
+            @Param("startOfNextDay") LocalDateTime startOfNextDay
+    );
 }
