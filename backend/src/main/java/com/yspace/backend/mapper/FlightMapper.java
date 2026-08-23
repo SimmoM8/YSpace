@@ -1,7 +1,7 @@
 package com.yspace.backend.mapper;
 
-import com.yspace.backend.dto.FlightDetailsResponseDto;
-import com.yspace.backend.dto.FlightSearchResponseDto;
+import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
+import com.yspace.backend.dto.flight.FlightSearchResponseDto;
 import com.yspace.backend.model.Flight;
 import org.springframework.stereotype.Component;
 

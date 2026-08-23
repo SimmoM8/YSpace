@@ -1,9 +1,9 @@
 package com.yspace.backend.service;
 
-import com.yspace.backend.dto.BookingResponseDto;
-import com.yspace.backend.exceptions.FlightNotBookableException;
-import com.yspace.backend.exceptions.FlightNotFoundException;
-import com.yspace.backend.exceptions.UserNotFoundException;
+import com.yspace.backend.dto.booking.BookingDetailsResponseDto;
+import com.yspace.backend.dto.booking.BookingRowDetailsResponseDto;
+import com.yspace.backend.dto.booking.BookingSummaryResponseDto;
+import com.yspace.backend.exceptions.*;
 import com.yspace.backend.mapper.BookingMapper;
 import com.yspace.backend.model.Booking;
 import com.yspace.backend.model.BookingRow;
@@ -30,12 +30,11 @@ public class BookingService {
     private final BookingMapper bookingMapper;
 
     @Transactional
-    public BookingResponseDto createBooking(
+    public BookingDetailsResponseDto createBooking(
             Integer flightId,
             String userEmail
     ) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new UserNotFoundException(userEmail));
+        User user = getUser(userEmail);
 
         Flight flight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new FlightNotFoundException(flightId));
@@ -59,7 +58,81 @@ public class BookingService {
 
         Booking savedBooking = bookingRepository.save(booking);
 
-        return bookingMapper.toDto(savedBooking);
+        return bookingMapper.toDetailsDto(savedBooking);
+    }
+
+    @Transactional(readOnly = true)
+    public List<BookingSummaryResponseDto> getUserBookings(
+            String userEmail
+    ) {
+        User user = getUser(userEmail);
+
+        return bookingRepository
+                .findAllByUserOrderByCreatedAtDesc(user)
+                .stream()
+                .map(bookingMapper::toSummaryDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public BookingDetailsResponseDto getBookingDetails(
+            Integer bookingId,
+            String userEmail
+    ) {
+        User user = getUser(userEmail);
+
+        Booking booking = getUserBooking(
+                bookingId,
+                user
+        );
+
+        return bookingMapper.toDetailsDto(booking);
+    }
+
+    @Transactional(readOnly = true)
+    public BookingRowDetailsResponseDto getBookingRowDetails(
+            Integer bookingId,
+            Integer bookingRowId,
+            String userEmail
+    ) {
+        User user = getUser(userEmail);
+
+        Booking booking = getUserBooking(
+                bookingId,
+                user
+        );
+
+        BookingRow bookingRow = booking.getBookingRows()
+                .stream()
+                .filter(row -> row.getId().equals(bookingRowId))
+                .findFirst()
+                .orElseThrow(
+                        () -> new BookingRowNotFoundException(
+                                bookingRowId
+                        )
+                );
+
+        return bookingMapper.toRowDetailsDto(bookingRow);
+    }
+
+    private User getUser(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new UserNotFoundException(email)
+                );
+    }
+
+    private Booking getUserBooking(
+            Integer bookingId,
+            User user
+    ) {
+        return bookingRepository
+                .findByIdAndUser(bookingId, user)
+                .orElseThrow(
+                        () -> new BookingNotFoundException(
+                                bookingId
+                        )
+                );
     }
 
     private void validateFlightCanBeBooked(Flight flight) {
@@ -70,26 +143,12 @@ public class BookingService {
             );
         }
 
-        if (flight.getDepartureTime().isBefore(LocalDateTime.now())) {
+        if (flight.getDepartureTime()
+                .isBefore(LocalDateTime.now())) {
+
             throw new FlightNotBookableException(
                     "Flights that have already departed cannot be booked"
             );
         }
-    }
-
-    public List<BookingResponseDto> getUserBookings(
-            String userEmail
-    ) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new UserNotFoundException(userEmail));
-
-        List<Booking> bookings = bookingRepository.findAllByUser(user);
-
-        List<BookingResponseDto> bookingDtos = new ArrayList<>();
-        for (Booking booking : bookings) {
-            bookingDtos.add(bookingMapper.toDto(booking));
-        }
-
-        return bookingDtos;
     }
 }

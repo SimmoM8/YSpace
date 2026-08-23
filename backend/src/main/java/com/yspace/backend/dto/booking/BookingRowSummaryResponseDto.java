@@ -1,4 +1,4 @@
-package com.yspace.backend.dto;
+package com.yspace.backend.dto.booking;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,12 +8,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class FlightSearchResponseDto {
+@AllArgsConstructor
+public class BookingRowSummaryResponseDto {
 
-    private Integer id;
-    private String code;
+    private Integer bookingRowId;
+
+    private Integer flightId;
+    private String flightCode;
+
+    private String routeName;
 
     private String originName;
     private String originCode;
@@ -21,10 +25,8 @@ public class FlightSearchResponseDto {
     private String destinationName;
     private String destinationCode;
 
-    private String spacecraft;
-
-    private BigDecimal price;
-
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
+
+    private BigDecimal price;
 }
