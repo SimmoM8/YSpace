@@ -115,6 +115,25 @@ public class BookingService {
         return bookingMapper.toRowDetailsDto(bookingRow);
     }
 
+    @Transactional
+    public BookingDetailsResponseDto cancelBooking(
+            Integer bookingId,
+            String userEmail
+    ) {
+        User user = getUser(userEmail);
+
+        Booking booking = getUserBooking(
+                bookingId,
+                user
+        );
+
+        validateBookingCanBeCancelled(booking);
+
+        booking.setStatus(Booking.BookingStatus.CANCELLED);
+
+        return bookingMapper.toDetailsDto(booking);
+    }
+
     private User getUser(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(
@@ -148,6 +167,35 @@ public class BookingService {
 
             throw new FlightNotBookableException(
                     "Flights that have already departed cannot be booked"
+            );
+        }
+    }
+
+    private void validateBookingCanBeCancelled(Booking booking) {
+
+        if (booking.getStatus() == Booking.BookingStatus.CANCELLED) {
+            throw new BookingNotCancellableException(
+                    "Booking has already been cancelled"
+            );
+        }
+
+        if (booking.getStatus() == Booking.BookingStatus.CLOSED) {
+            throw new BookingNotCancellableException(
+                    "Closed bookings cannot be cancelled"
+            );
+        }
+
+        boolean hasDepartedFlight = booking.getBookingRows()
+                .stream()
+                .map(BookingRow::getFlight)
+                .anyMatch(flight ->
+                        flight.getDepartureTime()
+                                .isBefore(LocalDateTime.now())
+                );
+
+        if (hasDepartedFlight) {
+            throw new BookingNotCancellableException(
+                    "Bookings containing flights that have already departed cannot be cancelled"
             );
         }
     }

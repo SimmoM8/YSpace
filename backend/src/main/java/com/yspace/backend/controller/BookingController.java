@@ -72,4 +72,17 @@ public class BookingController {
                 )
         );
     }
+
+    @PatchMapping("/{bookingId}/cancel")
+    public ResponseEntity<BookingDetailsResponseDto> cancelBooking(
+            @PathVariable Integer bookingId,
+            Authentication authentication
+    ) {
+        return ResponseEntity.ok(
+                bookingService.cancelBooking(
+                        bookingId,
+                        authentication.getName()
+                )
+        );
+    }
 }
