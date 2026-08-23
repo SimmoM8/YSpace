@@ -67,9 +67,9 @@ public class BookingService {
     ) {
         User user = getUser(userEmail);
 
-        return bookingRepository
-                .findAllByUserOrderByCreatedAtDesc(user)
-                .stream()
+        List<Booking> bookings = bookingRepository.findAllByUserOrderByCreatedAtDesc(user);
+
+        return bookings.stream()
                 .map(bookingMapper::toSummaryDto)
                 .toList();
     }
@@ -182,20 +182,6 @@ public class BookingService {
         if (booking.getStatus() == Booking.BookingStatus.CLOSED) {
             throw new BookingNotCancellableException(
                     "Closed bookings cannot be cancelled"
-            );
-        }
-
-        boolean hasDepartedFlight = booking.getBookingRows()
-                .stream()
-                .map(BookingRow::getFlight)
-                .anyMatch(flight ->
-                        flight.getDepartureTime()
-                                .isBefore(LocalDateTime.now())
-                );
-
-        if (hasDepartedFlight) {
-            throw new BookingNotCancellableException(
-                    "Bookings containing flights that have already departed cannot be cancelled"
             );
         }
     }
