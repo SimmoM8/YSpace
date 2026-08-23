@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -74,5 +75,21 @@ public class BookingService {
                     "Flights that have already departed cannot be booked"
             );
         }
+    }
+
+    public List<BookingResponseDto> getUserBookings(
+            String userEmail
+    ) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new UserNotFoundException(userEmail));
+
+        List<Booking> bookings = bookingRepository.findAllByUser(user);
+
+        List<BookingResponseDto> bookingDtos = new ArrayList<>();
+        for (Booking booking : bookings) {
+            bookingDtos.add(bookingMapper.toDto(booking));
+        }
+
+        return bookingDtos;
     }
 }
