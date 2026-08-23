@@ -173,15 +173,9 @@ public class BookingService {
 
     private void validateBookingCanBeCancelled(Booking booking) {
 
-        if (booking.getStatus() == Booking.BookingStatus.CANCELLED) {
+        if (booking.getStatus() != Booking.BookingStatus.OPEN) {
             throw new BookingNotCancellableException(
-                    "Booking has already been cancelled"
-            );
-        }
-
-        if (booking.getStatus() == Booking.BookingStatus.CLOSED) {
-            throw new BookingNotCancellableException(
-                    "Closed bookings cannot be cancelled"
+                    "Only open bookings can be cancelled"
             );
         }
     }
