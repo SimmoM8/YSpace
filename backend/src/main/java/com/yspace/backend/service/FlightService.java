@@ -1,8 +1,10 @@
 package com.yspace.backend.service;
 
-
+import com.yspace.backend.dto.FlightDetailsResponseDto;
 import com.yspace.backend.dto.FlightSearchResponseDto;
+import com.yspace.backend.exceptions.FlightNotFoundException;
 import com.yspace.backend.mapper.FlightMapper;
+import com.yspace.backend.model.Flight;
 import com.yspace.backend.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,12 @@ public class FlightService {
             Integer destinationId,
             LocalDate date
     ) {
+        if (originId.equals(destinationId)) {
+            throw new IllegalArgumentException(
+                    "Origin and destination cannot be the same"
+            );
+        }
+
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime startOfNextDay = date.plusDays(1).atStartOfDay();
 
@@ -37,5 +45,10 @@ public class FlightService {
                 .toList();
     }
 
+    public FlightDetailsResponseDto getFlightById(Integer id) {
+        Flight flight = flightRepository.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException(id));
 
+        return flightMapper.toDetailsDto(flight);
+    }
 }

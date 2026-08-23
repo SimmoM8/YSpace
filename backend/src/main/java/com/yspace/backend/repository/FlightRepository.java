@@ -15,12 +15,8 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     @Query("""
         SELECT f
         FROM Flight f
-        JOIN FETCH f.route r
-        JOIN FETCH r.originSpaceport origin
-        JOIN FETCH r.destinationSpaceport destination
-        JOIN FETCH f.spacecraft spacecraft
-        WHERE origin.id = :originId
-        AND destination.id = :destinationId
+        WHERE f.route.originSpaceport.id = :originId
+        AND f.route.destinationSpaceport.id = :destinationId
         AND f.departureTime >= :startOfDay
         AND f.departureTime < :startOfNextDay
         AND f.status <> com.yspace.backend.model.Flight.FlightStatus.CANCELLED

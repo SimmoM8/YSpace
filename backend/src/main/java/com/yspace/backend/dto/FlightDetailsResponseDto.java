@@ -10,18 +10,31 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlightSearchResponseDto {
+public class FlightDetailsResponseDto {
 
     private Integer id;
     private String code;
 
+    private String status;
+    private Boolean delayed;
+
+    private String routeName;
+    private String routeDescription;
+    private Double distance;
+
     private String originName;
     private String originCode;
+    private String originType;
+    private String originDescription;
 
     private String destinationName;
     private String destinationCode;
+    private String destinationType;
+    private String destinationDescription;
 
-    private String spacecraft;
+    private String spacecraftName;
+    private String spacecraftModel;
+    private String spacecraftManufacturer;
 
     private BigDecimal price;
 
