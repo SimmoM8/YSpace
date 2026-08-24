@@ -1,4 +1,4 @@
-package com.yspace.backend.dto;
+package com.yspace.backend.dto.flight;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

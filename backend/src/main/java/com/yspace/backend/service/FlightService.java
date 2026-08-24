@@ -1,7 +1,7 @@
 package com.yspace.backend.service;
 
-import com.yspace.backend.dto.FlightDetailsResponseDto;
-import com.yspace.backend.dto.FlightSearchResponseDto;
+import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
+import com.yspace.backend.dto.flight.FlightSearchResponseDto;
 import com.yspace.backend.dto.ScheduleFlightRequestDto;
 import com.yspace.backend.dto.UpdateFlightRequestDto;
 import com.yspace.backend.exceptions.FlightNotFoundException;
