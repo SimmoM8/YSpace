@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FlightMapper {
 
+
     public FlightSearchResponseDto toSearchDto(Flight flight) {
         return new FlightSearchResponseDto(
                 flight.getId(),

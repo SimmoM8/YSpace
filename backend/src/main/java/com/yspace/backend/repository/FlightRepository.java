@@ -28,4 +28,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("startOfDay") LocalDateTime startOfDay,
             @Param("startOfNextDay") LocalDateTime startOfNextDay
     );
+
+    boolean existsByCode(String code);
 }
