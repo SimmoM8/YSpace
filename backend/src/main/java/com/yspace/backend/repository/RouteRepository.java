@@ -22,4 +22,6 @@ public interface RouteRepository extends JpaRepository<Route, Integer> {
         OR LOWER(r.destinationSpaceport.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
     """)
     List<Route> fetchByKeyword(@Param("keyword") String keyword);
+
+    boolean existsByOriginSpaceportIdAndDestinationSpaceportId(Integer originSpaceportId, Integer destinationSpaceportId);
 }
