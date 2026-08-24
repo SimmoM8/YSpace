@@ -36,4 +36,32 @@ public class GlobalExceptionHandler {
     ) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(RouteNotFoundException.class)
+    public ResponseEntity<String> handleRouteNotFoundException(
+            RouteNotFoundException e
+    ) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SpaceportNotFoundException.class)
+    public ResponseEntity<String> handleSpaceportNotFoundException(
+            SpaceportNotFoundException e
+    ) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SpacecraftNotFoundException.class)
+    public ResponseEntity<String> handleSpacecraftNotFoundException(
+            SpacecraftNotFoundException e
+    ) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(
+            IllegalArgumentException e
+    ) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

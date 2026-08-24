@@ -50,6 +50,9 @@ public class Flight {
     @Column(name = "base_price", precision = 10, scale = 2)
     private BigDecimal basePrice;
 
+    @Column(name = "total_seats", nullable = false)
+    private Integer totalSeats;
+
     @Column(name = "departure_time")
     private LocalDateTime departureTime;
 

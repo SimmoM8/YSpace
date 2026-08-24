@@ -44,7 +44,7 @@ class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
-                                "/auth/admin/**"
+                                "/api/admin/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
