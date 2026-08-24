@@ -7,14 +7,13 @@ import com.yspace.backend.dto.UpdateFlightRequestDto;
 import com.yspace.backend.exceptions.FlightNotFoundException;
 import com.yspace.backend.exceptions.RouteNotFoundException;
 import com.yspace.backend.exceptions.SpacecraftNotFoundException;
+import com.yspace.backend.exceptions.UserNotFoundException;
 import com.yspace.backend.mapper.FlightMapper;
 import com.yspace.backend.model.Flight;
 import com.yspace.backend.model.Route;
 import com.yspace.backend.model.Spacecraft;
-import com.yspace.backend.repository.BookingRowRepository;
-import com.yspace.backend.repository.FlightRepository;
-import com.yspace.backend.repository.RouteRepository;
-import com.yspace.backend.repository.SpacecraftRepository;
+import com.yspace.backend.model.User;
+import com.yspace.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +32,7 @@ public class FlightService {
     private final RouteRepository routeRepository;
     private final SpacecraftRepository spacecraftRepository;
     private final BookingRowRepository bookingRowRepository;
+    private final UserRepository userRepository;
 
     public List<FlightSearchResponseDto> searchFlights(
             Integer originId,
@@ -67,7 +67,7 @@ public class FlightService {
     }
 
     @Transactional
-    public FlightDetailsResponseDto scheduleFlight(ScheduleFlightRequestDto request) {
+    public FlightDetailsResponseDto scheduleFlight(ScheduleFlightRequestDto request, String userEmail) {
 
         if (!request.getArrivalTime().isAfter(request.getDepartureTime())) {
             throw new IllegalArgumentException(
@@ -75,18 +75,23 @@ public class FlightService {
             );
         }
 
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new UserNotFoundException(userEmail));
+
         Route route = routeRepository.findById(request.getRouteId())
                 .orElseThrow(() -> new RouteNotFoundException(request.getRouteId()));
 
         Spacecraft spacecraft = spacecraftRepository.findById(request.getSpacecraftId())
                 .orElseThrow(() -> new SpacecraftNotFoundException(request.getSpacecraftId()));
 
+        Integer available_seats = spacecraft.getSeat_capacity();
+
         Flight flight = Flight.builder()
                 .code(generateFlightCode(route))
                 .route(route)
                 .spacecraft(spacecraft)
                 .basePrice(request.getBasePrice())
-                .totalSeats(request.getTotalSeats())
+                .availableSeats(available_seats)
                 .departureTime(request.getDepartureTime())
                 .arrivalTime(request.getArrivalTime())
                 .status(Flight.FlightStatus.SCHEDULED)
@@ -125,16 +130,16 @@ public class FlightService {
         if (request.getBasePrice() != null) {
             flight.setBasePrice(request.getBasePrice());
         }
-        if (request.getTotalSeats() != null) {
+        if (request.getAvailableSeats() != null) {
 
             long bookedSeats = getBookedSeats(flight.getId());
 
-            if (request.getTotalSeats() < bookedSeats) {
+            if (request.getAvailableSeats() < bookedSeats) {
                 throw new IllegalArgumentException(
                         "Total seats cannot be lower than the number of already booked seats (" + bookedSeats + ")"
                 );
             }
-            flight.setTotalSeats(request.getTotalSeats());
+            flight.setAvailableSeats(request.getAvailableSeats());
         }
 
         Flight updatedFlight = flightRepository.save(flight);

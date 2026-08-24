@@ -17,6 +17,9 @@ public class UpdateFlightRequestDto {
 
     private Integer spacecraftId;
 
+    @Min(1)
+    private Integer availableSeats;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime departureTime;
 
@@ -25,7 +28,4 @@ public class UpdateFlightRequestDto {
 
     @PositiveOrZero
     private BigDecimal basePrice;
-
-    @Min(1)
-    private Integer totalSeats;
 }

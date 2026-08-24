@@ -1,7 +1,6 @@
 package com.yspace.backend.dto;
 
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -24,6 +23,10 @@ public class ScheduleFlightRequestDto {
     private Integer spacecraftId;
 
     @NotNull
+    @PositiveOrZero
+    private BigDecimal basePrice;
+
+    @NotNull
     @Future
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime departureTime;
@@ -31,12 +34,4 @@ public class ScheduleFlightRequestDto {
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime arrivalTime;
-
-    @NotNull
-    @PositiveOrZero
-    private BigDecimal basePrice;
-
-    @NotNull
-    @Min(1)
-    private Integer totalSeats;
 }

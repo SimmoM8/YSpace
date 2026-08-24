@@ -47,6 +47,9 @@ public class Spacecraft {
     @Builder.Default
     private SpacecraftStatus status = SpacecraftStatus.UNDER_MAINTENANCE;
 
+    @Column(nullable = false)
+    private Integer seat_capacity;
+
     @Column(name = "is_operational", nullable = false)
     @JdbcTypeCode(SqlTypes.TINYINT)
     @Builder.Default
