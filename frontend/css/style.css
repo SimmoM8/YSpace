@@ -690,7 +690,7 @@ h3 {
 
     display: grid;
     grid-template-columns:
-        minmax(170px, 1fr) 1px minmax(190px, 1fr) 1px minmax(160px, 0.7fr) auto;
+        minmax(170px, 1fr) 44px minmax(190px, 1fr) 1px minmax(160px, 0.7fr) auto;
 
     align-items: stretch;
 
@@ -779,6 +779,41 @@ h3 {
     align-self: center;
 
     background: var(--color-border);
+}
+
+.search-reverse-button {
+    width: 34px;
+    height: 34px;
+
+    align-self: center;
+    justify-self: center;
+
+    padding: 0;
+
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+
+    background: var(--color-white);
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    font-size: 1rem;
+    line-height: 1;
+
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.search-reverse-button:hover,
+.search-reverse-button:focus-visible {
+    border-color: var(--color-text);
+    outline: none;
+
+    color: var(--color-text);
+    transform: rotate(180deg);
 }
 
 .button-search {
@@ -1507,7 +1542,11 @@ h3 {
     }
 
     .search-fields {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 44px 1fr;
+    }
+
+    .search-date-field {
+        grid-column: 1 / 3;
     }
 
     .search-divider {
@@ -1515,7 +1554,7 @@ h3 {
     }
 
     .button-search {
-        grid-column: 1 / -1;
+        grid-column: 3;
     }
 
     .section-heading,
@@ -1618,6 +1657,11 @@ h3 {
 
     .search-fields {
         grid-template-columns: 1fr;
+    }
+
+    .search-date-field,
+    .button-search {
+        grid-column: auto;
     }
 
     .search-field {

@@ -816,7 +816,7 @@
         display: none;
     }
 
-    .flights-search-field:nth-of-type(3) {
+    .flights-search-date-field {
         grid-column: 1 / 3;
 
         border-top: 1px solid var(--color-border);
@@ -877,11 +877,7 @@
         border-bottom: 1px solid var(--color-border);
     }
 
-    .flights-search-arrow {
-        display: none;
-    }
-
-    .flights-search-field:nth-of-type(3) {
+    .flights-search-date-field {
         grid-column: auto;
 
         border-top: 0;

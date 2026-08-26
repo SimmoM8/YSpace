@@ -16,6 +16,17 @@ if (searchForm) {
     setupSpaceportSearch(originInput, originHiddenInput, originOptions);
     setupSpaceportSearch(destinationInput, destinationHiddenInput, destinationOptions);
 
+    searchForm.querySelector('.search-reverse-button').addEventListener('click', () => {
+        [originInput.value, destinationInput.value] = [destinationInput.value, originInput.value];
+        [originHiddenInput.value, destinationHiddenInput.value] = [destinationHiddenInput.value, originHiddenInput.value];
+        originInput.setCustomValidity('');
+        destinationInput.setCustomValidity('');
+        originOptions.replaceChildren();
+        destinationOptions.replaceChildren();
+        originInput.setAttribute('aria-expanded', 'false');
+        destinationInput.setAttribute('aria-expanded', 'false');
+    });
+
     searchForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
