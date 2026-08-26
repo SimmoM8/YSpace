@@ -1,6 +1,6 @@
 package com.yspace.backend.controller;
 
-import com.yspace.backend.dto.FetchRouteResponseDto;
+import com.yspace.backend.dto.route.FetchRouteResponseDto;
 import com.yspace.backend.service.RouteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

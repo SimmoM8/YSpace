@@ -1,4 +1,4 @@
-package com.yspace.backend.dto;
+package com.yspace.backend.dto.booking;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

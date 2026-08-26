@@ -1,8 +1,8 @@
 package com.yspace.backend.service;
 
 
-import com.yspace.backend.dto.CreateRouteRequestDto;
-import com.yspace.backend.dto.FetchRouteResponseDto;
+import com.yspace.backend.dto.route.CreateRouteRequestDto;
+import com.yspace.backend.dto.route.FetchRouteResponseDto;
 import com.yspace.backend.dto.RouteAdminResponseDto;
 import com.yspace.backend.exceptions.SpaceportNotFoundException;
 import com.yspace.backend.mapper.RouteMapper;

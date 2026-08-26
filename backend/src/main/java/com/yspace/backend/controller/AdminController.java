@@ -1,9 +1,9 @@
 package com.yspace.backend.controller;
 
-import com.yspace.backend.dto.CreateRouteRequestDto;
+import com.yspace.backend.dto.route.CreateRouteRequestDto;
 import com.yspace.backend.dto.RouteAdminResponseDto;
-import com.yspace.backend.dto.ScheduleFlightRequestDto;
-import com.yspace.backend.dto.UpdateFlightRequestDto;
+import com.yspace.backend.dto.flight.ScheduleFlightRequestDto;
+import com.yspace.backend.dto.flight.UpdateFlightRequestDto;
 import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
 import com.yspace.backend.service.FlightService;
 import com.yspace.backend.service.RouteService;

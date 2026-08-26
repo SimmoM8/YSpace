@@ -1,6 +1,6 @@
 package com.yspace.backend.mapper;
 
-import com.yspace.backend.dto.FetchRouteResponseDto;
+import com.yspace.backend.dto.route.FetchRouteResponseDto;
 import com.yspace.backend.dto.RouteAdminResponseDto;
 import com.yspace.backend.model.Route;
 import org.springframework.stereotype.Component;

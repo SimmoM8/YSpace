@@ -40,7 +40,8 @@ class SecurityConfig {
                                 "/api/users/register",
                                 "/routes",
                                 "/routes/**",
-                                "/api/flights/**"
+                                "/api/flights/**",
+                                "/api/spaceports"
                         ).permitAll()
 
                         .requestMatchers(
@@ -57,4 +58,3 @@ class SecurityConfig {
         return http.build();
     }
 }
-

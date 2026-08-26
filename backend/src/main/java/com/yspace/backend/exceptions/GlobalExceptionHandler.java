@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-    
+
     @ExceptionHandler(BookingNotCancellableException.class)
     public ResponseEntity<String> handleBookingNotCancellableException(
             BookingNotCancellableException e
@@ -65,6 +65,8 @@ public class GlobalExceptionHandler {
                 e.getMessage(),
                 HttpStatus.BAD_REQUEST
         );
+    }
+    
     @ExceptionHandler(RouteNotFoundException.class)
     public ResponseEntity<String> handleRouteNotFoundException(
             RouteNotFoundException e
