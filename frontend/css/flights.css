@@ -194,7 +194,7 @@
 
     align-items: stretch;
 
-    overflow: hidden;
+    overflow: visible;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-medium);
@@ -381,6 +381,22 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.flights-results-message {
+    padding: 32px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+
+    background: var(--color-white);
+    color: var(--color-text-muted);
+
+    text-align: center;
+}
+
+.flights-results-error {
+    color: #9d2f2f;
 }
 
 
