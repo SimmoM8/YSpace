@@ -1,4 +1,3 @@
-* dropdown selection for the search flights inputs
 * create search flights results page
 * Create cards for search flights results 
 * Hook up registration 
