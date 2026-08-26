@@ -88,17 +88,43 @@
 
                 <!-- Search details -->
 
-                <form class="flights-search-bar">
+                <form
+                    class="flights-search-bar"
+                    id="flight-search-form"
+                    aria-label="Flight search form"
+                >
 
                     <div class="flights-search-field">
 
-                        <span class="flights-search-label">
+                        <label class="flights-search-label" for="origin-input">
                             From
-                        </span>
+                        </label>
 
-                        <strong>
-                            Earth Orbital Hub
-                        </strong>
+                        <div class="search-input-wrapper">
+                            <input
+                                type="text"
+                                name="origin"
+                                id="origin-input"
+                                value="Earth Orbital Hub"
+                                autocomplete="off"
+                                aria-autocomplete="list"
+                                aria-controls="origin-options"
+                                aria-expanded="false"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="origin-id"
+                                id="origin-hidden-input"
+                            >
+
+                            <ul
+                                class="search-options-list"
+                                id="origin-options"
+                                role="listbox"
+                                aria-label="Origin options"
+                            ></ul>
+                        </div>
 
                         <span class="flights-location-code">
                             EOH · Earth Orbit
@@ -114,13 +140,35 @@
 
                     <div class="flights-search-field">
 
-                        <span class="flights-search-label">
+                        <label class="flights-search-label" for="destination-input">
                             To
-                        </span>
+                        </label>
 
-                        <strong>
-                            Luna Base One
-                        </strong>
+                        <div class="search-input-wrapper">
+                            <input
+                                type="text"
+                                name="destination"
+                                id="destination-input"
+                                value="Luna Base One"
+                                autocomplete="off"
+                                aria-autocomplete="list"
+                                aria-controls="destination-options"
+                                aria-expanded="false"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="destination-id"
+                                id="destination-hidden-input"
+                            >
+
+                            <ul
+                                class="search-options-list"
+                                id="destination-options"
+                                role="listbox"
+                                aria-label="Destination options"
+                            ></ul>
+                        </div>
 
                         <span class="flights-location-code">
                             LBO · Moon
