@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Log in to your YSpace account to manage bookings and prepare for your next journey beyond Earth."
+    >
+
+    <title>Log in — YSpace</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="javascript/auth.js"></script>
+</head>
+
+<body class="auth-page">
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+    <header class="auth-header">
+        <div class="container auth-header-inner">
+
+            <a href="index.html" class="brand" aria-label="YSpace home">
+                <span class="brand-mark">Y</span>
+                <span class="brand-name">YSPACE</span>
+            </a>
+
+            <a href="index.html" class="auth-back-link">
+                <span aria-hidden="true">←</span>
+                Back to YSpace
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================================
+         LOGIN
+    ========================================================== -->
+
+    <main class="auth-main">
+
+        <div class="auth-background" aria-hidden="true">
+
+            <div class="auth-stars"></div>
+
+            <div class="auth-orbit auth-orbit-large"></div>
+            <div class="auth-orbit auth-orbit-small"></div>
+
+            <div class="auth-planet"></div>
+
+        </div>
+
+
+        <div class="container auth-layout">
+
+            <!-- =================================================
+                 BRAND MESSAGE
+            ================================================== -->
+
+            <section class="auth-intro">
+
+                <p class="eyebrow">
+                    Passenger access
+                </p>
+
+                <h1 class="auth-display">
+                    Continue your
+                    <span>journey.</span>
+                </h1>
+
+                <p class="auth-intro-text">
+                    Access your bookings, upcoming departures
+                    and passenger details from your YSpace account.
+                </p>
+
+
+                <div class="auth-network-info">
+
+                    <div class="auth-network-item">
+                        <span class="status-label">
+                            Passenger network
+                        </span>
+
+                        <strong>
+                            Solar System
+                        </strong>
+                    </div>
+
+
+                    <div class="auth-network-item">
+                        <span class="status-label">
+                            Account access
+                        </span>
+
+                        <strong class="auth-operational">
+                            <span class="status-indicator"></span>
+                            Operational
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 LOGIN CARD
+            ================================================== -->
+
+            <section class="auth-card">
+
+                <div class="auth-card-header">
+
+                    <p class="auth-card-kicker">
+                        YSPACE ACCOUNT
+                    </p>
+
+                    <h2>Log in</h2>
+
+                    <p>
+                        Enter the email address and password
+                        associated with your account.
+                    </p>
+
+                </div>
+
+
+                <form class="auth-form" id="login-form">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <div class="form-label-row">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <a href="#" class="form-help-link">
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="button button-primary auth-submit"
+                    >
+                        Log in
+                        <span aria-hidden="true">→</span>
+                    </button>
+
+
+                    <p class="auth-form-message" id="login-message"></p>
+
+                </form>
+
+
+                <div class="auth-divider">
+                    <span>New to YSpace?</span>
+                </div>
+
+
+                <a href="register.html" class="button auth-create-button">
+                    Create account
+                </a>
+
+
+                <p class="auth-terms">
+                    By accessing YSpace, you agree to our
+                    <a href="#">Terms of Service</a>
+                    and
+                    <a href="#">Privacy Policy</a>.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="auth-footer">
+
+        <div class="container auth-footer-inner">
+
+            <p>
+                © 2026 YSpace Industries
+            </p>
+
+            <p class="footer-status">
+                <span></span>
+                Secure passenger access
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>

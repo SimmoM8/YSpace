@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="YSpace makes travel beyond Earth bookable. Discover passenger flights to the Moon, Mars and destinations across the solar system."
+    />
+
+    <title>YSpace — Your Space Awaits</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="module" src="javascript/flights.js"></script>
+  </head>
+
+  <body>
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="YSpace home">
+          <span class="brand-mark">Y</span>
+          <span class="brand-name">YSPACE</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#destinations">Destinations</a>
+          <a href="#journey">The journey</a>
+          <a href="#fleet">Fleet</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="login.html" class="nav-login">Log in</a>
+          <a href="my-bookings.html" class="button button-small button-light nav-bookings">
+            My bookings
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+      <section class="hero">
+        <div class="hero-stars"></div>
+
+        <div class="planet planet-earth" aria-hidden="true"></div>
+        <div class="planet planet-moon" aria-hidden="true"></div>
+
+        <div class="container hero-content">
+          <p class="eyebrow">Commercial space travel</p>
+
+          <h1>
+            Your space
+            <span>awaits.</span>
+          </h1>
+
+          <p class="hero-description">
+            Travel beyond Earth with scheduled passenger flights connecting the
+            world's first generation of interplanetary destinations.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#destinations" class="button button-primary">
+              Explore destinations
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a href="#journey" class="text-link"> Discover the journey </a>
+          </div>
+        </div>
+
+        <div class="container hero-status">
+          <div class="status-item">
+            <span class="status-label">Network</span>
+            <strong>Solar System</strong>
+          </div>
+
+          <div class="status-item">
+            <span class="status-label">Departure hub</span>
+            <strong>Earth Orbit · EOH</strong>
+          </div>
+
+          <div class="status-item">
+            <span class="status-indicator"></span>
+            <div>
+              <span class="status-label">Operations</span>
+              <strong>Active</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             BOOKING / SEARCH TEASER
+        ====================================================== -->
+
+      <section class="search-section" id="booking-search-form">
+        <div class="container">
+          <div class="flight-search">
+            <div class="search-heading">
+              <p class="eyebrow eyebrow-dark">Start your journey</p>
+
+              <h2>Where will you go?</h2>
+            </div>
+
+            <form
+              class="search-fields"
+              id="flight-search-form"
+              aria-label="Flight search form"
+            >
+              <div class="search-field">
+                <label class="search-label" for="origin-input"> From </label>
+
+                <div class="search-input-wrapper">
+                  <input
+                    type="text"
+                    name="origin"
+                    id="origin-input"
+                    autocomplete="off"
+                    placeholder="Earth Orbit"
+                    aria-autocomplete="list"
+                    aria-controls="origin-options"
+                    aria-expanded="false"
+                  />
+
+                  <input type="hidden" name="origin-id" id="origin-hidden-input" />
+
+                  <ul
+                    class="search-options-list"
+                    id="origin-options"
+                    role="listbox"
+                  ></ul>
+                </div>
+
+                <small>EOH · Earth Orbital Hub</small>
+              </div>
+
+              <div class="search-divider" aria-hidden="true"></div>
+
+              <div class="search-field">
+                <label class="search-label" for="destination-input"> To </label>
+
+                <div class="search-input-wrapper">
+                  <input
+                    type="text"
+                    name="destination"
+                    id="destination-input"
+                    autocomplete="off"
+                    placeholder="Choose destination"
+                    aria-label="Destination"
+                    aria-autocomplete="list"
+                    aria-controls="destination-options"
+                    aria-expanded="false"
+                  />
+
+                  <input
+                    type="hidden"
+                    name="destination-id"
+                    id="destination-hidden-input"
+                  />
+
+                  <ul
+                    class="search-options-list"
+                    id="destination-options"
+                    role="listbox"
+                    aria-label="Destination options"
+                  ></ul>
+                </div>
+
+                <small>Moon, Mars and beyond</small>
+              </div>
+
+              <div class="search-divider" aria-hidden="true"></div>
+
+              <div class="search-field">
+                <label class="search-label" for="travel-date-picker">
+                  Departure
+                </label>
+
+                <input
+                  type="date"
+                  name="departure-date"
+                  id="travel-date-picker"
+                />
+
+                <small>Choose your travel date</small>
+              </div>
+
+              <button type="submit" class="button button-search">
+                Search flights
+                <span aria-hidden="true">→</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             DESTINATIONS
+        ====================================================== -->
+
+      <section class="section destinations" id="destinations">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow eyebrow-dark">Featured destinations</p>
+
+              <h2>
+                Leave the familiar
+                <br />
+                behind.
+              </h2>
+            </div>
+
+            <p class="section-intro">
+              From a lunar weekend to humanity's next great frontier, YSpace
+              connects remarkable destinations through a growing passenger
+              network.
+            </p>
+          </div>
+
+          <div class="destination-grid">
+            <!-- MOON -->
+
+            <article class="destination-card destination-luna">
+              <div class="destination-art">
+                <div class="moon-large"></div>
+
+                <span class="destination-number"> 01 </span>
+              </div>
+
+              <div class="destination-content">
+                <div>
+                  <p class="destination-code">LBO · MOON</p>
+
+                  <h3>Luna</h3>
+
+                  <p>
+                    Cross 384,400 kilometres of space and experience Earth from
+                    somewhere entirely new.
+                  </p>
+                </div>
+
+                <div class="destination-footer">
+                  <div>
+                    <span>Route</span>
+                    <strong>Earth to Luna Express</strong>
+                  </div>
+
+                  <a href="#" class="circle-link" aria-label="Explore Luna">
+                    →
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- MARS -->
+
+            <article class="destination-card destination-mars">
+              <div class="destination-art">
+                <div class="mars-large"></div>
+
+                <span class="destination-number"> 02 </span>
+              </div>
+
+              <div class="destination-content">
+                <div>
+                  <p class="destination-code">MGW · MARS</p>
+
+                  <h3>Mars</h3>
+
+                  <p>
+                    Make the long-range crossing to Mars Gateway and become part
+                    of interplanetary travel history.
+                  </p>
+                </div>
+
+                <div class="destination-footer">
+                  <div>
+                    <span>Route</span>
+                    <strong>Earth to Mars Window</strong>
+                  </div>
+
+                  <a href="#" class="circle-link" aria-label="Explore Mars">
+                    →
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             BRAND / JOURNEY SECTION
+        ====================================================== -->
+
+      <section class="journey-section" id="journey">
+        <div class="journey-orbit" aria-hidden="true"></div>
+
+        <div class="container journey-grid">
+          <div class="journey-heading">
+            <p class="eyebrow">The YSpace experience</p>
+
+            <h2>
+              Space travel,
+              <span>made human.</span>
+            </h2>
+          </div>
+
+          <div class="journey-content">
+            <p class="journey-lead">
+              The destination may be extraordinary. Booking it shouldn't be.
+            </p>
+
+            <p>
+              YSpace brings the structure, reliability and simplicity of modern
+              passenger travel beyond Earth — from selecting your route to
+              boarding your spacecraft.
+            </p>
+
+            <div class="journey-features">
+              <div class="feature">
+                <span class="feature-number">01</span>
+
+                <div>
+                  <h3>Choose your world</h3>
+                  <p>
+                    Explore routes connecting planets, moons and orbital
+                    stations.
+                  </p>
+                </div>
+              </div>
+
+              <div class="feature">
+                <span class="feature-number">02</span>
+
+                <div>
+                  <h3>Select your flight</h3>
+                  <p>
+                    Compare scheduled departures, spacecraft and journey times.
+                  </p>
+                </div>
+              </div>
+
+              <div class="feature">
+                <span class="feature-number">03</span>
+
+                <div>
+                  <h3>Prepare for departure</h3>
+                  <p>
+                    Your booking and journey details, managed through one YSpace
+                    account.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             FLEET
+        ====================================================== -->
+
+      <section class="section fleet" id="fleet">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow eyebrow-dark">The fleet</p>
+
+              <h2>
+                Built for the
+                <br />
+                distance.
+              </h2>
+            </div>
+
+            <p class="section-intro">
+              Purpose-built passenger spacecraft carry YSpace travellers from
+              short orbital crossings to deep-space journeys.
+            </p>
+          </div>
+
+          <div class="fleet-card">
+            <div class="spacecraft-visual" aria-hidden="true">
+              <div class="spacecraft">
+                <div class="craft-nose"></div>
+                <div class="craft-body">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="craft-tail"></div>
+              </div>
+
+              <div class="spacecraft-line"></div>
+            </div>
+
+            <div class="fleet-details">
+              <p class="destination-code">DEEP SPACE PASSENGER VESSEL</p>
+
+              <h3>Helios XR</h3>
+
+              <p>
+                Engineered by YSpace Industries for long-range passenger routes
+                throughout the inner solar system.
+              </p>
+
+              <div class="fleet-specs">
+                <div>
+                  <span>Range</span>
+                  <strong>90M km</strong>
+                </div>
+
+                <div>
+                  <span>Velocity</span>
+                  <strong>56,000 km/h</strong>
+                </div>
+
+                <div>
+                  <span>Service life</span>
+                  <strong>22 years</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             CTA
+        ====================================================== -->
+
+      <section class="final-cta">
+        <div class="cta-planet" aria-hidden="true"></div>
+
+        <div class="container cta-content">
+          <p class="eyebrow">Your next destination is up</p>
+
+          <h2>
+            Earth was only
+            <span>the beginning.</span>
+          </h2>
+
+          <p>
+            Create your YSpace account and start exploring passenger routes
+            across the solar system.
+          </p>
+
+          <div class="cta-actions">
+            <a href="#booking-search-form" class="button button-primary">
+              Find your flight
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a href="register.html" class="button button-outline"> Create account </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a href="index.html" class="brand">
+              <span class="brand-mark">Y</span>
+              <span class="brand-name">YSPACE</span>
+            </a>
+
+            <p>Passenger travel beyond Earth.</p>
+          </div>
+
+          <div class="footer-links">
+            <div>
+              <span>Explore</span>
+              <a href="#destinations">Destinations</a>
+              <a href="#journey">The journey</a>
+              <a href="#fleet">Fleet</a>
+            </div>
+
+            <div>
+              <span>Account</span>
+              <a href="login.html" class="nav-login">Log in</a>
+              <a href="register.html">Create account</a>
+              <a href="my-bookings.html" class="nav-bookings">My bookings</a>
+            </div>
+
+            <div>
+              <span>YSpace</span>
+              <a href="#">About</a>
+              <a href="#">Safety</a>
+              <a href="#">Contact</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 YSpace Industries</p>
+
+          <p class="footer-status">
+            <span></span>
+            Passenger network operational
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
