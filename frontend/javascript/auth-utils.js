@@ -1,18 +1,24 @@
 export function isLoggedIn() {
-    return !!localStorage.getItem("token");
+    return Boolean(localStorage.getItem("token"));
 }
 
 export function logout() {
     localStorage.removeItem("token");
+
     window.location.href = "/login.html";
 }
 
 export function getUserEmail() {
     const token = localStorage.getItem("token");
-    if (!token) return null;
+
+    if (!token) {
+        return null;
+    }
+
     try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        return payload.sub || null;
+        const payload = decodeJwtPayload(token);
+
+        return payload.sub ?? null;
     } catch {
         return null;
     }
@@ -20,27 +26,54 @@ export function getUserEmail() {
 
 export function applyAuthState() {
     const loggedIn = isLoggedIn();
-    const email = getUserEmail();
 
-    document.querySelectorAll(".nav-login").forEach((el) => {
+    document.querySelectorAll(".nav-login").forEach((element) => {
         if (loggedIn) {
-            el.textContent = "Log out";
-            el.href = "#";
-            el.addEventListener("click", (e) => {
-                e.preventDefault();
-                logout();
-            });
+            element.textContent = "Log out";
+
+            element.href = "#";
+
+            element.addEventListener("click", handleLogoutClick);
         } else {
-            el.textContent = "Log in";
-            el.href = "/login.html";
+            element.textContent = "Log in";
+
+            element.href = "/login.html";
         }
     });
 
-    document.querySelectorAll(".nav-bookings").forEach((el) => {
-        if (loggedIn) {
-            el.href = "/my-bookings.html";
-        } else {
-            el.href = "/login.html";
-        }
+    document.querySelectorAll(".nav-bookings").forEach((element) => {
+        element.href = loggedIn ? "/my-bookings.html" : "/login.html";
     });
+}
+
+function handleLogoutClick(event) {
+    event.preventDefault();
+
+    logout();
+}
+
+function decodeJwtPayload(token) {
+    const parts = token.split(".");
+
+    if (parts.length !== 3) {
+        throw new Error("Invalid JWT");
+    }
+
+    const base64Url = parts[1];
+
+    const base64 = base64Url.replaceAll("-", "+").replaceAll("_", "/");
+
+    const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+
+    const json = decodeURIComponent(
+        atob(padded)
+            .split("")
+            .map(
+                (character) =>
+                    "%" + character.charCodeAt(0).toString(16).padStart(2, "0"),
+            )
+            .join(""),
+    );
+
+    return JSON.parse(json);
 }
