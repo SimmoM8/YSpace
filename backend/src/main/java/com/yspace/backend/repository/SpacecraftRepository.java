@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpacecraftRepository extends JpaRepository<Spacecraft, Integer> {
+
+    boolean existsByModelId(Integer modelId);
 }

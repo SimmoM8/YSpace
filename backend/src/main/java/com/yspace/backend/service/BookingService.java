@@ -1,5 +1,6 @@
 package com.yspace.backend.service;
 
+import com.yspace.backend.dto.booking.AdminBookingSummaryResponseDto;
 import com.yspace.backend.dto.booking.BookingDetailsResponseDto;
 import com.yspace.backend.dto.booking.BookingRowDetailsResponseDto;
 import com.yspace.backend.dto.booking.BookingSummaryResponseDto;
@@ -71,6 +72,14 @@ public class BookingService {
 
         return bookings.stream()
                 .map(bookingMapper::toSummaryDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AdminBookingSummaryResponseDto> getAllBookings() {
+        return bookingRepository.findAll()
+                .stream()
+                .map(bookingMapper::toAdminSummaryDto)
                 .toList();
     }
 

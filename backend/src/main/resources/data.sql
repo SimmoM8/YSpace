@@ -1,16 +1,22 @@
 -- Idempotent seed data for yspace_db
 -- Uses fixed IDs and NOT EXISTS checks so the script can run multiple times.
+--
+-- NOTE: Passwords below are REAL bcrypt hashes so seeded accounts can log in:
+--   admin@yspace.com   -> password: test
+--   luna.park@yspace.com, orion.vale@yspace.com, touristN@yspace.com -> password: password
+-- The UPDATEs at the bottom force the correct hash onto any pre-existing rows
+-- that may have been created with the old placeholder hash.
 
 INSERT INTO users (id, role, first_name, last_name, email, password, created_at, updated_at)
-SELECT 1, 'ADMIN', 'Nova', 'Commander', 'admin@yspace.com', '$2a$10$seededAdminPasswordHash', '2026-01-01 10:00:00', '2026-01-01 10:00:00'
+SELECT 1, 'ADMIN', 'Nova', 'Commander', 'admin@yspace.com', '$2a$10$JWcT3BCKhzUfAj67WCfUmeqhfCDNxzN3YwY5pjKHMJmALgSloGpK.', '2026-01-01 10:00:00', '2026-01-01 10:00:00'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 1);
 
 INSERT INTO users (id, role, first_name, last_name, email, password, created_at, updated_at)
-SELECT 2, 'SPACE_TOURIST', 'Luna', 'Park', 'luna.park@yspace.com', '$2a$10$seededTouristPasswordHash1', '2026-01-02 11:00:00', '2026-01-02 11:00:00'
+SELECT 2, 'SPACE_TOURIST', 'Luna', 'Park', 'luna.park@yspace.com', '$2a$10$URAfSJoulLbgRL.leUsQB.GT8t/d4y8v9iOPri1iEHenDcECv1CCa', '2026-01-02 11:00:00', '2026-01-02 11:00:00'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 2);
 
 INSERT INTO users (id, role, first_name, last_name, email, password, created_at, updated_at)
-SELECT 3, 'SPACE_TOURIST', 'Orion', 'Vale', 'orion.vale@yspace.com', '$2a$10$seededTouristPasswordHash2', '2026-01-03 12:00:00', '2026-01-03 12:00:00'
+SELECT 3, 'SPACE_TOURIST', 'Orion', 'Vale', 'orion.vale@yspace.com', '$2a$10$CwXxxDgsTV7IKRxCCE6m/ejWsCiFYuD1JHUrd5tAnYDArUCkss51e', '2026-01-03 12:00:00', '2026-01-03 12:00:00'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 3);
 
 INSERT INTO addresses (id, user_id, street, city, state, postal_code, country, created_at, updated_at)
@@ -41,11 +47,11 @@ INSERT INTO spaceports (id, name, code, type, description, image_url)
 SELECT 3, 'Mars Gateway', 'MGW', 'PLANET', 'Mars orbit transfer and customs station.', 'https://images.yspace.local/spaceports/mgw.png'
 WHERE NOT EXISTS (SELECT 1 FROM spaceports WHERE id = 3);
 
-INSERT INTO routes (id, name, origin_spaceport_id, departure_spaceport_id, distance, description, created_at, updated_at)
+INSERT INTO routes (id, name, origin_spaceport_id, destination_spaceport_id, distance, description, created_at, updated_at)
 SELECT 1, 'Earth to Luna Express', 1, 2, 384400.0, 'Fast transfer route between Earth orbit and the Moon.', '2026-01-06 08:00:00', '2026-01-06 08:00:00'
 WHERE NOT EXISTS (SELECT 1 FROM routes WHERE id = 1);
 
-INSERT INTO routes (id, name, origin_spaceport_id, departure_spaceport_id, distance, description, created_at, updated_at)
+INSERT INTO routes (id, name, origin_spaceport_id, destination_spaceport_id, distance, description, created_at, updated_at)
 SELECT 2, 'Earth to Mars Window', 1, 3, 54600000.0, 'Long-range route opened during transfer windows.', '2026-01-06 08:10:00', '2026-01-06 08:10:00'
 WHERE NOT EXISTS (SELECT 1 FROM routes WHERE id = 2);
 
@@ -57,28 +63,30 @@ INSERT INTO spacecraft_models (id, name, manufacturer, description, max_range, v
 SELECT 2, 'Helios XR', 'YSpace Industries', 'Deep-space passenger vessel for Mars windows.', 90000000.0, 56000.0, 22
 WHERE NOT EXISTS (SELECT 1 FROM spacecraft_models WHERE id = 2);
 
-INSERT INTO spacecrafts (id, name, model_id, status, is_operational, created_at, updated_at)
-SELECT 1, 'YS-101 Aurora', 1, 'PARKED', 1, '2026-01-07 07:00:00', '2026-01-07 07:00:00'
+INSERT INTO spacecrafts (id, name, model_id, status, seat_capacity, is_operational, created_at, updated_at)
+SELECT 1, 'YS-101 Aurora', 1, 'PARKED', 200, 1, '2026-01-07 07:00:00', '2026-01-07 07:00:00'
 WHERE NOT EXISTS (SELECT 1 FROM spacecrafts WHERE id = 1);
 
-INSERT INTO spacecrafts (id, name, model_id, status, is_operational, created_at, updated_at)
-SELECT 2, 'YS-204 Horizon', 2, 'BOARDING', 1, '2026-01-07 07:15:00', '2026-01-07 07:15:00'
+INSERT INTO spacecrafts (id, name, model_id, status, seat_capacity, is_operational, created_at, updated_at)
+SELECT 2, 'YS-204 Horizon', 2, 'BOARDING', 180, 1, '2026-01-07 07:15:00', '2026-01-07 07:15:00'
 WHERE NOT EXISTS (SELECT 1 FROM spacecrafts WHERE id = 2);
 
-INSERT INTO spacecrafts (id, name, model_id, status, is_operational, created_at, updated_at)
-SELECT 3, 'YS-301 Odyssey', 2, 'CRUISING', 1, '2026-01-07 07:30:00', '2026-01-07 07:30:00'
+INSERT INTO spacecrafts (id, name, model_id, status, seat_capacity, is_operational, created_at, updated_at)
+SELECT 3, 'YS-301 Odyssey', 2, 'CRUISING', 160, 1, '2026-01-07 07:30:00', '2026-01-07 07:30:00'
 WHERE NOT EXISTS (SELECT 1 FROM spacecrafts WHERE id = 3);
 
-INSERT INTO flights (id, number, route_id, spacecraft_id, base_price, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
-SELECT 1, 'YS1001', 1, 2, 1499.00, '2026-06-10 09:00:00', '2026-06-10 13:30:00', 'BOARDING', 0, '2026-01-10 10:00:00', '2026-01-10 10:00:00'
+-- Explicit flights use future departures aligned with the product default search
+-- date (2026-09-18) so the out-of-the-box flight search immediately returns results.
+INSERT INTO flights (id, code, route_id, spacecraft_id, base_price, available_seats, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
+SELECT 1, 'EOH-LBO-0901', 1, 2, 1499.00, 180, '2026-09-18 09:00:00', '2026-09-18 13:30:00', 'SCHEDULED', 0, '2026-01-10 10:00:00', '2026-01-10 10:00:00'
 WHERE NOT EXISTS (SELECT 1 FROM flights WHERE id = 1);
 
-INSERT INTO flights (id, number, route_id, spacecraft_id, base_price, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
-SELECT 2, 'YS1002', 1, 1, 1399.00, '2026-06-11 15:00:00', '2026-06-11 19:20:00', 'SCHEDULED', 0, '2026-01-10 10:10:00', '2026-01-10 10:10:00'
+INSERT INTO flights (id, code, route_id, spacecraft_id, base_price, available_seats, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
+SELECT 2, 'EOH-LBO-0902', 1, 1, 1399.00, 200, '2026-09-18 15:00:00', '2026-09-18 19:20:00', 'SCHEDULED', 0, '2026-01-10 10:10:00', '2026-01-10 10:10:00'
 WHERE NOT EXISTS (SELECT 1 FROM flights WHERE id = 2);
 
-INSERT INTO flights (id, number, route_id, spacecraft_id, base_price, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
-SELECT 3, 'YS2201', 2, 3, 8999.00, '2026-07-01 06:00:00', '2026-07-16 18:00:00', 'SCHEDULED', 0, '2026-01-10 10:20:00', '2026-01-10 10:20:00'
+INSERT INTO flights (id, code, route_id, spacecraft_id, base_price, available_seats, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
+SELECT 3, 'EOH-MGW-1001', 2, 3, 8999.00, 160, '2026-10-01 06:00:00', '2026-10-02 18:00:00', 'SCHEDULED', 0, '2026-01-10 10:20:00', '2026-01-10 10:20:00'
 WHERE NOT EXISTS (SELECT 1 FROM flights WHERE id = 3);
 
 INSERT INTO bookings (id, user_id, total_price, status, created_at, updated_at)
@@ -117,7 +125,7 @@ SELECT
     CONCAT('Tourist', s.n),
     'Seed',
     CONCAT('tourist', s.n, '@yspace.com'),
-    CONCAT('$2a$10$seededTouristHash', LPAD(s.n, 2, '0')),
+    '$2a$10$URAfSJoulLbgRL.leUsQB.GT8t/d4y8v9iOPri1iEHenDcECv1CCa',
     DATE_ADD('2026-01-04 10:00:00', INTERVAL s.n DAY),
     DATE_ADD('2026-01-04 10:00:00', INTERVAL s.n DAY)
 FROM seq s
@@ -178,18 +186,18 @@ SELECT
 FROM seq s
 WHERE NOT EXISTS (SELECT 1 FROM spaceports sp WHERE sp.id = s.id);
 
-INSERT INTO routes (id, name, origin_spaceport_id, departure_spaceport_id, distance, description, created_at, updated_at)
+INSERT INTO routes (id, name, origin_spaceport_id, destination_spaceport_id, distance, description, created_at, updated_at)
 SELECT
     r.id,
     r.name,
     r.origin_spaceport_id,
-    r.departure_spaceport_id,
+    r.destination_spaceport_id,
     r.distance,
     r.description,
     r.created_at,
     r.updated_at
 FROM (
-    SELECT 3 AS id, 'Luna Return' AS name, 2 AS origin_spaceport_id, 1 AS departure_spaceport_id, 384400.0 AS distance, 'Moon to Earth return route.' AS description, '2026-01-06 09:00:00' AS created_at, '2026-01-06 09:00:00' AS updated_at
+    SELECT 3 AS id, 'Luna Return' AS name, 2 AS origin_spaceport_id, 1 AS destination_spaceport_id, 384400.0 AS distance, 'Moon to Earth return route.' AS description, '2026-01-06 09:00:00' AS created_at, '2026-01-06 09:00:00' AS updated_at
     UNION ALL SELECT 4, 'Mars Return', 3, 1, 54600000.0, 'Mars transfer return route.', '2026-01-06 09:05:00', '2026-01-06 09:05:00'
     UNION ALL SELECT 5, 'Luna to Mars', 2, 3, 54215600.0, 'Lunar launch towards Mars gateway.', '2026-01-06 09:10:00', '2026-01-06 09:10:00'
     UNION ALL SELECT 6, 'Mars to Luna', 3, 2, 54215600.0, 'Mars gateway transfer to lunar base.', '2026-01-06 09:15:00', '2026-01-06 09:15:00'
@@ -221,7 +229,7 @@ SELECT
 FROM seq s
 WHERE NOT EXISTS (SELECT 1 FROM spacecraft_models sm WHERE sm.id = s.id);
 
-INSERT INTO spacecrafts (id, name, model_id, status, is_operational, created_at, updated_at)
+INSERT INTO spacecrafts (id, name, model_id, status, seat_capacity, is_operational, created_at, updated_at)
 WITH RECURSIVE seq AS (
     SELECT 4 AS id
     UNION ALL
@@ -244,13 +252,16 @@ SELECT
         WHEN 9 THEN 'PARKED'
         ELSE 'BOARDING'
     END,
+    120 + MOD(s.id, 80),
     CASE WHEN MOD(s.id, 10) = 0 THEN 0 ELSE 1 END,
     DATE_ADD('2026-01-08 08:00:00', INTERVAL s.id DAY),
     DATE_ADD('2026-01-08 08:00:00', INTERVAL s.id DAY)
 FROM seq s
 WHERE NOT EXISTS (SELECT 1 FROM spacecrafts sc WHERE sc.id = s.id);
 
-INSERT INTO flights (id, number, route_id, spacecraft_id, base_price, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
+-- Bulk flights are all scheduled in the future (Sept-Oct 2026 onward) so the
+-- public flight search and admin schedule view show bookable departures.
+INSERT INTO flights (id, code, route_id, spacecraft_id, base_price, available_seats, departure_time, arrival_time, status, is_delayed, created_at, updated_at)
 WITH RECURSIVE seq AS (
     SELECT 4 AS id
     UNION ALL
@@ -262,14 +273,15 @@ SELECT
     1 + MOD(s.id, 14),
     1 + MOD(s.id, 30),
     1200.00 + (s.id * 57.00),
-    DATE_ADD('2026-08-01 06:00:00', INTERVAL s.id DAY),
-    DATE_ADD(DATE_ADD('2026-08-01 06:00:00', INTERVAL s.id DAY), INTERVAL (4 + MOD(s.id, 7)) HOUR),
+    100 + MOD(s.id, 120),
+    DATE_ADD('2026-09-20 06:00:00', INTERVAL s.id DAY),
+    DATE_ADD(DATE_ADD('2026-09-20 06:00:00', INTERVAL s.id DAY), INTERVAL (4 + MOD(s.id, 7)) HOUR),
     CASE MOD(s.id, 6)
         WHEN 0 THEN 'SCHEDULED'
         WHEN 1 THEN 'BOARDING'
-        WHEN 2 THEN 'DEPARTED'
-        WHEN 3 THEN 'ARRIVED'
-        WHEN 4 THEN 'IN_FLIGHT'
+        WHEN 2 THEN 'SCHEDULED'
+        WHEN 3 THEN 'SCHEDULED'
+        WHEN 4 THEN 'BOARDING'
         ELSE 'CANCELLED'
     END,
     CASE WHEN MOD(s.id, 9) = 0 THEN 1 ELSE 0 END,
@@ -311,3 +323,27 @@ SELECT
     950.00 + (s.id * 21.00)
 FROM seq s
 WHERE NOT EXISTS (SELECT 1 FROM booking_rows br WHERE br.id = s.id);
+
+-- -------------------------------------------------------------------
+-- Force-correct passwords on any rows that predate this fix
+-- (the old placeholders were not valid bcrypt, so nobody could log in).
+-- -------------------------------------------------------------------
+UPDATE users SET password = '$2a$10$JWcT3BCKhzUfAj67WCfUmeqhfCDNxzN3YwY5pjKHMJmALgSloGpK.' WHERE id = 1;
+UPDATE users SET password = '$2a$10$URAfSJoulLbgRL.leUsQB.GT8t/d4y8v9iOPri1iEHenDcECv1CCa' WHERE id BETWEEN 2 AND 30;
+
+-- -------------------------------------------------------------------
+-- Backfill any spacecraft that have a NULL seat capacity.
+-- These rows predate the seat_capacity column (or were inserted against
+-- an older schema), so the INSERT guards above never touched them. Where a
+-- flight on the same spacecraft recorded a real capacity we reuse it,
+-- otherwise fall back to a sensible default. Idempotent: only NULL rows.
+-- -------------------------------------------------------------------
+UPDATE spacecrafts sc
+LEFT JOIN (
+    SELECT spacecraft_id, MAX(available_seats) AS seats
+    FROM flights
+    WHERE available_seats IS NOT NULL AND spacecraft_id IS NOT NULL
+    GROUP BY spacecraft_id
+) f ON f.spacecraft_id = sc.id
+SET sc.seat_capacity = COALESCE(f.seats, sc.seat_capacity, 150)
+WHERE sc.seat_capacity IS NULL;

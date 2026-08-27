@@ -24,4 +24,8 @@ public interface RouteRepository extends JpaRepository<Route, Integer> {
     List<Route> fetchByKeyword(@Param("keyword") String keyword);
 
     boolean existsByOriginSpaceportIdAndDestinationSpaceportId(Integer originSpaceportId, Integer destinationSpaceportId);
+
+    boolean existsByOriginSpaceportId(Integer originSpaceportId);
+
+    boolean existsByDestinationSpaceportId(Integer destinationSpaceportId);
 }

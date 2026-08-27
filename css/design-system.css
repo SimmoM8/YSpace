@@ -1,0 +1,702 @@
+/* =====================================================================
+   YSpace — Design System (dark space theme)
+   Layered on top of style.css / flights.css / register.css to unify the
+   whole product into one cohesive, polished dark "space" experience.
+   ===================================================================== */
+
+:root {
+    /* -------- Surfaces (dark first) -------- */
+    --surface-page:        #06080c;
+    --surface-soft:        #0b0e14;
+    --surface-card:        #0e1219;
+    --surface-card-2:      #131826;
+    --surface-elevated:    #161c28;
+    --surface-input:       #0a0d13;
+    --surface-hover:       #171e2c;
+
+    /* -------- Borders / lines -------- */
+    --line:        rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+
+    /* -------- Text -------- */
+    --ink:        #eef2f7;
+    --ink-muted:  #9aa4b2;
+    --ink-soft:   #6b7686;
+
+    /* -------- Accents (vibrant "dopamine" palette) -------- */
+    --accent:         #d9ff43;   /* primary lime                */
+    --accent-glow:    rgba(217, 255, 67, 0.35);
+    --cyan:           #4dd8ff;   /* departure / info            */
+    --violet:         #8b7bff;   /* admin / control             */
+    --pink:           #ff5c8a;   /* marketing pop               */
+    --green:          #3ddc97;   /* success / available         */
+    --amber:          #ffb84d;   /* delayed / limited           */
+    --red:            #ff5b6a;   /* danger / cancelled          */
+
+    /* -------- Shadows -------- */
+    --shadow-card:  0 24px 60px -22px rgba(0, 0, 0, 0.75);
+    --shadow-pop:   0 30px 70px -20px rgba(0, 0, 0, 0.85);
+    --glow-accent:  0 10px 32px -8px var(--accent-glow);
+
+    /* -------- Radius -------- */
+    --r-md: 14px;
+    --r-lg: 22px;
+
+    /* -------- Font -------- */
+    --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* =====================================================================
+   Base surfaces — unify every page body to dark
+   ===================================================================== */
+body,
+.flights-page,
+.register-page,
+.auth-page {
+    background: var(--surface-page) !important;
+    color: var(--ink) !important;
+}
+
+.search-section,
+.section,
+.destinations,
+.fleet,
+.fleet-card,
+.destination-card,
+.craft,
+.flights-results-section,
+.flights-page .flights-results-section {
+    background: var(--surface-page) !important;
+    color: var(--ink) !important;
+}
+
+/* =====================================================================
+   Typography — crisp, larger, display-grade headings
+   ===================================================================== */
+.site-header,
+.flights-header,
+.auth-header,
+.register-header {
+    position: relative;
+    z-index: 20;
+}
+
+main {
+    color: var(--ink);
+}
+
+h1, h2, h3, h4 {
+    color: var(--ink);
+    letter-spacing: -0.02em;
+}
+
+.flights-title,
+.section h2,
+.search-heading h2,
+.journey-heading h2,
+.cta-content h2,
+.admin-panel-title {
+    font-family: var(--font-display);
+    color: var(--ink);
+}
+
+/* subtle gradient text on marketing headings */
+.destinations h2,
+.fleet h2 {
+    background: linear-gradient(100deg, #ffffff 0%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+/* =====================================================================
+   Header / nav — glassy dark bars
+   ===================================================================== */
+.site-header,
+.flights-header {
+    background: rgba(6, 8, 12, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+}
+
+.main-nav a,
+.flights-nav a {
+    color: var(--ink-muted);
+    transition: color var(--transition-fast);
+}
+.main-nav a:hover,
+.flights-nav a:hover,
+.main-nav a.is-active,
+.flights-nav a.is-active {
+    color: var(--accent);
+}
+
+/* =====================================================================
+   Cards — dark elevated surfaces with hover lift + glow
+   ===================================================================== */
+.flight-search,
+.flight-card,
+.route-card,
+.spacecraft-card,
+.destination-card,
+.fleet-card,
+.admin-tab,
+.admin-stat,
+.admin-row,
+.register-panel,
+.auth-card,
+.form-card {
+    background: var(--surface-card) !important;
+    color: var(--ink) !important;
+    border-color: var(--line) !important;
+    box-shadow: var(--shadow-card);
+}
+
+.flight-search,
+.flight-card,
+.route-card,
+.spacecraft-card,
+.destination-card,
+.admin-stat,
+.admin-row {
+    transition: transform var(--transition-normal),
+        box-shadow var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+.flight-card:hover,
+.route-card:hover,
+.spacecraft-card:hover,
+.destination-card:hover,
+.admin-row:hover {
+    transform: translateY(-4px);
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-pop);
+}
+
+/* card header strips / meta */
+.flight-card-status,
+.flight-card-footer,
+.route-card-body,
+.spacecraft-card-head,
+.destination-card-top {
+    background: var(--surface-card-2) !important;
+    border-color: var(--line) !important;
+}
+
+/* card-inner text — ensure legible light ink on dark surfaces */
+.flight-time-value,
+.flight-route-type,
+.flight-craft-icon,
+.flight-location-code,
+.route-card-heading h3,
+.route-card-details strong,
+.spacecraft-card-name,
+.spacecraft-card-meta,
+.destination-card-name,
+.destination-card-desc,
+.flight-detail strong,
+.flight-modal-summary,
+.flight-modal-route {
+    color: var(--ink) !important;
+}
+.flight-route-point {
+    border-color: var(--cyan) !important;
+}
+.flight-route-line {
+    background: var(--line-strong) !important;
+}
+
+/* =====================================================================
+   Buttons — vibrant, glowing primary
+   ===================================================================== */
+.button-primary,
+.button-search,
+.flight-select-button,
+.button-brand-cta {
+    background: linear-gradient(135deg, var(--accent) 0%, #c8f03a 100%) !important;
+    color: #0a0d13 !important;
+    border: none !important;
+    box-shadow: var(--glow-accent) !important;
+    transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        filter var(--transition-fast);
+}
+.button-primary:hover,
+.button-search:hover,
+.flight-select-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 14px 40px -8px var(--accent-glow) !important;
+}
+
+.button-outline {
+    border: 1px solid var(--line-strong) !important;
+    color: var(--ink) !important;
+    background: transparent !important;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.button-outline:hover {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+}
+
+.button-light,
+.nav-bookings {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--ink) !important;
+}
+
+/* =====================================================================
+   Inputs / selects — dark fields
+   ===================================================================== */
+input,
+select,
+textarea,
+.search-input-wrapper input,
+.flights-search-field input,
+.flights-search-field select,
+.admin-form input,
+.admin-form select,
+.admin-form textarea,
+.admin-filter input,
+.register-form input,
+.auth-form input {
+    background: var(--surface-input) !important;
+    color: var(--ink) !important;
+    border-color: var(--line) !important;
+}
+input::placeholder,
+textarea::placeholder {
+    color: var(--ink-soft);
+}
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(217, 255, 67, 0.18) !important;
+    outline: none;
+}
+
+/* =====================================================================
+   Status / badges — vibrant pills
+   ===================================================================== */
+.flight-status {
+    font-weight: 700;
+}
+.flight-status::before {
+    background: currentColor;
+}
+.flight-status-available { color: var(--green) !important; }
+.flight-status-limited   { color: var(--amber) !important; }
+.flight-status-sold-out  { color: var(--ink-soft) !important; }
+.flight-status-delayed,
+.flight-delayed-badge     { color: var(--amber) !important; }
+
+.flight-delayed-badge {
+    background: rgba(255, 184, 77, 0.12) !important;
+    border-color: rgba(255, 184, 77, 0.35) !important;
+}
+
+/* =====================================================================
+   Modal — dark glass panel
+   ===================================================================== */
+.app-modal-panel {
+    background: var(--surface-card-2) !important;
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-pop);
+}
+.app-modal-content,
+.app-modal-body {
+    color: var(--ink);
+}
+
+/* =====================================================================
+   Auth / register — dark cards
+   ===================================================================== */
+.register-panel,
+.auth-card {
+    background: var(--surface-card) !important;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+.auth-divider span,
+.register-divider span {
+    background: var(--surface-card) !important;
+    color: var(--ink-muted);
+}
+.auth-form-message,
+.register-form-message {
+    color: var(--red);
+}
+.form-help-link,
+.text-link {
+    color: var(--cyan);
+}
+
+/* =====================================================================
+   Footer — match dark theme
+   ===================================================================== */.site-footer {
+    background: var(--surface-soft) !important;
+    color: var(--ink-muted);
+}
+.footer-status,
+.footer-bottom p {
+    color: var(--ink-soft);
+}
+
+/* =====================================================================
+   ADMIN DASHBOARD — professional console
+   ===================================================================== */
+.admin-page {
+    background: var(--surface-page) !important;
+}
+
+/* sidebar */
+.admin-sidebar {
+    gap: 8px;
+}
+.admin-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--surface-card) !important;
+    color: var(--ink-muted);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+.admin-tab:hover {
+    background: var(--surface-hover);
+    color: var(--ink);
+    transform: translateX(2px);
+}
+.admin-tab.is-active {
+    background: linear-gradient(135deg, var(--accent) 0%, #c8f03a 100%) !important;
+    color: #0a0d13 !important;
+    border-color: transparent;
+    box-shadow: var(--glow-accent);
+}
+
+/* panel chrome */
+.admin-panels {
+    background: transparent;
+}
+.admin-panel-title {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+.admin-panel-intro {
+    color: var(--ink-muted);
+}
+.admin-panel-subtitle {
+    color: var(--ink);
+    font-size: 1.12rem;
+}
+
+/* stat cards */
+.admin-stats {
+    gap: 18px;
+}
+.admin-stat {
+    position: relative;
+    overflow: hidden;
+    padding: 24px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface-card) !important;
+}
+.admin-stat::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120px 80px at 85% -10%, var(--accent-glow), transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+}
+.admin-stat span {
+    color: var(--ink-muted);
+}
+.admin-stat strong {
+    color: var(--accent);
+    font-size: 2.4rem;
+}
+
+/* rows / lists */
+.admin-list {
+    gap: 14px;
+}
+.admin-row {
+    padding: 18px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--surface-card) !important;
+}
+.admin-row strong {
+    color: var(--ink);
+}
+.admin-row span {
+    color: var(--ink-muted);
+}
+.admin-row-actions {
+    gap: 10px;
+}
+.admin-row-btn {
+    padding: 9px 15px;
+    border-radius: 9px;
+    font-size: 0.76rem;
+}
+
+/* form messages */
+.admin-form-message--ok {
+    color: var(--green);
+}
+.admin-form-message {
+    color: var(--red);
+}
+
+/* filter */
+.admin-filter input {
+    border-radius: 10px;
+    min-height: 46px;
+}
+
+/* price / flight status inside admin rows */
+.admin-price {
+    color: var(--accent) !important;
+}
+.admin-row strong {
+    color: var(--ink);
+}
+.admin-row span {
+    color: var(--ink-muted);
+}
+.admin-count {
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+}
+.admin-panel {
+    color: var(--ink);
+}
+
+/* responsive safety */
+@media (max-width: 860px) {
+    .admin-layout { flex-direction: column; }
+    .admin-sidebar { flex-direction: row; flex-wrap: wrap; }
+    .admin-tab { width: auto; flex: 1 1 auto; justify-content: center; }
+}
+
+/* =====================================================================
+   POLISH LAYER — consistency & contrast pass
+   Fixes light-era leftovers / low-contrast text now sitting on dark
+   surfaces, plus layout rhythm niggles. Loads last so it wins.
+   ===================================================================== */
+
+/* ---------- Global muted text contrast (dark backdrops) ---------- */
+.eyebrow,
+.eyebrow-dark,
+.section-intro,
+.search-label,
+.search-field small,
+.destination-code,
+.destination-content > div > p:last-child,
+.destination-footer span,
+.destination-number,
+.fleet-details > p,
+.fleet-specs span,
+.footer-brand p,
+.footer-links span,
+.footer-links a,
+.footer-bottom,
+.journey-heading h2 span,
+.journey-content > p:not(.journey-lead),
+.cta-content > p:not(.eyebrow),
+.flights-nav {
+    color: var(--ink-muted) !important;
+}
+
+/* keep pure-white lead text where it belongs */
+.journey-lead {
+    color: var(--ink) !important;
+}
+
+/* ---------- Buttons: tighter icon gap + focus ring ---------- */
+.button {
+    gap: 12px;
+}
+a.button,
+button.button {
+    text-decoration: none;
+}
+.button:focus-visible,
+.btn:focus-visible,
+.admin-tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+.button-outline {
+    border-color: var(--line-strong) !important;
+    color: var(--ink) !important;
+}
+.button-light {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--ink) !important;
+}
+
+/* ---------- Home flight-search: dark field + dividers ---------- */
+.search-fields {
+    background: var(--surface-card-2) !important;
+    border-color: var(--line) !important;
+}
+.search-divider {
+    background: var(--line-strong) !important;
+}
+.search-input-wrapper > input,
+.search-field > input[type="date"] {
+    color: var(--ink) !important;
+    caret-color: var(--accent);
+}
+.button-search {
+    background: linear-gradient(135deg, var(--accent) 0%, #c8f03a 100%) !important;
+    color: #0a0d13 !important;
+    box-shadow: var(--glow-accent);
+}
+
+/* ---------- Section heading: tighter, even rhythm ---------- */
+.section-heading {
+    gap: 56px;
+    margin-bottom: 56px;
+}
+.search-heading .eyebrow {
+    margin-bottom: 10px;
+}
+.search-heading h2,
+.section-heading h2 {
+    color: var(--ink);
+}
+
+/* ---------- Home destination cards: polished dark surfaces ---------- */
+.destination-card,
+.fleet-card {
+    border-radius: var(--r-lg) !important;
+    border-color: var(--line) !important;
+}
+.destination-card {
+    background: var(--surface-card) !important;
+}
+.circle-link {
+    border-color: var(--line-strong) !important;
+    color: var(--ink-muted) !important;
+}
+.circle-link:hover {
+    background: var(--surface-hover) !important;
+    color: var(--accent) !important;
+}
+
+/* ---------- Home fleet card sync ---------- */
+.fleet-card {
+    border-color: var(--line) !important;
+}
+.fleet-details h3 {
+    color: var(--ink);
+}
+.fleet-specs strong {
+    color: var(--ink);
+}
+
+/* ---------- Footer rhythm & contrast ---------- */
+.site-footer { padding-block: 64px 26px; }
+.footer-main { padding-bottom: 60px; }
+.footer-bottom { color: var(--ink-soft) !important; }
+.footer-status { color: var(--green) !important; }
+
+/* ---------- Secondary-page (flights.css) polish ---------- */
+.flights-nav a {
+    color: var(--ink-muted) !important;
+}
+.flights-nav a:hover,
+.flights-nav a.is-active {
+    color: var(--accent) !important;
+}
+
+/* flight-card inner surfaces already dark; soften borders + spacing */
+.flight-card,
+.route-card,
+.spacecraft-card {
+    border-radius: 16px !important;
+    border-color: var(--line) !important;
+}
+.flight-card-status {
+    border-radius: 16px 16px 0 0 !important;
+}
+.flights-sort select {
+    background: var(--surface-input) !important;
+    border-color: var(--line-strong) !important;
+    color: var(--ink) !important;
+}
+.flights-sort label {
+    color: var(--ink-muted) !important;
+}
+.flights-empty,
+.flights-empty p {
+    color: var(--ink-muted) !important;
+}
+
+/* ---------- Auth / register form cards: light text on dark ---------- */
+.auth-form-message,
+.register-form-message,
+.form-help,
+.form-error {
+    color: var(--ink-muted) !important;
+}
+.auth-card h1,
+.auth-card h2,
+.register-panel h1,
+.register-panel h2 {
+    color: var(--ink) !important;
+}
+.auth-card-kicker,
+.auth-card-header > p:last-child,
+.auth-terms,
+.auth-intro-text,
+.auth-intro .eyebrow,
+.auth-network-item .status-label,
+.register-form label,
+.auth-form .form-group label {
+    color: var(--ink-muted) !important;
+}
+.auth-back-link {
+    color: var(--ink-muted) !important;
+}
+.auth-back-link:hover {
+    color: var(--accent) !important;
+}
+.auth-terms a,
+.register-terms a {
+    color: var(--cyan) !important;
+}
+.auth-card {
+    border-radius: var(--r-lg) !important;
+}
+
+/* ---------- Tame tiny font sizes into a consistent scale ---------- */
+.search-label,
+.destination-code,
+.destination-footer span,
+.footer-links span,
+.fleet-specs span {
+    font-size: 0.7rem;
+}
+

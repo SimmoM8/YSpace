@@ -22,6 +22,7 @@ if (registerForm) {
         submitButton.disabled = true;
         submitButton.innerHTML = "Creating account... <span aria-hidden='true'>→</span>";
 
+        let registered = false;
         try {
             await apiPost("/users/register", {
                 firstName,
@@ -30,15 +31,29 @@ if (registerForm) {
                 password
             });
 
-            window.location.href = "/login.html";
+            registered = true;
+
+            // Show success state before redirect
+            if (messageEl) {
+                messageEl.textContent = "Account created! Redirecting to log in...";
+                messageEl.classList.add("register-message--success");
+            }
+            submitButton.innerHTML = "Account created ✓";
+
+            setTimeout(() => {
+                window.location.href = "/login.html";
+            }, 1500);
         } catch (error) {
             if (messageEl) {
-                messageEl.textContent = error.message || "Registration failed. Please try again.";
+                if (error.message && error.message.toLowerCase().includes("already")) {
+                    messageEl.textContent = "An account with this email already exists.";
+                } else {
+                    messageEl.textContent = error.message || "Registration failed. Please try again.";
+                }
                 messageEl.classList.add("register-message--error");
             }
         } finally {
-            submitButton.disabled = false;
-            submitButton.innerHTML = "Create passenger account <span aria-hidden='true'>→</span>";
+            submitButton.disabled = registered;
         }
     });
 }

@@ -7,16 +7,16 @@
 
     <meta
         name="description"
-        content="Manage your YSpace passenger bookings and upcoming departures."
+        content="Browse the YSpace passenger route network across the solar system."
     >
 
-    <title>My Bookings — YSpace</title>
+    <title>Routes — YSpace</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flights.css">
   <link rel="stylesheet" href="css/design-system.css">
 
-    <script type="module" src="javascript/bookings.js"></script>
+    <script type="module" src="javascript/routes.js"></script>
 </head>
 
 <body class="flights-page">
@@ -58,7 +58,7 @@
     <main>
 
         <!-- =====================================================
-             BOOKINGS HEADER
+             ROUTES HEADER
         ====================================================== -->
 
         <section class="flights-search-section">
@@ -72,21 +72,40 @@
 
                     <div>
                         <p class="eyebrow">
-                            Passenger account
+                            Passenger network
                         </p>
 
                         <h1 class="flights-title">
-                            My
-                            <span>bookings.</span>
+                            Explore
+                            <span>routes.</span>
                         </h1>
                     </div>
 
                     <p class="flights-search-description">
-                        View and manage your upcoming and past YSpace
-                        flight bookings.
+                        Discover the destinations connected across the
+                        YSpace solar network.
                     </p>
 
                 </div>
+
+                <form class="flights-search-bar routes-search-bar" id="routes-search-form">
+                    <div class="flights-search-field" style="flex:1">
+                        <label class="flights-search-label" for="routes-search">
+                            Search routes
+                        </label>
+                        <input
+                            type="text"
+                            id="routes-search"
+                            name="routes-search"
+                            placeholder="Search by destination or origin..."
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button type="submit" class="button button-primary flights-search-button">
+                        Search <span aria-hidden="true">→</span>
+                    </button>
+                </form>
 
             </div>
 
@@ -94,7 +113,7 @@
 
 
         <!-- =====================================================
-             BOOKINGS LIST
+             ROUTES LIST
         ====================================================== -->
 
         <section class="flights-results-section">
@@ -105,15 +124,15 @@
 
                     <div>
                         <p class="flights-results-kicker">
-                            YOUR BOOKINGS
+                            ROUTE NETWORK
                         </p>
 
-                        <h2 id="bookings-count">Loading...</h2>
+                        <h2 id="routes-count">Loading...</h2>
                     </div>
 
                 </div>
 
-                <div class="flight-list" id="bookings-list">
+                <div class="route-list" id="routes-list">
                 </div>
 
                 <div class="flights-results-footer">
@@ -122,13 +141,12 @@
                         <span class="status-indicator"></span>
 
                         <p>
-                            Booking status is updated in real time
-                            across the YSpace passenger network.
+                            Routes are subject to YSpace flight schedules.
                         </p>
                     </div>
 
                     <a href="index.html#booking-search-form">
-                        Book a new flight
+                        Find a flight
                         <span aria-hidden="true">→</span>
                     </a>
 
@@ -164,7 +182,6 @@
 
                 </div>
 
-
                 <div class="footer-links">
 
                     <div>
@@ -191,7 +208,6 @@
                 </div>
 
             </div>
-
 
             <div class="footer-bottom">
 

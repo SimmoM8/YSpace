@@ -66,6 +66,14 @@ public class FlightService {
         return flightMapper.toDetailsDto(flight);
     }
 
+    @Transactional(readOnly = true)
+    public List<FlightDetailsResponseDto> getAllFlights() {
+        return flightRepository.findAll()
+                .stream()
+                .map(flightMapper::toDetailsDto)
+                .toList();
+    }
+
     @Transactional
     public FlightDetailsResponseDto scheduleFlight(ScheduleFlightRequestDto request, String userEmail) {
 

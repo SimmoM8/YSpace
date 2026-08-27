@@ -1,10 +1,10 @@
 import { apiGet, apiPost } from "./api.js";
-import { isLoggedIn, applyAuthState, getUserEmail } from "./auth-utils.js";
+import { isLoggedIn, applyAuthState } from "./auth-utils.js";
+import { openModal, closeModal, confirmDialog } from "./modal.js";
 
 applyAuthState();
 
 const searchForm = document.getElementById("flight-search-form");
-const isIndexPage = !!document.getElementById("booking-search-form");
 const isFlightsPage = !!document.querySelector(".flights-page");
 
 const originInput = searchForm.querySelector("#origin-input");
@@ -13,6 +13,8 @@ const originHiddenInput = searchForm.querySelector("#origin-hidden-input");
 const destinationHiddenInput = searchForm.querySelector("#destination-hidden-input");
 const originOptions = searchForm.querySelector("#origin-options");
 const destinationOptions = searchForm.querySelector("#destination-options");
+
+let currentFlights = [];
 
 originInput.addEventListener("input", async () => {
     originOptions.innerHTML = '<li class="search-options-list-item search-options-loading">Loading...</li>';
@@ -92,17 +94,6 @@ async function fetchSpaceports(keyword) {
     }
 }
 
-async function fetchRoutes() {
-    try {
-        const base = "http://localhost:8081";
-        const response = await fetch(`${base}/routes`);
-        return await response.json();
-    } catch (error) {
-        console.error("Error loading routes:", error);
-        return [];
-    }
-}
-
 if (isFlightsPage) {
     initFlightsPage();
 }
@@ -121,10 +112,33 @@ async function initFlightsPage() {
     }
 
     if (!originId || !destinationId) {
+        showEmptyState();
         return;
     }
 
     await loadFlights(originId, destinationId, date);
+}
+
+function showEmptyState() {
+    const flightList = document.querySelector(".flight-list");
+    const resultsHeader = document.querySelector(".flights-results-header");
+    if (!flightList) return;
+
+    const resultsCount = document.querySelector(".flights-results-header h2");
+    if (resultsCount) resultsCount.textContent = "Search for a route";
+    if (resultsHeader) {
+        const kicker = resultsHeader.querySelector(".flights-results-kicker");
+        if (kicker) kicker.textContent = "READY TO TRAVEL";
+    }
+
+    flightList.innerHTML = `
+        <div class="flights-empty">
+            <p>Choose an origin and destination above to see available flights.</p>
+            <a href="/index.html#booking-search-form" class="button button-primary">
+                Start your search <span aria-hidden="true">→</span>
+            </a>
+        </div>
+    `;
 }
 
 async function loadFlights(originId, destinationId, date) {
@@ -149,7 +163,7 @@ async function loadFlights(originId, destinationId, date) {
             flightList.innerHTML = `
                 <div class="flights-empty">
                     <p>No flights found for this route and date.</p>
-                    <a href="index.html#booking-search-form" class="button button-primary">
+                    <a href="/index.html#booking-search-form" class="button button-primary">
                         Search again <span aria-hidden="true">→</span>
                     </a>
                 </div>
@@ -172,10 +186,8 @@ async function loadFlights(originId, destinationId, date) {
             });
         }
 
-        flightList.innerHTML = "";
-        for (const flight of flights) {
-            flightList.appendChild(createFlightCard(flight));
-        }
+        currentFlights = flights;
+        renderFlights(flights);
     } catch (error) {
         console.error("Error loading flights:", error);
         flightList.innerHTML = `
@@ -189,6 +201,36 @@ async function loadFlights(originId, destinationId, date) {
     }
 }
 
+function renderFlights(flights) {
+    const flightList = document.querySelector(".flight-list");
+    if (!flightList) return;
+
+    flightList.innerHTML = "";
+    for (const flight of flights) {
+        flightList.appendChild(createFlightCard(flight));
+    }
+}
+
+function isFlightBookable(flight) {
+    return flight.status !== "CANCELLED" && flight.status !== "DEPARTED" && flight.status !== "ARRIVED" && flight.status !== "IN_FLIGHT";
+}
+
+function getFlightStatus(flight) {
+    if (!flight.status || flight.status === "SCHEDULED" || flight.status === "BOARDING") {
+        return { label: flight.status === "BOARDING" ? "Boarding" : "Available", cls: "flight-status-available" };
+    }
+    if (flight.status === "CANCELLED") {
+        return { label: "Cancelled", cls: "flight-status-sold-out" };
+    }
+    if (flight.status === "DEPARTED" || flight.status === "IN_FLIGHT") {
+        return { label: flight.status === "DEPARTED" ? "Departed" : "In flight", cls: "flight-status-limited" };
+    }
+    if (flight.status === "ARRIVED") {
+        return { label: "Arrived", cls: "flight-status-limited" };
+    }
+    return { label: flight.status, cls: "flight-status-limited" };
+}
+
 function createFlightCard(flight) {
     const departure = new Date(flight.departureTime);
     const arrival = new Date(flight.arrivalTime);
@@ -197,14 +239,18 @@ function createFlightCard(flight) {
     const durationHours = Math.floor((durationMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const durationStr = durationDays > 0 ? `${durationDays}d ${durationHours}h` : `${durationHours}h`;
 
-    const price = new Intl.NumberFormat("en-US").format(flight.price);
+    const price = formatPrice(flight.price);
+    const status = getFlightStatus(flight);
+    const bookable = isFlightBookable(flight);
+    const delayedLabel = flight.delayed ? '<span class="flight-delayed-badge">Delayed</span>' : "";
 
     const article = document.createElement("article");
-    article.className = "flight-card";
+    article.className = `flight-card ${!bookable ? "flight-card-unavailable" : ""}`;
     article.innerHTML = `
         <div class="flight-card-status">
             <span class="flight-number">${flight.code}</span>
-            <span class="flight-status flight-status-available">Available</span>
+            <span class="flight-status ${status.cls}">${status.label}</span>
+            ${delayedLabel}
         </div>
 
         <div class="flight-card-main">
@@ -238,27 +284,45 @@ function createFlightCard(flight) {
                 <small>per passenger</small>
             </div>
 
-            <button class="button flight-select-button" data-flight-id="${flight.id}">
-                Select flight <span aria-hidden="true">→</span>
-            </button>
+            ${bookable
+                ? `<button class="button flight-select-button" data-flight-id="${flight.id}">
+                    Select flight <span aria-hidden="true">→</span>
+                  </button>`
+                : `<span class="button flight-select-button flight-select-button-disabled">${status.label}</span>`
+            }
         </div>
 
         <div class="flight-card-footer">
             <div class="flight-detail">
                 <span>Spacecraft</span>
-                <strong>${flight.spacecraft}</strong>
+                <strong>${flight.spacecraft || "—"}</strong>
             </div>
             <div class="flight-detail">
                 <span>Route</span>
-                <strong>${flight.originCode} — ${flight.destinationCode} Express</strong>
+                <strong>${flight.originCode} → ${flight.destinationCode}</strong>
+            </div>
+            <div class="flight-detail" style="margin-left:auto">
+                <button class="flight-details-link" data-flight-id="${flight.id}">Details</button>
             </div>
         </div>
     `;
 
     const selectBtn = article.querySelector(".flight-select-button");
-    selectBtn.addEventListener("click", () => handleSelectFlight(flight));
+    if (selectBtn) {
+        selectBtn.addEventListener("click", () => handleSelectFlight(flight));
+    }
+
+    const detailsLink = article.querySelector(".flight-details-link");
+    if (detailsLink) {
+        detailsLink.addEventListener("click", () => openFlightDetails(flight));
+    }
 
     return article;
+}
+
+function formatPrice(value) {
+    if (value === null || value === undefined) return "0";
+    return new Intl.NumberFormat("en-US").format(Number(value));
 }
 
 function formatTime(date) {
@@ -269,25 +333,204 @@ function formatTime(date) {
     });
 }
 
+async function openFlightDetails(flight) {
+    let details = flight;
+    try {
+        const response = await apiGet(`/flights/${flight.id}`);
+        details = await response.json();
+    } catch (error) {
+        console.error("Error loading flight details:", error);
+    }
+
+    const departure = new Date(details.departureTime);
+    const arrival = new Date(details.arrivalTime);
+
+    const body = `
+        <div class="flight-modal-summary">
+            <div>
+                <div class="flight-modal-route">${details.originCode} → ${details.destinationCode}</div>
+                <div class="flight-modal-times">
+                    <span>${formatDateTime(departure)}</span>
+                    <span class="arrow">→</span>
+                    <span>${formatDateTime(arrival)}</span>
+                </div>
+            </div>
+            <div class="flight-modal-price">
+                <span>From</span>
+                <strong>${formatPrice(details.price)} kr</strong>
+            </div>
+        </div>
+
+        <div class="flight-detail-grid">
+            <div class="flight-detail-item">
+                <span>Flight</span>
+                <strong>${details.code}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Status</span>
+                <strong>${details.delayed ? "Delayed" : details.status || "Scheduled"}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Spacecraft</span>
+                <strong>${details.spacecraftName || "—"}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Model</span>
+                <strong>${details.spacecraftModel || "—"}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Manufacturer</span>
+                <strong>${details.spacecraftManufacturer || "—"}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Distance</span>
+                <strong>${details.distance ? formatDistance(details.distance) : "—"}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Route</span>
+                <strong>${details.routeName || "—"}</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Origin</span>
+                <strong>${details.originName} (${details.originCode})</strong>
+            </div>
+            <div class="flight-detail-item">
+                <span>Destination</span>
+                <strong>${details.destinationName} (${details.destinationCode})</strong>
+            </div>
+            ${details.routeDescription ? `
+                <div class="flight-detail-item" style="grid-column:1/-1">
+                    <span>About this route</span>
+                    <strong>${details.routeDescription}</strong>
+                </div>
+            ` : ""}
+        </div>
+    `;
+
+    const footer = isFlightBookable(details)
+        ? `<button class="button button-primary app-modal-confirm-book" data-flight-id="${details.id}">Book this flight <span aria-hidden="true">→</span></button>`
+        : `<span class="button flight-select-button-disabled">Not available for booking</span>`;
+
+    openModal({
+        title: `${details.code} — Flight details`,
+        body,
+        footer
+    });
+
+    const bookBtn = document.querySelector(".app-modal-confirm-book");
+    if (bookBtn) {
+        bookBtn.addEventListener("click", () => {
+            closeModal();
+            handleSelectFlight(details);
+        });
+    }
+}
+
+function formatDateTime(date) {
+    return date.toLocaleString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    });
+}
+
+function formatDistance(km) {
+    if (km >= 1000000) return `${(km / 1000000).toFixed(1)}M km`;
+    if (km >= 1000) return `${(km / 1000).toFixed(1)}k km`;
+    return `${km} km`;
+}
+
 async function handleSelectFlight(flight) {
     if (!isLoggedIn()) {
         window.location.href = `/login.html?redirect=/flights.html${encodeURIComponent(window.location.search)}`;
         return;
     }
 
-    const price = new Intl.NumberFormat("en-US").format(flight.price);
-    const confirmed = confirm(
-        `Book flight ${flight.code}?\n\n${flight.originName} → ${flight.destinationName}\nPrice: ${price} kr`
-    );
+    const price = formatPrice(flight.price);
+
+    const confirmed = await confirmDialog({
+        title: `Book flight ${flight.code}?`,
+        message: `${flight.originName} → ${flight.destinationName}<br><strong>${price} kr</strong> per passenger.`,
+        confirmText: "Confirm booking",
+        danger: false
+    });
 
     if (!confirmed) return;
 
     try {
         const response = await apiPost("/bookings", { flightId: flight.id });
         const booking = await response.json();
-        alert(`Booking confirmed! Booking ID: ${booking.bookingId}`);
-        window.location.href = "/my-bookings.html";
+        showBookingConfirmed(booking);
     } catch (error) {
-        alert(error.message || "Failed to create booking. Please try again.");
+        openModal({
+            title: "Booking failed",
+            body: `<p>${error.message || "Something went wrong. Please try again."}</p>`,
+            footer: `<button class="button button-primary app-modal-ok">OK</button>`
+        });
+        document.querySelector(".app-modal-ok")?.addEventListener("click", closeModal);
     }
+}
+
+function showBookingConfirmed(booking) {
+    const rows = (booking.bookingRows || []).map((row) => {
+        return `
+            <div class="flight-detail-grid">
+                <div class="flight-detail-item"><span>Flight</span><strong>${row.flightCode}</strong></div>
+                <div class="flight-detail-item"><span>Route</span><strong>${row.routeName || "—"}</strong></div>
+                <div class="flight-detail-item"><span>Departs</span><strong>${row.departureTime ? formatDateTime(new Date(row.departureTime)) : "—"}</strong></div>
+                <div class="flight-detail-item"><span>Arrives</span><strong>${row.arrivalTime ? formatDateTime(new Date(row.arrivalTime)) : "—"}</strong></div>
+            </div>
+        `;
+    }).join("");
+
+    openModal({
+        title: "Booking confirmed 🚀",
+        body: `
+            <p><strong>Booking #${booking.bookingId}</strong> has been created.</p>
+            <p>Status: <strong>${booking.status}</strong></p>
+            <div class="flight-modal-summary">
+                <div>
+                    <div class="flight-modal-route">Total</div>
+                </div>
+                <div class="flight-modal-price">
+                    <strong>${formatPrice(booking.totalPrice)} kr</strong>
+                </div>
+            </div>
+            ${rows}
+        `,
+        footer: `
+            <button class="button button-outline app-modal-close-link">Close</button>
+            <a class="button button-primary" href="/my-bookings.html">View my bookings <span aria-hidden="true">→</span></a>
+        `
+    });
+    document.querySelector(".app-modal-close-link")?.addEventListener("click", closeModal);
+}
+
+// Sort
+
+const sortSelect = document.getElementById("flight-sort");
+if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+        const sortBy = sortSelect.value;
+        const sorted = [...currentFlights];
+
+        if (sortBy === "Departure time") {
+            sorted.sort((a, b) => new Date(a.departureTime) - new Date(b.departureTime));
+        } else if (sortBy === "Lowest price") {
+            sorted.sort((a, b) => Number(a.price) - Number(b.price));
+        } else if (sortBy === "Shortest journey") {
+            sorted.sort((a, b) => {
+                const da = new Date(a.arrivalTime) - new Date(a.departureTime);
+                const db = new Date(b.arrivalTime) - new Date(b.departureTime);
+                return da - db;
+            });
+        } else {
+            return; // Recommended: keep original order
+        }
+
+        renderFlights(sorted);
+    });
 }

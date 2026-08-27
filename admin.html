@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="YSpace administrator console for managing routes, flights, spacecraft, spaceports and bookings."
+    >
+
+    <title>Admin Console — YSpace</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/flights.css">
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <script type="module" src="javascript/admin.js"></script>
+</head>
+
+<body class="flights-page admin-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="flights-header">
+        <div class="container flights-header-inner">
+
+            <a href="index.html" class="brand" aria-label="YSpace home">
+                <span class="brand-mark">Y</span>
+                <span class="brand-name">YSPACE</span>
+            </a>
+
+            <nav class="flights-nav" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="routes.html">Routes</a>
+                <a href="destination.html">Destinations</a>
+                <a href="spacecraft.html">Fleet</a>
+                <a href="admin.html" class="is-active">Admin</a>
+            </nav>
+
+            <div class="flights-header-actions">
+                <a href="login.html" class="nav-login">
+                    Log in
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- ================= CONSOLE ================= -->
+
+    <main>
+
+        <section class="flights-search-section">
+
+            <div class="flights-stars" aria-hidden="true"></div>
+            <div class="flights-orbit" aria-hidden="true"></div>
+
+            <div class="container flights-search-content">
+
+                <div class="flights-search-heading">
+
+                    <div>
+                        <p class="eyebrow">
+                            YSpace control
+                        </p>
+
+                        <h1 class="flights-title">
+                            Admin
+                            <span>console.</span>
+                        </h1>
+                    </div>
+
+                    <p class="flights-search-description">
+                        Create routes, schedule flights, manage the
+                        fleet and monitor every booking.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="flights-results-section">
+
+            <div class="container">
+
+                <div class="admin-loading" id="admin-loading">
+                    <div class="spinner"></div>
+                    <p>Checking administrator access...</p>
+                </div>
+
+                <div class="admin-shell" id="admin-shell" hidden>
+
+                    <!-- ---- Sidebar ---- -->
+                    <aside class="admin-sidebar">
+
+                        <div class="admin-nav-groups">
+
+                            <div class="admin-nav-group">
+                                <span>Overview</span>
+                                <button class="admin-tab is-active" data-panel="dashboard">
+                                    <span class="admin-tab-icon">◧</span> Dashboard
+                                </button>
+                            </div>
+
+                            <div class="admin-nav-group">
+                                <span>Catalogue</span>
+                                <button class="admin-tab" data-panel="spaceports">
+                                    <span class="admin-tab-icon">◎</span> Spaceports
+                                </button>
+                                <button class="admin-tab" data-panel="routes">
+                                    <span class="admin-tab-icon">⇄</span> Routes
+                                </button>
+                                <button class="admin-tab" data-panel="spacecraft">
+                                    <span class="admin-tab-icon">✧</span> Spacecraft
+                                </button>
+                            </div>
+
+                            <div class="admin-nav-group">
+                                <span>Operations</span>
+                                <button class="admin-tab" data-panel="flights">
+                                    <span class="admin-tab-icon">✈</span> Flights
+                                </button>
+                                <button class="admin-tab" data-panel="bookings">
+                                    <span class="admin-tab-icon">🧾</span> Bookings
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="admin-session" id="admin-session" hidden>
+                            <div class="avatar" id="admin-avatar">A</div>
+                            <div class="who">
+                                <strong id="admin-name">Admin</strong>
+                                <span id="admin-role">Administrator</span>
+                            </div>
+                        </div>
+
+                    </aside>
+
+                    <!-- ---- Panels ---- -->
+                    <div class="admin-panels">
+
+                        <!-- DASHBOARD -->
+                        <section class="admin-panel is-active" id="panel-dashboard">
+                            <div class="admin-panel-header">
+                                <div>
+                                    <h2 class="admin-panel-title">Dashboard</h2>
+                                    <p class="admin-panel-intro">A snapshot of the YSpace passenger network.</p>
+                                </div>
+                            </div>
+
+                            <div class="admin-stats" id="admin-stats"></div>
+
+                            <h3 class="admin-card-title" style="margin:34px 0 4px;">Quick actions</h3>
+                            <p class="admin-card-sub">Jump straight into the most common operations.</p>
+                            <div class="admin-quickactions">
+                                <button class="admin-quickaction" data-go="flights">
+                                    <span class="qa-emoji">✈️</span>
+                                    <strong>Schedule a flight</strong>
+                                    <p>Pick a route, a spacecraft and departure time — done in three steps.</p>
+                                </button>
+                                <button class="admin-quickaction" data-go="routes">
+                                    <span class="qa-emoji">🛤️</span>
+                                    <strong>Create a route</strong>
+                                    <p>Connect two spaceports into a new passenger route.</p>
+                                </button>
+                                <button class="admin-quickaction" data-go="spaceports">
+                                    <span class="qa-emoji">🪐</span>
+                                    <strong>Add a spaceport</strong>
+                                    <p>Register a new port on any planet, moon or station.</p>
+                                </button>
+                                <button class="admin-quickaction" data-go="spacecraft">
+                                    <span class="qa-emoji">🚀</span>
+                                    <strong>Add a spacecraft</strong>
+                                    <p>Bring a new vessel into the active fleet.</p>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- SPACEPORTS -->
+                        <section class="admin-panel" id="panel-spaceports">
+                            <div class="admin-panel-header">
+                                <div>
+                                    <h2 class="admin-panel-title">Spaceports</h2>
+                                    <p class="admin-panel-intro">Add new ports to the network or review the current catalogue.</p>
+                                </div>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Add a spaceport</h3>
+                                </div>
+                                <p class="admin-card-sub">Planets, moons and orbital stations all welcome.</p>
+                                <form class="form-grid admin-form" id="create-spaceport-form">
+                                    <div class="form-group">
+                                        <label for="sp-name">Name</label>
+                                        <input type="text" id="sp-name" name="name" required placeholder="Europa Harbor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sp-code">Code</label>
+                                        <input type="text" id="sp-code" name="code" maxlength="10" required placeholder="EHB">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sp-type">Type</label>
+                                        <select id="sp-type" name="type" required>
+                                            <option value="">Select type...</option>
+                                            <option value="PLANET">Planet</option>
+                                            <option value="MOON">Moon</option>
+                                            <option value="STATION">Station</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sp-image">Image URL <span class="help">(optional)</span></label>
+                                        <input type="text" id="sp-image" name="imageUrl" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <label for="sp-description">Description</label>
+                                        <textarea id="sp-description" name="description" rows="3" placeholder="Short description"></textarea>
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <p class="form-msg" id="sp-message"></p>
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <button type="submit" class="btn btn-primary">Add spaceport</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Current spaceports</h3>
+                                    <span class="pill pill--cyan" id="spaceport-count"></span>
+                                </div>
+                                <p class="admin-card-sub">Every port in the YSpace network.</p>
+                                <div class="admin-list" id="spaceport-admin-list"></div>
+                            </div>
+                        </section>
+
+                        <!-- ROUTES -->
+                        <section class="admin-panel" id="panel-routes">
+                            <div class="admin-panel-header">
+                                <div>
+                                    <h2 class="admin-panel-title">Routes</h2>
+                                    <p class="admin-panel-intro">Build new connections between spaceports.</p>
+                                </div>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Create a route</h3>
+                                </div>
+                                <p class="admin-card-sub">Choose a distinct origin and destination.</p>
+                                <form class="form-grid admin-form" id="create-route-form">
+                                    <div class="form-group form-group--full">
+                                        <label for="ar-name">Route name</label>
+                                        <input type="text" id="ar-name" name="name" required placeholder="Earth to Luna Express">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ar-origin">Origin spaceport</label>
+                                        <select id="ar-origin" name="originSpaceportId" required>
+                                            <option value="">Select origin...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ar-destination">Destination spaceport</label>
+                                        <select id="ar-destination" name="destinationSpaceportId" required>
+                                            <option value="">Select destination...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ar-distance">Distance (km)</label>
+                                        <input type="number" id="ar-distance" name="distance" min="1" step="1" placeholder="384400">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ar-description">Description <span class="help">(optional)</span></label>
+                                        <input type="text" id="ar-description" name="description" placeholder="Short description">
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <p class="form-msg" id="ar-message"></p>
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <button type="submit" class="btn btn-primary">Create route</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Existing routes</h3>
+                                    <span class="pill pill--violet" id="route-count"></span>
+                                </div>
+                                <p class="admin-card-sub">All routes currently in the network.</p>
+                                <div class="admin-list" id="route-admin-list"></div>
+                            </div>
+                        </section>
+
+                        <!-- SPACECRAFT -->
+                        <section class="admin-panel" id="panel-spacecraft">
+                            <div class="admin-panel-header">
+                                <div>
+                                    <h2 class="admin-panel-title">Spacecraft fleet</h2>
+                                    <p class="admin-panel-intro">Add vessels and manage the operational fleet.</p>
+                                </div>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Add a spacecraft</h3>
+                                </div>
+                                <p class="admin-card-sub">New vessels start under maintenance until launched.</p>
+                                <form class="form-grid admin-form" id="create-spacecraft-form">
+                                    <div class="form-group form-group--full">
+                                        <label for="sc-name">Spacecraft name</label>
+                                        <input type="text" id="sc-name" name="name" required placeholder="YS-501 Aurora II">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sc-model">Model</label>
+                                        <select id="sc-model" name="modelId" required>
+                                            <option value="">Select model...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sc-seats">Seat capacity</label>
+                                        <input type="number" id="sc-seats" name="seatCapacity" min="1" required placeholder="120">
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <p class="form-msg" id="sc-message"></p>
+                                    </div>
+                                    <div class="form-group form-group--full">
+                                        <button type="submit" class="btn btn-primary">Add spacecraft</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Fleet inventory</h3>
+                                    <span class="pill pill--accent" id="spacecraft-count"></span>
+                                </div>
+                                <p class="admin-card-sub">Every vessel in the YSpace fleet.</p>
+                                <div class="admin-list" id="spacecraft-admin-list"></div>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Spacecraft models</h3>
+                                    <span class="pill pill--violet" id="spacecraft-model-count"></span>
+                                </div>
+                                <p class="admin-card-sub">Remove a model from the database. Models still used by a vessel cannot be deleted.</p>
+                                <div class="admin-list" id="spacecraft-models-list"></div>
+                            </div>
+                        </section>
+
+                        <!-- FLIGHTS -->
+                        <section class="admin-panel" id="panel-flights">
+                            <div class="admin-panel-header">
+                                <div>
+                                    <h2 class="admin-panel-title">Flights</h2>
+                                    <p class="admin-panel-intro">Schedule new departures and manage the timetable.</p>
+                                </div>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Schedule a new flight</h3>
+                                </div>
+                                <p class="admin-card-sub">A short 3-step wizard — route, vessel &amp; pricing, then times.</p>
+
+                                <div class="wizard-steps" id="wizard-steps">
+                                    <div class="wizard-step is-active" data-step="1">
+                                        <span class="ws-num">1</span><span class="ws-label">Route</span>
+                                    </div>
+                                    <div class="wizard-step" data-step="2">
+                                        <span class="ws-num">2</span><span class="ws-label">Vessel &amp; price</span>
+                                    </div>
+                                    <div class="wizard-step" data-step="3">
+                                        <span class="ws-num">3</span><span class="ws-label">Times &amp; review</span>
+                                    </div>
+                                </div>
+
+                                <form class="admin-form" id="schedule-flight-form" novalidate>
+                                    <!-- Stage 1: Route -->
+                                    <div class="wizard-stage is-active" data-stage="1">
+                                        <div class="wizard-stage-grid">
+                                            <div class="form-group form-group--full">
+                                                <label for="sf-route">Route</label>
+                                                <select id="sf-route" name="routeId" required>
+                                                    <option value="">Select a route...</option>
+                                                </select>
+                                                <p class="help">The connection this flight will serve.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wizard-nav">
+                                            <span></span>
+                                            <button type="button" class="btn btn-primary" data-next="1">Continue</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stage 2: Spacecraft + price -->
+                                    <div class="wizard-stage" data-stage="2">
+                                        <div class="wizard-stage-grid">
+                                            <div class="form-group">
+                                                <label for="sf-spacecraft">Spacecraft</label>
+                                                <select id="sf-spacecraft" name="spacecraftId" required>
+                                                    <option value="">Select a vessel...</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sf-price">Base price (kr)</label>
+                                                <input type="number" id="sf-price" name="basePrice" min="0" step="0.01" required placeholder="1499.00">
+                                            </div>
+                                            <div class="form-group form-group--full">
+                                                <p class="help">Only operational vessels (not retired) can be selected. Seat capacity is applied automatically.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wizard-nav">
+                                            <button type="button" class="btn btn-ghost" data-prev="1">Back</button>
+                                            <button type="button" class="btn btn-primary" data-next="2">Continue</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stage 3: Times + review -->
+                                    <div class="wizard-stage" data-stage="3">
+                                        <div class="wizard-stage-grid">
+                                            <div class="form-group">
+                                                <label for="sf-departure">Departure date &amp; time</label>
+                                                <input type="datetime-local" id="sf-departure" name="departureTime" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sf-arrival">Arrival date &amp; time</label>
+                                                <input type="datetime-local" id="sf-arrival" name="arrivalTime" required>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-top:18px;">
+                                            <span class="pill pill--cyan" style="margin-bottom:12px;">Review</span>
+                                        </div>
+                                        <div class="wizard-review" id="wizard-review">
+                                            <div class="wizard-review-row"><span>Route</span><strong id="rv-route">—</strong></div>
+                                            <div class="wizard-review-row"><span>Spacecraft</span><strong id="rv-spacecraft">—</strong></div>
+                                            <div class="wizard-review-row"><span>Base price</span><strong id="rv-price">—</strong></div>
+                                            <div class="wizard-review-row"><span>Departure</span><strong id="rv-departure">—</strong></div>
+                                            <div class="wizard-review-row"><span>Arrival</span><strong id="rv-arrival">—</strong></div>
+                                        </div>
+
+                                        <p class="form-msg" id="sf-message" style="margin-top:14px;"></p>
+
+                                        <div class="wizard-nav">
+                                            <button type="button" class="btn btn-ghost" data-prev="2">Back</button>
+                                            <button type="submit" class="btn btn-primary">Schedule flight</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="admin-card">
+                                <div class="admin-card-head">
+                                    <h3 class="admin-card-title">Timetable</h3>
+                                    <span class="pill pill--green" id="flight-count"></span>
+                                </div>
+                                <p class="admin-card-sub">Review, edit and cancel scheduled departures.</p>
+                                <div class="admin-toolbar">
+                                    <input type="text" id="flight-filter" placeholder="Filter by code or route...">
+                                    <select id="flight-status-filter">
+                                        <option value="">All statuses</option>
+                                        <option value="SCHEDULED">Scheduled</option>
+                                        <option value="BOARDING">Boarding</option>
+                                        <option value="DEPARTED">Departed</option>
+                                        <option value="ARRIVED">Arrived</option>
+                                        <option value="IN_FLIGHT">In flight</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="admin-list" id="flight-admin-list"></div>
+                            </div>
+                        </section>
+
+                        <!-- BOOKINGS -->
+                        <section class="admin-panel" id="panel-bookings">
+                            <div class="admin-panel-header">
+                                <div>
+                                    <h2 class="admin-panel-title">Bookings</h2>
+                                    <p class="admin-panel-intro">Monitor every booking across the network.</p>
+                                </div>
+                                <span class="pill pill--green" id="admin-bookings-count"></span>
+                            </div>
+
+                            <div class="admin-toolbar">
+                                <select id="booking-status-filter">
+                                    <option value="">All statuses</option>
+                                    <option value="OPEN">Open</option>
+                                    <option value="CLOSED">Closed</option>
+                                    <option value="CANCELLED">Cancelled</option>
+                                </select>
+                            </div>
+
+                            <div class="admin-list" id="bookings-admin-list"></div>
+                        </section>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-main">
+
+                <div class="footer-brand">
+
+                    <a href="index.html" class="brand">
+                        <span class="brand-mark">Y</span>
+                        <span class="brand-name">YSPACE</span>
+                    </a>
+
+                    <p>
+                        Passenger travel beyond Earth.
+                    </p>
+
+                </div>
+
+                <div class="footer-links">
+
+                    <div>
+                        <span>Explore</span>
+                        <a href="routes.html">Routes</a>
+                        <a href="destination.html">Destinations</a>
+                        <a href="spacecraft.html">Fleet</a>
+                    </div>
+
+                    <div>
+                        <span>Account</span>
+                        <a href="login.html" class="nav-login">Log in</a>
+                        <a href="register.html">Create account</a>
+                        <a href="my-bookings.html" class="nav-bookings">My bookings</a>
+                    </div>
+
+                    <div>
+                        <span>YSpace</span>
+                        <a href="admin.html">Admin</a>
+                        <a href="routes.html">Routes</a>
+                        <a href="destination.html">Destinations</a>
+                        <a href="spacecraft.html">Fleet</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 YSpace Industries
+                </p>
+
+                <p class="footer-status">
+                    <span></span>
+                    Passenger network operational
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

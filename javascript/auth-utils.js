@@ -4,7 +4,12 @@ export function isLoggedIn() {
 
 export function logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     window.location.href = "/login.html";
+}
+
+export function getUserRole() {
+    return localStorage.getItem("role") || null;
 }
 
 export function getUserEmail() {
@@ -41,6 +46,15 @@ export function applyAuthState() {
             el.href = "/my-bookings.html";
         } else {
             el.href = "/login.html";
+        }
+    });
+
+    document.querySelectorAll(".nav-admin").forEach((el) => {
+        if (loggedIn && getUserRole() === "ADMIN") {
+            el.removeAttribute("hidden");
+            el.href = "/admin.html";
+        } else {
+            el.setAttribute("hidden", "");
         }
     });
 }

@@ -14,4 +14,10 @@ public class FetchSpaceportResponseDto {
     private String spaceportCode;
 
     private String spaceportName;
+
+    private String spaceportType;
+
+    private String spaceportDescription;
+
+    private String spaceportImageUrl;
 }

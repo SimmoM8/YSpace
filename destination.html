@@ -7,16 +7,16 @@
 
     <meta
         name="description"
-        content="Manage your YSpace passenger bookings and upcoming departures."
+        content="Browse YSpace destinations and spaceports across the solar system."
     >
 
-    <title>My Bookings — YSpace</title>
+    <title>Destinations — YSpace</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flights.css">
   <link rel="stylesheet" href="css/design-system.css">
 
-    <script type="module" src="javascript/bookings.js"></script>
+    <script type="module" src="javascript/destination.js"></script>
 </head>
 
 <body class="flights-page">
@@ -36,7 +36,7 @@
             <nav class="flights-nav" aria-label="Main navigation">
                 <a href="index.html">Home</a>
                 <a href="routes.html">Routes</a>
-                <a href="destination.html">Destinations</a>
+                <a href="destination.html" class="is-active">Destinations</a>
                 <a href="spacecraft.html">Fleet</a>
                 <a href="admin.html" class="nav-admin" hidden>Admin</a>
             </nav>
@@ -58,7 +58,7 @@
     <main>
 
         <!-- =====================================================
-             BOOKINGS HEADER
+             DESTINATIONS HERO
         ====================================================== -->
 
         <section class="flights-search-section">
@@ -72,21 +72,53 @@
 
                     <div>
                         <p class="eyebrow">
-                            Passenger account
+                            Beyond Earth
                         </p>
 
                         <h1 class="flights-title">
-                            My
-                            <span>bookings.</span>
+                            Destinations &amp;
+                            <span>spaceports.</span>
                         </h1>
                     </div>
 
                     <p class="flights-search-description">
-                        View and manage your upcoming and past YSpace
-                        flight bookings.
+                        Discover the hubs that connect the YSpace
+                        passenger network across the solar system.
                     </p>
 
                 </div>
+
+
+                <!-- Search -->
+
+                <form
+                    class="flights-search-bar flights-search-bar--single"
+                    id="destination-search-form"
+                    aria-label="Destination search form"
+                >
+
+                    <div class="flights-search-field flights-search-field--grow">
+                        <label class="flights-search-label" for="destination-search">
+                            Search destinations
+                        </label>
+
+                        <div class="search-input-wrapper">
+                            <input
+                                type="text"
+                                id="destination-search"
+                                name="keyword"
+                                placeholder="Search by name or code..."
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <span class="flights-location-code">
+                            Spaceports · stations · moons
+                        </span>
+
+                    </div>
+
+                </form>
 
             </div>
 
@@ -94,7 +126,7 @@
 
 
         <!-- =====================================================
-             BOOKINGS LIST
+             DESTINATIONS CONTENT
         ====================================================== -->
 
         <section class="flights-results-section">
@@ -102,36 +134,29 @@
             <div class="container">
 
                 <div class="flights-results-header">
-
                     <div>
-                        <p class="flights-results-kicker">
-                            YOUR BOOKINGS
-                        </p>
-
-                        <h2 id="bookings-count">Loading...</h2>
+                        <p class="flights-results-kicker">YSpace network</p>
+                        <h2>Spaceports</h2>
+                        <p class="flights-results-date" id="destination-count"></p>
                     </div>
-
                 </div>
 
-                <div class="flight-list" id="bookings-list">
+                <div class="destination-grid" id="destination-list">
+                    <div class="flights-loading"><p>Loading destinations...</p></div>
                 </div>
 
                 <div class="flights-results-footer">
-
                     <div>
                         <span class="status-indicator"></span>
-
                         <p>
-                            Booking status is updated in real time
-                            across the YSpace passenger network.
+                            New destinations are added as the
+                            YSpace network expands.
                         </p>
                     </div>
-
                     <a href="index.html#booking-search-form">
-                        Book a new flight
+                        Find a flight
                         <span aria-hidden="true">→</span>
                     </a>
-
                 </div>
 
             </div>
@@ -164,7 +189,6 @@
 
                 </div>
 
-
                 <div class="footer-links">
 
                     <div>
@@ -184,14 +208,13 @@
                     <div>
                         <span>YSpace</span>
                         <a href="admin.html" class="nav-admin" hidden>Admin</a>
-                        <a href="routes.html">Routes</a>
+                        <a href="destination.html">Destinations</a>
                         <a href="spacecraft.html">Fleet</a>
                     </div>
 
                 </div>
 
             </div>
-
 
             <div class="footer-bottom">
 

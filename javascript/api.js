@@ -1,4 +1,5 @@
 const API_BASE = 'http://localhost:8081/api';
+const API_HOST = 'http://localhost:8081';
 
 export class ApiError extends Error {
     constructor(message, status, code) {
@@ -25,6 +26,7 @@ async function apiFetch(url, options = {}, raw = false) {
 
         if (response.status === 401) {
             localStorage.removeItem("token");
+            localStorage.removeItem("role");
             window.location.href = "/login.html";
             throw new ApiError(
                 "Unauthorized",
@@ -94,3 +96,5 @@ export function apiPatch(url, data) {
 export function apiDelete(url) {
     return apiFetch(url, { method: "DELETE" });
 }
+
+export { API_HOST };

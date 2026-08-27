@@ -11,7 +11,10 @@ public class SpaceportMapper {
         return new FetchSpaceportResponseDto(
                 spaceport.getId(),
                 spaceport.getCode(),
-                spaceport.getName()
+                spaceport.getName(),
+                spaceport.getType() != null ? spaceport.getType().name() : null,
+                spaceport.getDescription(),
+                spaceport.getImageUrl()
         );
     }
 }

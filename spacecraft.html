@@ -7,16 +7,16 @@
 
     <meta
         name="description"
-        content="Manage your YSpace passenger bookings and upcoming departures."
+        content="Meet the YSpace spacecraft fleet operating passenger routes across the solar system."
     >
 
-    <title>My Bookings — YSpace</title>
+    <title>Spacecraft — YSpace</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flights.css">
   <link rel="stylesheet" href="css/design-system.css">
 
-    <script type="module" src="javascript/bookings.js"></script>
+    <script type="module" src="javascript/spacecraft.js"></script>
 </head>
 
 <body class="flights-page">
@@ -37,7 +37,7 @@
                 <a href="index.html">Home</a>
                 <a href="routes.html">Routes</a>
                 <a href="destination.html">Destinations</a>
-                <a href="spacecraft.html">Fleet</a>
+                <a href="spacecraft.html" class="is-active">Fleet</a>
                 <a href="admin.html" class="nav-admin" hidden>Admin</a>
             </nav>
 
@@ -58,7 +58,7 @@
     <main>
 
         <!-- =====================================================
-             BOOKINGS HEADER
+             FLEET HERO
         ====================================================== -->
 
         <section class="flights-search-section">
@@ -72,18 +72,18 @@
 
                     <div>
                         <p class="eyebrow">
-                            Passenger account
+                            The YSpace fleet
                         </p>
 
                         <h1 class="flights-title">
-                            My
-                            <span>bookings.</span>
+                            Our
+                            <span>spacecraft.</span>
                         </h1>
                     </div>
 
                     <p class="flights-search-description">
-                        View and manage your upcoming and past YSpace
-                        flight bookings.
+                        Explore the vessels that carry passengers
+                        between Earth and the near planets.
                     </p>
 
                 </div>
@@ -94,7 +94,7 @@
 
 
         <!-- =====================================================
-             BOOKINGS LIST
+             FLEET CONTENT
         ====================================================== -->
 
         <section class="flights-results-section">
@@ -102,36 +102,29 @@
             <div class="container">
 
                 <div class="flights-results-header">
-
                     <div>
-                        <p class="flights-results-kicker">
-                            YOUR BOOKINGS
-                        </p>
-
-                        <h2 id="bookings-count">Loading...</h2>
+                        <p class="flights-results-kicker">Active fleet</p>
+                        <h2>Spacecraft</h2>
+                        <p class="flights-results-date" id="spacecraft-count"></p>
                     </div>
-
                 </div>
 
-                <div class="flight-list" id="bookings-list">
+                <div class="spacecraft-grid" id="spacecraft-list">
+                    <div class="flights-loading"><p>Loading fleet...</p></div>
                 </div>
 
                 <div class="flights-results-footer">
-
                     <div>
                         <span class="status-indicator"></span>
-
                         <p>
-                            Booking status is updated in real time
-                            across the YSpace passenger network.
+                            Fleet status is updated continuously
+                            across the YSpace network.
                         </p>
                     </div>
-
-                    <a href="index.html#booking-search-form">
-                        Book a new flight
+                    <a href="routes.html">
+                        View routes
                         <span aria-hidden="true">→</span>
                     </a>
-
                 </div>
 
             </div>
@@ -164,7 +157,6 @@
 
                 </div>
 
-
                 <div class="footer-links">
 
                     <div>
@@ -184,14 +176,13 @@
                     <div>
                         <span>YSpace</span>
                         <a href="admin.html" class="nav-admin" hidden>Admin</a>
-                        <a href="routes.html">Routes</a>
                         <a href="spacecraft.html">Fleet</a>
+                        <a href="destination.html">Destinations</a>
                     </div>
 
                 </div>
 
             </div>
-
 
             <div class="footer-bottom">
 

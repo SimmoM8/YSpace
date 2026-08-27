@@ -4,6 +4,7 @@ import com.yspace.backend.dto.booking.BookingDetailsResponseDto;
 import com.yspace.backend.dto.booking.BookingRowDetailsResponseDto;
 import com.yspace.backend.dto.booking.BookingRowSummaryResponseDto;
 import com.yspace.backend.dto.booking.BookingSummaryResponseDto;
+import com.yspace.backend.dto.booking.AdminBookingSummaryResponseDto;
 import com.yspace.backend.model.Booking;
 import com.yspace.backend.model.BookingRow;
 import com.yspace.backend.model.Flight;
@@ -20,6 +21,29 @@ public class BookingMapper {
         return new BookingSummaryResponseDto(
                 booking.getId(),
                 booking.getStatus().name(),
+
+                flight.getRoute().getName(),
+
+                flight.getDepartureTime(),
+
+                booking.getTotalPrice(),
+
+                booking.getCreatedAt()
+        );
+    }
+
+    public AdminBookingSummaryResponseDto toAdminSummaryDto(Booking booking) {
+
+        BookingRow firstRow = booking.getBookingRows().getFirst();
+        Flight flight = firstRow.getFlight();
+
+        return new AdminBookingSummaryResponseDto(
+                booking.getId(),
+                booking.getStatus().name(),
+
+                booking.getUser().getEmail(),
+                booking.getUser().getFirstName(),
+                booking.getUser().getLastName(),
 
                 flight.getRoute().getName(),
 

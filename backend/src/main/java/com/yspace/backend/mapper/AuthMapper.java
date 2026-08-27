@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthMapper {
-    public AuthResponseDto toDto(String token){
-        return new AuthResponseDto(token);
+    public AuthResponseDto toDto(String token, String role) {
+        return new AuthResponseDto(token, role);
     }
 }

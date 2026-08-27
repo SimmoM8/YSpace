@@ -4,13 +4,16 @@ package com.yspace.backend.service;
 import com.yspace.backend.dto.route.CreateRouteRequestDto;
 import com.yspace.backend.dto.route.FetchRouteResponseDto;
 import com.yspace.backend.dto.RouteAdminResponseDto;
+import com.yspace.backend.exceptions.RouteNotFoundException;
 import com.yspace.backend.exceptions.SpaceportNotFoundException;
 import com.yspace.backend.mapper.RouteMapper;
 import com.yspace.backend.model.Route;
 import com.yspace.backend.model.Spaceport;
+import com.yspace.backend.repository.FlightRepository;
 import com.yspace.backend.repository.RouteRepository;
 import com.yspace.backend.repository.SpaceportRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,11 +23,13 @@ public class RouteService {
     private final RouteMapper routeMapper;
     private final RouteRepository routeRepository;
     private final SpaceportRepository spaceportRepository;
+    private final FlightRepository flightRepository;
 
-    public RouteService(RouteRepository routeRepository, RouteMapper routeMapper, SpaceportRepository spaceportRepository) {
+    public RouteService(RouteRepository routeRepository, RouteMapper routeMapper, SpaceportRepository spaceportRepository, FlightRepository flightRepository) {
         this.routeRepository = routeRepository;
         this.routeMapper = routeMapper;
         this.spaceportRepository = spaceportRepository;
+        this.flightRepository = flightRepository;
     }
 
     public List<FetchRouteResponseDto> fetchAllRoutes(String keyword) {
@@ -43,6 +48,13 @@ public class RouteService {
         return routeRepository.fetchByKeyword(keyword)
                 .stream()
                 .map(routeMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<RouteAdminResponseDto> fetchAdminRoutes() {
+        return routeRepository.findAll()
+                .stream()
+                .map(routeMapper::toAdminDto)
                 .collect(Collectors.toList());
     }
 
@@ -80,5 +92,20 @@ public class RouteService {
         Route savedRoute = routeRepository.save(route);
 
         return routeMapper.toAdminDto(savedRoute);
+    }
+
+    @Transactional
+    public void deleteRoute(Integer id) {
+        Route route = routeRepository.findById(id)
+                .orElseThrow(() -> new RouteNotFoundException(id));
+
+        boolean hasFlights = flightRepository.existsByRouteId(id);
+        if (hasFlights) {
+            throw new IllegalArgumentException(
+                    "This route has flights scheduled and cannot be deleted. Remove or cancel its flights first."
+            );
+        }
+
+        routeRepository.delete(route);
     }
 }

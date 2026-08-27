@@ -6,8 +6,12 @@ import com.yspace.backend.mapper.AuthMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthenticationService {
@@ -40,6 +44,13 @@ public class AuthenticationService {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = jwtService.createToken(userDetails);
 
-        return authMapper.toDto(token);
+        Set<String> authorities = userDetails.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
+
+        String role = authorities.contains("ROLE_ADMIN") ? "ADMIN" : "SPACE_TOURIST";
+
+        return authMapper.toDto(token, role);
     }
 }

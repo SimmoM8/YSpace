@@ -30,4 +30,8 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     );
 
     boolean existsByCode(String code);
+
+    boolean existsByRouteId(Integer routeId);
+
+    boolean existsBySpacecraftId(Integer spacecraftId);
 }

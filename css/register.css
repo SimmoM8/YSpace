@@ -446,7 +446,7 @@
 
     border-top: 1px solid var(--color-border);
 
-    background: #eeeeea;
+    background: var(--color-space-soft);
 
     font-size: 0.75rem;
 }
