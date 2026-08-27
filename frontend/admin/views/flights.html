@@ -1,0 +1,296 @@
+<section class="admin-page-header">
+
+    <div>
+
+        <p class="admin-page-kicker">
+            FLIGHT OPERATIONS
+        </p>
+
+        <h1>
+            Manage
+            <span>flights.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            Review scheduled departures, monitor flight status
+            and manage passenger operations across the YSpace network.
+        </p>
+
+    </div>
+
+
+    <div class="admin-page-header-actions">
+
+        <a
+            href="#create-flight"
+            class="admin-button admin-button-primary"
+        >
+            <span>+</span>
+            Schedule flight
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =============================================================
+     SUMMARY
+============================================================== -->
+
+<section
+    class="admin-flight-stats"
+    aria-label="Flight overview"
+>
+
+    <article class="admin-flight-stat">
+
+        <span class="admin-flight-stat-label">
+            Scheduled
+        </span>
+
+        <strong data-flight-stat="scheduled">
+            —
+        </strong>
+
+        <small>
+            Awaiting operation
+        </small>
+
+    </article>
+
+
+    <article class="admin-flight-stat">
+
+        <span class="admin-flight-stat-label">
+            In progress
+        </span>
+
+        <strong data-flight-stat="in-progress">
+            —
+        </strong>
+
+        <small>
+            Boarding or underway
+        </small>
+
+    </article>
+
+
+    <article class="admin-flight-stat">
+
+        <span class="admin-flight-stat-label">
+            Arrived
+        </span>
+
+        <strong data-flight-stat="arrived">
+            —
+        </strong>
+
+        <small>
+            Completed flights
+        </small>
+
+    </article>
+
+
+    <article class="admin-flight-stat">
+
+        <span class="admin-flight-stat-label">
+            Cancelled
+        </span>
+
+        <strong data-flight-stat="cancelled">
+            —
+        </strong>
+
+        <small>
+            Cancelled operations
+        </small>
+
+    </article>
+
+</section>
+
+
+<!-- =============================================================
+     FILTERS
+============================================================== -->
+
+<section class="admin-flight-toolbar">
+
+    <form class="admin-flight-filters">
+
+        <div class="admin-filter-search">
+
+            <label for="flight-search">
+                Search
+            </label>
+
+            <input
+                type="search"
+                id="flight-search"
+                name="search"
+                placeholder="Flight number, route, destination or spacecraft"
+            >
+
+        </div>
+
+
+        <div class="admin-filter-group">
+
+            <label for="flight-status-filter">
+                Status
+            </label>
+
+            <select
+                id="flight-status-filter"
+                name="status"
+            >
+
+                <option value="">
+                    All statuses
+                </option>
+
+                <option value="SCHEDULED">
+                    Scheduled
+                </option>
+
+                <option value="BOARDING">
+                    Boarding
+                </option>
+
+                <option value="DEPARTED">
+                    Departed
+                </option>
+
+                <option value="IN_FLIGHT">
+                    In flight
+                </option>
+
+                <option value="ARRIVED">
+                    Arrived
+                </option>
+
+                <option value="CANCELLED">
+                    Cancelled
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="admin-filter-group">
+
+            <label for="flight-date-filter">
+                Departure date
+            </label>
+
+            <input
+                type="date"
+                id="flight-date-filter"
+                name="date"
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="
+                admin-button
+                admin-button-secondary
+                admin-filter-button
+            "
+        >
+            Apply filters
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- =============================================================
+     FLIGHT TABLE
+============================================================== -->
+
+<section
+    class="
+        admin-panel
+        admin-flight-management-panel
+    "
+>
+
+    <header
+        class="
+            admin-panel-header
+            admin-flight-table-header
+        "
+    >
+
+        <div>
+
+            <p class="admin-panel-kicker">
+                SCHEDULE
+            </p>
+
+            <h2>
+                Flights
+            </h2>
+
+        </div>
+
+
+        <div class="admin-table-result-count">
+            Loading...
+        </div>
+
+    </header>
+
+
+    <div class="admin-table-wrapper">
+
+        <table
+            class="
+                admin-table
+                admin-flight-table
+            "
+        >
+
+            <thead>
+
+                <tr>
+                    <th>Flight</th>
+                    <th>Route</th>
+                    <th>Schedule</th>
+                    <th>Spacecraft</th>
+                    <th>Passengers</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="admin-table-empty"
+                    >
+                        Loading flights...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>

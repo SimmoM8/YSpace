@@ -1,17 +1,23 @@
 package com.yspace.backend.controller;
 
 import com.yspace.backend.dto.RouteAdminResponseDto;
+import com.yspace.backend.dto.flight.AdminFlightResponseDto;
 import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
 import com.yspace.backend.dto.flight.ScheduleFlightRequestDto;
 import com.yspace.backend.dto.flight.UpdateFlightRequestDto;
 import com.yspace.backend.dto.route.CreateRouteRequestDto;
+import com.yspace.backend.model.Flight;
 import com.yspace.backend.service.FlightService;
 import com.yspace.backend.service.RouteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -22,13 +28,6 @@ public class AdminController {
     private final FlightService flightService;
 
 
-    /*
-     * Used by the admin frontend to verify that the current
-     * authenticated user has ADMIN access.
-     *
-     * Spring Security has already checked the ADMIN role before
-     * this method can execute.
-     */
     @GetMapping("/check")
     public ResponseEntity<Void> checkAdminAccess() {
         return ResponseEntity.noContent().build();
@@ -44,6 +43,29 @@ public class AdminController {
         );
     }
 
+    @GetMapping("/flights")
+    public ResponseEntity<List<AdminFlightResponseDto>>
+    getFlights(
+            @RequestParam(required = false)
+            String search,
+
+            @RequestParam(required = false)
+            Flight.FlightStatus status,
+
+            @RequestParam(required = false)
+            @DateTimeFormat(
+                    iso = DateTimeFormat.ISO.DATE
+            )
+            LocalDate date
+    ) {
+        return ResponseEntity.ok(
+                flightService.getAdminFlights(
+                        search,
+                        status,
+                        date
+                )
+        );
+    }
 
     @PostMapping("/flights")
     public ResponseEntity<FlightDetailsResponseDto> scheduleFlight(

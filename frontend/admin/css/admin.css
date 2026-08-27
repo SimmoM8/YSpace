@@ -8,7 +8,6 @@
    live here.
 ================================================================ */
 
-
 /* ================================================================
    VARIABLES
 ================================================================ */
@@ -36,7 +35,6 @@
     --admin-danger: #9a5048;
 }
 
-
 /* ================================================================
    PAGE
 ================================================================ */
@@ -53,7 +51,6 @@ body.admin-page {
     color: var(--admin-text);
 }
 
-
 /* ================================================================
    APPLICATION SHELL
 ================================================================ */
@@ -64,7 +61,6 @@ body.admin-page {
 
     min-height: 100vh;
 }
-
 
 /* ================================================================
    SIDEBAR
@@ -84,14 +80,10 @@ body.admin-page {
 
     border-right: 1px solid var(--admin-border-dark);
 
-    background:
-        linear-gradient(180deg,
-            #0b0f14 0%,
-            var(--admin-sidebar) 100%);
+    background: linear-gradient(180deg, #0b0f14 0%, var(--admin-sidebar) 100%);
 
     color: var(--color-white);
 }
-
 
 /* ================================================================
    SIDEBAR BRAND
@@ -153,7 +145,6 @@ body.admin-page {
     font-weight: 700;
     letter-spacing: 0.17em;
 }
-
 
 /* ================================================================
    NAVIGATION
@@ -271,7 +262,6 @@ body.admin-page {
     text-align: center;
 }
 
-
 /* ================================================================
    SIDEBAR FOOTER
 ================================================================ */
@@ -306,8 +296,7 @@ body.admin-page {
 
     background: var(--color-accent);
 
-    box-shadow:
-        0 0 12px rgba(217, 255, 67, 0.45);
+    box-shadow: 0 0 12px rgba(217, 255, 67, 0.45);
 }
 
 .admin-system-status div {
@@ -351,7 +340,6 @@ body.admin-page {
     color: var(--color-white);
 }
 
-
 /* ================================================================
    MAIN
 ================================================================ */
@@ -361,7 +349,6 @@ body.admin-page {
 
     min-width: 0;
 }
-
 
 /* ================================================================
    TOP BAR
@@ -484,7 +471,6 @@ body.admin-page {
     background: var(--color-mars);
 }
 
-
 /* ================================================================
    ADMIN USER
 ================================================================ */
@@ -539,7 +525,6 @@ body.admin-page {
     font-size: 0.68rem;
 }
 
-
 /* ================================================================
    CONTENT
 ================================================================ */
@@ -550,7 +535,6 @@ body.admin-page {
     margin-inline: auto;
     padding-block: 52px 80px;
 }
-
 
 /* ================================================================
    PAGE HEADER
@@ -606,7 +590,6 @@ body.admin-page {
 
     padding-bottom: 4px;
 }
-
 
 /* ================================================================
    ADMIN BUTTONS
@@ -664,7 +647,6 @@ body.admin-page {
 .admin-button-secondary:hover {
     border-color: #b6b9b5;
 }
-
 
 /* ================================================================
    KPI CARDS
@@ -756,7 +738,6 @@ body.admin-page {
     font-weight: 800;
 }
 
-
 /* ================================================================
    PANELS
 ================================================================ */
@@ -837,7 +818,6 @@ body.admin-page {
     color: var(--admin-text);
 }
 
-
 /* ================================================================
    TABLE
 ================================================================ */
@@ -910,7 +890,6 @@ body.admin-page {
     letter-spacing: 0.04em;
 }
 
-
 /* ================================================================
    ROUTE
 ================================================================ */
@@ -929,7 +908,6 @@ body.admin-page {
 .admin-route span {
     color: #a4a8a4;
 }
-
 
 /* ================================================================
    LOAD
@@ -968,7 +946,6 @@ body.admin-page {
 
     background: #5b6269;
 }
-
 
 /* ================================================================
    STATUS BADGES
@@ -1019,7 +996,6 @@ body.admin-page {
     background: #f0f3e9;
     color: var(--admin-success);
 }
-
 
 /* ================================================================
    NETWORK PANEL
@@ -1083,8 +1059,7 @@ body.admin-page {
     font-size: 0.68rem;
     font-weight: 800;
 
-    box-shadow:
-        0 7px 18px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.18);
 }
 
 .admin-network-node {
@@ -1097,8 +1072,7 @@ body.admin-page {
 
     background: var(--admin-success);
 
-    box-shadow:
-        0 0 0 4px var(--admin-surface);
+    box-shadow: 0 0 0 4px var(--admin-surface);
 }
 
 .admin-network-node-one {
@@ -1183,7 +1157,6 @@ body.admin-page {
     font-size: 0.69rem;
 }
 
-
 /* ================================================================
    BOOKINGS
 ================================================================ */
@@ -1194,8 +1167,7 @@ body.admin-page {
 
 .admin-booking-row {
     display: grid;
-    grid-template-columns:
-        minmax(110px, 1fr) minmax(125px, 1fr) 75px auto;
+    grid-template-columns: minmax(110px, 1fr) minmax(125px, 1fr) 75px auto;
 
     gap: 20px;
     align-items: center;
@@ -1231,7 +1203,6 @@ body.admin-page {
 
     font-size: 0.54rem;
 }
-
 
 /* ================================================================
    ACTIVITY
@@ -1292,7 +1263,6 @@ body.admin-page {
     font-size: 0.52rem;
 }
 
-
 /* ================================================================
    FOOTER
 ================================================================ */
@@ -1313,13 +1283,11 @@ body.admin-page {
     font-size: 0.55rem;
 }
 
-
 /* ================================================================
    RESPONSIVE — SMALL DESKTOP / TABLET
 ================================================================ */
 
 @media (max-width: 1200px) {
-
     :root {
         --admin-sidebar-width: 220px;
     }
@@ -1355,16 +1323,13 @@ body.admin-page {
     .admin-network-orbit {
         margin-bottom: 0;
     }
-
 }
-
 
 /* ================================================================
    RESPONSIVE — TABLET
 ================================================================ */
 
 @media (max-width: 900px) {
-
     :root {
         --admin-sidebar-width: 76px;
     }
@@ -1432,16 +1397,13 @@ body.admin-page {
     .admin-secondary-grid {
         grid-template-columns: 1fr;
     }
-
 }
-
 
 /* ================================================================
    RESPONSIVE — MOBILE
 ================================================================ */
 
 @media (max-width: 650px) {
-
     :root {
         --admin-sidebar-width: 0px;
         --admin-topbar-height: 64px;
@@ -1546,5 +1508,489 @@ body.admin-page {
 
         padding: 15px;
     }
+}
 
+/* ================================================================
+   FLIGHT MANAGEMENT
+================================================================ */
+
+/* ================================================================
+   SUMMARY
+================================================================ */
+
+.admin-flight-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 9px;
+
+    background: var(--admin-surface);
+}
+
+.admin-flight-stat {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    padding: 22px 24px;
+}
+
+.admin-flight-stat+.admin-flight-stat {
+    border-left: 1px solid var(--admin-border);
+}
+
+.admin-flight-stat-label {
+    margin-bottom: 19px;
+
+    color: var(--admin-muted);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+}
+
+.admin-flight-stat strong {
+    margin-bottom: 7px;
+
+    font-size: 2.1rem;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+.admin-flight-stat small {
+    color: #969a96;
+
+    font-size: 0.54rem;
+}
+
+/* ================================================================
+   FILTER TOOLBAR
+================================================================ */
+
+.admin-flight-toolbar {
+    margin-bottom: 20px;
+
+    padding: 18px;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 9px;
+
+    background: var(--admin-surface);
+}
+
+.admin-flight-filters {
+    display: grid;
+    grid-template-columns:
+        minmax(260px, 1fr) minmax(150px, 190px) minmax(160px, 190px) auto;
+
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.admin-filter-search,
+.admin-filter-group {
+    min-width: 0;
+}
+
+.admin-filter-search label,
+.admin-filter-group label {
+    display: block;
+
+    margin: 0 0 7px 2px;
+
+    color: var(--admin-muted);
+
+    font-size: 0.54rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.admin-filter-search input,
+.admin-filter-group input,
+.admin-filter-group select {
+    width: 100%;
+    height: 43px;
+
+    padding-inline: 13px;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    outline: 0;
+
+    background: #fafaf8;
+    color: var(--admin-text);
+
+    font-size: 0.66rem;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.admin-filter-search input::placeholder {
+    color: #a1a5a1;
+}
+
+.admin-filter-search input:hover,
+.admin-filter-group input:hover,
+.admin-filter-group select:hover {
+    border-color: #b5b9b5;
+}
+
+.admin-filter-search input:focus,
+.admin-filter-group input:focus,
+.admin-filter-group select:focus {
+    border-color: #878c87;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(21, 24, 27, 0.05);
+}
+
+.admin-filter-button {
+    height: 43px;
+
+    cursor: pointer;
+}
+
+/* ================================================================
+   FLIGHT TABLE
+================================================================ */
+
+.admin-flight-management-panel {
+    overflow: visible;
+}
+
+.admin-flight-table-header {
+    min-height: 88px;
+}
+
+.admin-table-result-count {
+    color: var(--admin-muted);
+
+    font-size: 0.57rem;
+}
+
+.admin-flight-table {
+    min-width: 1000px;
+}
+
+.admin-flight-table td {
+    height: 86px;
+}
+
+.admin-flight-identity {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-flight-identity strong {
+    margin-bottom: 4px;
+
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+}
+
+.admin-flight-identity span {
+    color: var(--admin-muted);
+
+    font-size: 0.53rem;
+}
+
+.admin-flight-route {
+    margin-bottom: 2px;
+}
+
+.admin-flight-schedule {
+    display: flex;
+    gap: 24px;
+}
+
+.admin-flight-schedule>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-flight-schedule span {
+    margin-bottom: 3px;
+
+    color: var(--admin-muted);
+
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.admin-flight-schedule strong {
+    white-space: nowrap;
+
+    font-size: 0.59rem;
+}
+
+.admin-passenger-load {
+    width: 105px;
+}
+
+.admin-passenger-load-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+}
+
+.admin-passenger-load-header strong {
+    font-size: 0.58rem;
+}
+
+.admin-passenger-load-header span {
+    color: var(--admin-muted);
+
+    font-size: 0.53rem;
+}
+
+.admin-status-completed {
+    border-color: #d0d3cf;
+
+    background: #eeeeeb;
+    color: #5f666c;
+}
+
+.admin-status-cancelled {
+    border-color: #d8b7b2;
+
+    background: #f4e9e7;
+    color: var(--admin-danger);
+}
+
+.admin-flight-row-cancelled {
+    opacity: 0.68;
+}
+
+.admin-row-action {
+    display: grid;
+
+    width: 31px;
+    height: 31px;
+
+    place-items: center;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 50%;
+
+    color: var(--admin-muted);
+
+    font-size: 0.7rem;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.admin-row-action:hover {
+    transform: translateX(2px);
+
+    border-color: var(--admin-text);
+
+    background: var(--admin-text);
+    color: var(--color-white);
+}
+
+/* ================================================================
+   TABLE FOOTER
+================================================================ */
+
+.admin-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 66px;
+
+    padding-inline: 24px;
+
+    border-top: 1px solid var(--admin-border);
+}
+
+.admin-table-footer>span {
+    color: var(--admin-muted);
+
+    font-size: 0.55rem;
+}
+
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.admin-pagination-button {
+    display: grid;
+
+    min-width: 30px;
+    height: 30px;
+
+    padding-inline: 8px;
+
+    place-items: center;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 5px;
+
+    background: #fafaf8;
+    color: var(--admin-muted);
+
+    font-size: 0.57rem;
+    font-weight: 700;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.admin-pagination-button:hover {
+    border-color: #adb1ad;
+
+    color: var(--admin-text);
+}
+
+.admin-pagination-active {
+    border-color: var(--admin-text);
+
+    background: var(--admin-text);
+    color: var(--color-white);
+}
+
+.admin-pagination-disabled {
+    opacity: 0.4;
+
+    pointer-events: none;
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+
+@media (max-width: 1200px) {
+    .admin-flight-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .admin-flight-stat:nth-child(3) {
+        border-top: 1px solid var(--admin-border);
+        border-left: 0;
+    }
+
+    .admin-flight-stat:nth-child(4) {
+        border-top: 1px solid var(--admin-border);
+    }
+
+    .admin-flight-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .admin-filter-search {
+        grid-column: 1 / -1;
+    }
+
+    .admin-filter-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 650px) {
+    .admin-flight-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-flight-stat+.admin-flight-stat {
+        border-top: 1px solid var(--admin-border);
+        border-left: 0;
+    }
+
+    .admin-flight-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-filter-search {
+        grid-column: auto;
+    }
+
+    .admin-flight-toolbar {
+        padding: 14px;
+    }
+
+    .admin-table-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+
+        padding-block: 16px;
+    }
+}
+
+/* ================================================================
+   ADMIN VIEW STATES
+================================================================ */
+
+.admin-view-loading {
+    padding: 70px 24px;
+
+    color: var(--admin-muted);
+
+    font-size: 0.72rem;
+    text-align: center;
+}
+
+
+.admin-view-error {
+    padding: 40px;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 9px;
+
+    background: var(--admin-surface);
+}
+
+
+.admin-view-error h2 {
+    margin-bottom: 14px;
+
+    font-size: 2rem;
+}
+
+
+.admin-view-error>p:last-child {
+    max-width: 520px;
+    margin-bottom: 0;
+
+    color: var(--admin-muted);
+
+    font-size: 0.75rem;
+    line-height: 1.7;
+}
+
+
+.admin-table-empty {
+    height: 120px !important;
+
+    color: var(--admin-muted);
+
+    text-align: center;
+}
+
+
+.admin-table-error {
+    color: var(--admin-danger);
 }

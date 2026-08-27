@@ -1,13 +1,17 @@
-const API_BASE = 'http://localhost:8081/api';
+const API_BASE = "http://localhost:8081/api";
+
 
 export class ApiError extends Error {
+
     constructor(message, status, code) {
         super(message);
+
         this.name = "ApiError";
         this.status = status;
         this.code = code;
     }
 }
+
 
 async function apiFetch(url, options = {}) {
     const token = localStorage.getItem("token");
@@ -15,6 +19,7 @@ async function apiFetch(url, options = {}) {
     try {
         const response = await fetch(`${API_BASE}${url}`, {
             ...options,
+
             headers: {
                 ...(options.body && { "Content-Type": "application/json" }),
                 ...(token && { Authorization: `Bearer ${token}` }),
@@ -24,44 +29,81 @@ async function apiFetch(url, options = {}) {
 
         if (response.status === 401) {
             localStorage.removeItem("token");
-            window.location.href = "/login.html";
+
             throw new ApiError(
-                "Unauthorized",
-                response.status,
+                "Your session has expired.",
+                401,
                 "UNAUTHORIZED"
             );
         }
 
+
         if (!response.ok) {
-            let errorData;
-            try {
-                errorData = await response.json();
-            } catch (e) {
-                errorData = { message: "Unknown error occurred" };
-            }
+
+            const errorMessage =
+                await readErrorMessage(response);
+
             throw new ApiError(
-                errorData.message || "API request failed",
+                errorMessage,
                 response.status,
-                errorData.code || "API_ERROR"
+                "API_ERROR"
             );
         }
+
 
         return response;
 
     } catch (error) {
 
-        // If the error is already an instance of ApiError, rethrow it
         if (error instanceof ApiError) {
             throw error;
         }
 
         throw new ApiError(
-            error.message || "Could not connect to the server",
+            error.message ||
+            "Could not connect to the server.",
             null,
             "NETWORK_ERROR"
         );
     }
+}
 
+
+async function readErrorMessage(response) {
+
+    const contentType =
+        response.headers.get("content-type") || "";
+
+    try {
+
+        if (
+            contentType.includes(
+                "application/json"
+            )
+        ) {
+
+            const data =
+                await response.json();
+
+            return (
+                data.message ||
+                data.error ||
+                "API request failed"
+            );
+        }
+
+        const text =
+            await response.text();
+
+        return (
+            text ||
+            "API request failed"
+        );
+
+    } catch {
+
+        return "API request failed";
+    }
 }
 
 
@@ -69,12 +111,14 @@ export function apiGet(url) {
     return apiFetch(url, { method: "GET" });
 }
 
+
 export function apiPost(url, data) {
     return apiFetch(url, {
         method: "POST",
         body: JSON.stringify(data)
     });
 }
+
 
 export function apiPut(url, data) {
     return apiFetch(url, {
@@ -86,9 +130,13 @@ export function apiPut(url, data) {
 export function apiPatch(url, data) {
     return apiFetch(url, {
         method: "PATCH",
-        body: JSON.stringify(data)
-    });
+        ...(data !== undefined && {
+            body: JSON.stringify(data)
+        })
+    }
+    );
 }
+
 
 export function apiDelete(url) {
     return apiFetch(url, { method: "DELETE" });

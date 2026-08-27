@@ -14,7 +14,6 @@ public interface SpaceportRepository extends JpaRepository<Spaceport, Integer> {
         SELECT s FROM Spaceport s
         WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(s.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
-        OR LOWER(s.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(s.code) LIKE LOWER(CONCAT('%', :keyword, '%'))
     """)
     List<Spaceport> findAllByKeyword(@Param("keyword") String keyword);
