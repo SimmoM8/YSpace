@@ -35,8 +35,8 @@
 
         <div class="header-actions">
           <a href="login.html" class="nav-login">Log in</a>
-          <a href="#" class="button button-small button-light">
-            Find a flight
+          <a href="my-bookings.html" class="button button-small button-light nav-bookings">
+            My bookings
           </a>
         </div>
       </div>
@@ -142,14 +142,7 @@
                 <small>EOH · Earth Orbital Hub</small>
               </div>
 
-              <button
-                type="button"
-                class="search-reverse-button"
-                aria-label="Reverse origin and destination"
-                title="Reverse direction"
-              >
-                ⇄
-              </button>
+              <div class="search-divider" aria-hidden="true"></div>
 
               <div class="search-field">
                 <label class="search-label" for="destination-input"> To </label>
@@ -186,7 +179,7 @@
 
               <div class="search-divider" aria-hidden="true"></div>
 
-              <div class="search-field search-date-field">
+              <div class="search-field">
                 <label class="search-label" for="travel-date-picker">
                   Departure
                 </label>
@@ -463,12 +456,12 @@
           </p>
 
           <div class="cta-actions">
-            <a href="#" class="button button-primary">
+            <a href="#booking-search-form" class="button button-primary">
               Find your flight
               <span aria-hidden="true">→</span>
             </a>
 
-            <a href="#" class="button button-outline"> Create account </a>
+            <a href="register.html" class="button button-outline"> Create account </a>
           </div>
         </div>
       </section>
@@ -500,9 +493,9 @@
 
             <div>
               <span>Account</span>
-              <a href="login.html">Log in</a>
+              <a href="login.html" class="nav-login">Log in</a>
               <a href="register.html">Create account</a>
-              <a href="#">My bookings</a>
+              <a href="my-bookings.html" class="nav-bookings">My bookings</a>
             </div>
 
             <div>

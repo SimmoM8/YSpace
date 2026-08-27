@@ -1,87 +1,90 @@
-import { apiGet } from './api.js';
+import { apiGet, apiPost } from "./api.js";
+import { isLoggedIn, applyAuthState, getUserEmail } from "./auth-utils.js";
 
-const searchForm = document.getElementById('flight-search-form');
+applyAuthState();
 
-if (searchForm) {
-    const originInput = searchForm.querySelector('#origin-input');
-    const destinationInput = searchForm.querySelector('#destination-input');
-    const originHiddenInput = searchForm.querySelector('#origin-hidden-input');
-    const destinationHiddenInput = searchForm.querySelector('#destination-hidden-input');
-    const dateInput = searchForm.querySelector('[name="departure-date"]');
-    const originOptions = searchForm.querySelector('#origin-options');
-    const destinationOptions = searchForm.querySelector('#destination-options');
-    const isResultsPage = document.body.classList.contains('flights-page');
-    let currentFlights = [];
+const searchForm = document.getElementById("flight-search-form");
+const isIndexPage = !!document.getElementById("booking-search-form");
+const isFlightsPage = !!document.querySelector(".flights-page");
 
-    setupSpaceportSearch(originInput, originHiddenInput, originOptions);
-    setupSpaceportSearch(destinationInput, destinationHiddenInput, destinationOptions);
+const originInput = searchForm.querySelector("#origin-input");
+const destinationInput = searchForm.querySelector("#destination-input");
+const originHiddenInput = searchForm.querySelector("#origin-hidden-input");
+const destinationHiddenInput = searchForm.querySelector("#destination-hidden-input");
+const originOptions = searchForm.querySelector("#origin-options");
+const destinationOptions = searchForm.querySelector("#destination-options");
 
-    searchForm.querySelector('.search-reverse-button').addEventListener('click', () => {
-        [originInput.value, destinationInput.value] = [destinationInput.value, originInput.value];
-        [originHiddenInput.value, destinationHiddenInput.value] = [destinationHiddenInput.value, originHiddenInput.value];
-        originInput.setCustomValidity('');
-        destinationInput.setCustomValidity('');
-        originOptions.replaceChildren();
-        destinationOptions.replaceChildren();
-        originInput.setAttribute('aria-expanded', 'false');
-        destinationInput.setAttribute('aria-expanded', 'false');
-    });
+originInput.addEventListener("input", async () => {
+    originOptions.innerHTML = '<li class="search-options-list-item search-options-loading">Loading...</li>';
+    originOptions.innerHTML = await fetchSpaceports(originInput.value);
+});
 
-    searchForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+searchForm.querySelector('.search-reverse-button').addEventListener('click', () => {
+    [originInput.value, destinationInput.value] = [destinationInput.value, originInput.value];
+    [originHiddenInput.value, destinationHiddenInput.value] = [destinationHiddenInput.value, originHiddenInput.value];
+    originInput.setCustomValidity('');
+    destinationInput.setCustomValidity('');
+    originOptions.replaceChildren();
+    destinationOptions.replaceChildren();
+    originInput.setAttribute('aria-expanded', 'false');
+    destinationInput.setAttribute('aria-expanded', 'false');
+});
 
-        if (!validateSearch(originHiddenInput, destinationHiddenInput, dateInput)) return;
+destinationInput.addEventListener("input", async () => {
+    destinationOptions.innerHTML = '<li class="search-options-list-item search-options-loading">Loading...</li>';
+    destinationOptions.innerHTML = await fetchSpaceports(destinationInput.value);
+});
 
-        const searchParams = createSearchParams(originInput, destinationInput, originHiddenInput, destinationHiddenInput, dateInput);
-
-        if (!isResultsPage) {
-            window.location.assign(`flights.html?${searchParams.toString()}`);
-            return;
-        }
-
-        window.history.replaceState(null, '', `${window.location.pathname}?${searchParams.toString()}`);
-        currentFlights = await searchFlights(searchParams);
-    });
-
-    if (isResultsPage) {
-        const searchParams = new URLSearchParams(window.location.search);
-        populateSearchForm(searchParams, { originInput, destinationInput, originHiddenInput, destinationHiddenInput, dateInput });
-
-        if (hasCompleteSearch(searchParams)) currentFlights = await searchFlights(searchParams);
-
-        const sortSelect = document.getElementById('flight-sort');
-        sortSelect?.addEventListener('change', () => renderFlights(sortFlights(currentFlights, sortSelect.value)));
+originOptions.addEventListener("click", (event) => {
+    const selectedOption = event.target.closest(".search-options-list-item");
+    if (selectedOption) {
+        originInput.value = selectedOption.dataset.name;
+        originHiddenInput.value = selectedOption.dataset.id;
+        originOptions.innerHTML = "";
+    } else {
+        originOptions.innerHTML = "";
     }
-}
+});
 
-function setupSpaceportSearch(textInput, hiddenInput, optionsList) {
-    textInput.addEventListener('input', async () => {
-        hiddenInput.value = '';
-        textInput.setCustomValidity('');
+destinationOptions.addEventListener("click", (event) => {
+    const selectedOption = event.target.closest(".search-options-list-item");
+    if (selectedOption) {
+        destinationInput.value = selectedOption.dataset.name;
+        destinationHiddenInput.value = selectedOption.dataset.id;
+        destinationOptions.innerHTML = "";
+    } else {
+        destinationOptions.innerHTML = "";
+    }
+});
 
-        if (!textInput.value.trim()) {
-            optionsList.replaceChildren();
-            textInput.setAttribute('aria-expanded', 'false');
-            return;
-        }
+document.addEventListener("click", (event) => {
+    if (!event.target.closest(".search-input-wrapper")) {
+        originOptions.innerHTML = "";
+        destinationOptions.innerHTML = "";
+    }
+});
 
-        optionsList.innerHTML = '<li class="search-options-list-item">Loading...</li>';
-        optionsList.innerHTML = await fetchSpaceports(textInput.value);
-        textInput.setAttribute('aria-expanded', String(optionsList.children.length > 0));
-    });
+searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    performSearch();
+});
 
-    optionsList.addEventListener('click', (event) => {
-        const selectedOption = event.target.closest('[data-id]');
+function performSearch() {
+    const originId = originHiddenInput.value;
+    const destinationId = destinationHiddenInput.value;
+    const dateInput = searchForm.querySelector('[name="departure-date"]');
+    const date = dateInput ? dateInput.value : "";
 
-        if (selectedOption) {
-            textInput.value = selectedOption.dataset.name;
-            hiddenInput.value = selectedOption.dataset.id;
-            textInput.setCustomValidity('');
-        }
+    if (!originId || !destinationId) {
+        return;
+    }
 
-        optionsList.replaceChildren();
-        textInput.setAttribute('aria-expanded', 'false');
-    });
+    const params = new URLSearchParams();
+    params.set("originId", originId);
+    params.set("destinationId", destinationId);
+    if (date) params.set("date", date);
+
+    window.location.href = `/flights.html?${params.toString()}`;
 }
 
 async function fetchSpaceports(keyword) {
@@ -89,171 +92,213 @@ async function fetchSpaceports(keyword) {
         const response = await apiGet(`/spaceports?keyword=${encodeURIComponent(keyword)}`);
         const spaceports = await response.json();
 
-        return spaceports.map((spaceport) => `
-            <li class="search-options-list-item" data-id="${escapeHtml(spaceport.spaceportId)}"
-                data-name="${escapeHtml(spaceport.spaceportName)}" role="option">
-                ${escapeHtml(spaceport.spaceportName)} (${escapeHtml(spaceport.spaceportCode || '')})
-            </li>
-        `).join('');
+        let html = "";
+        for (const sp of spaceports) {
+            html += `<li class="search-options-list-item" data-id="${sp.spaceportId}" data-name="${sp.spaceportName}">${sp.spaceportName} (${sp.spaceportCode || ""})</li>`;
+        }
+        return html;
     } catch (error) {
-        console.error('Error loading spaceports:', error);
-        return '<li class="search-options-list-item">Could not load spaceports.</li>';
+        console.error("Error loading spaceports:", error);
+        return "";
     }
 }
 
-function validateSearch(originIdInput, destinationIdInput, dateInput) {
-    originIdInput.previousElementSibling.setCustomValidity(originIdInput.value ? '' : 'Choose an origin from the suggestions.');
-    destinationIdInput.previousElementSibling.setCustomValidity(destinationIdInput.value ? '' : 'Choose a destination from the suggestions.');
-    dateInput.setCustomValidity(dateInput.value ? '' : 'Choose a departure date.');
-    return searchForm.reportValidity();
-}
-
-function createSearchParams(originInput, destinationInput, originIdInput, destinationIdInput, dateInput) {
-    return new URLSearchParams({
-        originId: originIdInput.value,
-        destinationId: destinationIdInput.value,
-        date: dateInput.value,
-        originName: originInput.value,
-        destinationName: destinationInput.value
-    });
-}
-
-function populateSearchForm(searchParams, inputs) {
-    inputs.originHiddenInput.value = searchParams.get('originId') || '';
-    inputs.destinationHiddenInput.value = searchParams.get('destinationId') || '';
-    inputs.dateInput.value = searchParams.get('date') || inputs.dateInput.value;
-    inputs.originInput.value = searchParams.get('originName') || inputs.originInput.value;
-    inputs.destinationInput.value = searchParams.get('destinationName') || inputs.destinationInput.value;
-}
-
-function hasCompleteSearch(searchParams) {
-    return ['originId', 'destinationId', 'date'].every((key) => searchParams.has(key));
-}
-
-async function searchFlights(searchParams) {
-    const resultsList = document.querySelector('.flight-list');
-    const submitButton = searchForm.querySelector('[type="submit"]');
-    const apiParams = new URLSearchParams({
-        originId: searchParams.get('originId'),
-        destinationId: searchParams.get('destinationId'),
-        date: searchParams.get('date')
-    });
-
-    submitButton.disabled = true;
-    resultsList.innerHTML = '<p class="flights-results-message">Searching for flights...</p>';
-
+async function fetchRoutes() {
     try {
-        const response = await apiGet(`/flights/search?${apiParams.toString()}`);
-        const flights = await response.json();
-        updateResultsHeading(flights, searchParams.get('date'));
-        renderFlights(sortFlights(flights, document.getElementById('flight-sort')?.value));
-        return flights;
+        const base = "http://localhost:8081";
+        const response = await fetch(`${base}/routes`);
+        return await response.json();
     } catch (error) {
-        console.error('Error searching flights:', error);
-        resultsList.innerHTML = `<p class="flights-results-message flights-results-error">${escapeHtml(error.message || 'Could not load flights.')}</p>`;
-        updateResultsHeading([], searchParams.get('date'));
+        console.error("Error loading routes:", error);
         return [];
-    } finally {
-        submitButton.disabled = false;
     }
 }
 
-function updateResultsHeading(flights, date) {
-    const firstFlight = flights[0];
-    document.querySelector('.flights-results-header h2').textContent = `${flights.length} departure${flights.length === 1 ? '' : 's'} found`;
-    document.querySelector('.flights-results-kicker').textContent = firstFlight ? `${firstFlight.originCode} → ${firstFlight.destinationCode}` : 'No matching route';
-    document.querySelector('.flights-results-date').textContent = formatDate(date);
+if (isFlightsPage) {
+    initFlightsPage();
 }
 
-function renderFlights(flights) {
-    const resultsList = document.querySelector('.flight-list');
+async function initFlightsPage() {
+    const params = new URLSearchParams(window.location.search);
+    const originId = params.get("originId");
+    const destinationId = params.get("destinationId");
+    const date = params.get("date");
 
-    if (!flights.length) {
-        resultsList.innerHTML = '<p class="flights-results-message">No flights found for this route and date.</p>';
+    if (originId) originHiddenInput.value = originId;
+    if (destinationId) destinationHiddenInput.value = destinationId;
+    if (date) {
+        const dateInput = searchForm.querySelector('[name="departure-date"]');
+        if (dateInput) dateInput.value = date;
+    }
+
+    if (!originId || !destinationId) {
         return;
     }
 
-    resultsList.innerHTML = flights.map(renderFlightCard).join('');
+    await loadFlights(originId, destinationId, date);
 }
 
-function renderFlightCard(flight) {
+async function loadFlights(originId, destinationId, date) {
+    const flightList = document.querySelector(".flight-list");
+    const resultsHeader = document.querySelector(".flights-results-header");
+    const resultsKicker = document.querySelector(".flights-results-kicker");
+    const resultsCount = document.querySelector(".flights-results-header h2");
+    const resultsDate = document.querySelector(".flights-results-date");
+
+    if (!flightList) return;
+
+    flightList.innerHTML = '<div class="flights-loading"><p>Loading flights...</p></div>';
+
+    try {
+        let url = `/flights/search?originId=${originId}&destinationId=${destinationId}`;
+        if (date) url += `&date=${date}`;
+
+        const response = await apiGet(url);
+        const flights = await response.json();
+
+        if (flights.length === 0) {
+            flightList.innerHTML = `
+                <div class="flights-empty">
+                    <p>No flights found for this route and date.</p>
+                    <a href="index.html#booking-search-form" class="button button-primary">
+                        Search again <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            `;
+            if (resultsCount) resultsCount.textContent = "0 departures found";
+            return;
+        }
+
+        if (resultsKicker && flights.length > 0) {
+            resultsKicker.textContent = `${flights[0].originCode} → ${flights[0].destinationCode}`;
+        }
+        if (resultsCount) resultsCount.textContent = `${flights.length} departure${flights.length !== 1 ? "s" : ""} found`;
+        if (resultsDate && date) {
+            const d = new Date(date + "T00:00:00");
+            resultsDate.textContent = d.toLocaleDateString("en-US", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        flightList.innerHTML = "";
+        for (const flight of flights) {
+            flightList.appendChild(createFlightCard(flight));
+        }
+    } catch (error) {
+        console.error("Error loading flights:", error);
+        flightList.innerHTML = `
+            <div class="flights-empty">
+                <p>Something went wrong while loading flights.</p>
+                <button class="button button-primary" onclick="location.reload()">
+                    Try again <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        `;
+    }
+}
+
+function createFlightCard(flight) {
     const departure = new Date(flight.departureTime);
     const arrival = new Date(flight.arrivalTime);
+    const durationMs = arrival - departure;
+    const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+    const durationHours = Math.floor((durationMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const durationStr = durationDays > 0 ? `${durationDays}d ${durationHours}h` : `${durationHours}h`;
 
-    return `
-        <article class="flight-card">
-            <div class="flight-card-status">
-                <span class="flight-number">${escapeHtml(flight.code)}</span>
+    const price = new Intl.NumberFormat("en-US").format(flight.price);
+
+    const article = document.createElement("article");
+    article.className = "flight-card";
+    article.innerHTML = `
+        <div class="flight-card-status">
+            <span class="flight-number">${flight.code}</span>
+            <span class="flight-status flight-status-available">Available</span>
+        </div>
+
+        <div class="flight-card-main">
+            <div class="flight-time">
+                <span class="flight-time-value">${formatTime(departure)}</span>
+                <strong>${flight.originCode}</strong>
+                <span>${flight.originName}</span>
             </div>
-            <div class="flight-card-main">
-                <div class="flight-time">
-                    <span class="flight-time-value">${formatTime(departure)}</span>
-                    <strong>${escapeHtml(flight.originCode)}</strong>
-                    <span>${escapeHtml(flight.originName)}</span>
+
+            <div class="flight-journey">
+                <span class="flight-duration">${durationStr}</span>
+                <div class="flight-route">
+                    <span class="flight-route-point"></span>
+                    <span class="flight-route-line"></span>
+                    <span class="flight-craft-icon">✦</span>
+                    <span class="flight-route-line"></span>
+                    <span class="flight-route-point"></span>
                 </div>
-                <div class="flight-journey">
-                    <span class="flight-duration">${formatDuration(departure, arrival)}</span>
-                    <div class="flight-route">
-                        <span class="flight-route-point"></span><span class="flight-route-line"></span>
-                        <span class="flight-craft-icon">✦</span>
-                        <span class="flight-route-line"></span><span class="flight-route-point"></span>
-                    </div>
-                </div>
-                <div class="flight-time flight-time-arrival">
-                    <span class="flight-time-value">${formatTime(arrival)}</span>
-                    <strong>${escapeHtml(flight.destinationCode)}</strong>
-                    <span>${escapeHtml(flight.destinationName)}</span>
-                </div>
-                <div class="flight-price">
-                    <span>From</span><strong>${formatPrice(flight.price)}</strong><small>per passenger</small>
-                </div>
-                <a href="#" class="button flight-select-button" data-flight-id="${escapeHtml(flight.id)}">
-                    Select flight <span aria-hidden="true">→</span>
-                </a>
+                <span class="flight-route-type">Direct</span>
             </div>
-            <div class="flight-card-footer">
-                <div class="flight-detail"><span>Spacecraft</span><strong>${escapeHtml(flight.spacecraft)}</strong></div>
-                <div class="flight-detail"><span>Departure</span><strong>${formatDateTime(departure)}</strong></div>
-                <div class="flight-detail"><span>Arrival</span><strong>${formatDateTime(arrival)}</strong></div>
+
+            <div class="flight-time flight-time-arrival">
+                <span class="flight-time-value">${formatTime(arrival)}</span>
+                <strong>${flight.destinationCode}</strong>
+                <span>${flight.destinationName}</span>
             </div>
-        </article>
+
+            <div class="flight-price">
+                <span>From</span>
+                <strong>${price} kr</strong>
+                <small>per passenger</small>
+            </div>
+
+            <button class="button flight-select-button" data-flight-id="${flight.id}">
+                Select flight <span aria-hidden="true">→</span>
+            </button>
+        </div>
+
+        <div class="flight-card-footer">
+            <div class="flight-detail">
+                <span>Spacecraft</span>
+                <strong>${flight.spacecraft}</strong>
+            </div>
+            <div class="flight-detail">
+                <span>Route</span>
+                <strong>${flight.originCode} — ${flight.destinationCode} Express</strong>
+            </div>
+        </div>
     `;
-}
 
-function sortFlights(flights, sortBy) {
-    const sortedFlights = [...flights];
-    if (sortBy === 'departure') return sortedFlights.sort((a, b) => new Date(a.departureTime) - new Date(b.departureTime));
-    if (sortBy === 'price') return sortedFlights.sort((a, b) => Number(a.price) - Number(b.price));
-    if (sortBy === 'duration') {
-        return sortedFlights.sort((a, b) => (new Date(a.arrivalTime) - new Date(a.departureTime)) - (new Date(b.arrivalTime) - new Date(b.departureTime)));
-    }
-    return sortedFlights;
+    const selectBtn = article.querySelector(".flight-select-button");
+    selectBtn.addEventListener("click", () => handleSelectFlight(flight));
+
+    return article;
 }
 
 function formatTime(date) {
-    return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' }).format(date);
+    return date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    });
 }
 
-function formatDate(date) {
-    return new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${date}T00:00:00`));
-}
+async function handleSelectFlight(flight) {
+    if (!isLoggedIn()) {
+        window.location.href = `/login.html?redirect=/flights.html${encodeURIComponent(window.location.search)}`;
+        return;
+    }
 
-function formatDateTime(date) {
-    return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(date);
-}
+    const price = new Intl.NumberFormat("en-US").format(flight.price);
+    const confirmed = confirm(
+        `Book flight ${flight.code}?\n\n${flight.originName} → ${flight.destinationName}\nPrice: ${price} kr`
+    );
 
-function formatDuration(departure, arrival) {
-    const totalMinutes = Math.max(0, Math.round((arrival - departure) / 60000));
-    const days = Math.floor(totalMinutes / 1440);
-    const hours = Math.floor((totalMinutes % 1440) / 60);
-    const minutes = totalMinutes % 60;
-    return [days && `${days}d`, hours && `${hours}h`, minutes && `${minutes}m`].filter(Boolean).join(' ') || '0m';
-}
+    if (!confirmed) return;
 
-function formatPrice(price) {
-    return new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 }).format(Number(price));
-}
-
-function escapeHtml(value) {
-    return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+    try {
+        const response = await apiPost("/bookings", { flightId: flight.id });
+        const booking = await response.json();
+        alert(`Booking confirmed! Booking ID: ${booking.bookingId}`);
+        window.location.href = "/my-bookings.html";
+    } catch (error) {
+        alert(error.message || "Failed to create booking. Please try again.");
+    }
 }

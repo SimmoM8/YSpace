@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Manage your YSpace passenger bookings and upcoming departures."
+    >
+
+    <title>My Bookings — YSpace</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/flights.css">
+
+    <script type="module" src="javascript/bookings.js"></script>
+</head>
+
+<body class="flights-page">
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+    <header class="flights-header">
+        <div class="container flights-header-inner">
+
+            <a href="index.html" class="brand" aria-label="YSpace home">
+                <span class="brand-mark">Y</span>
+                <span class="brand-name">YSPACE</span>
+            </a>
+
+            <nav class="flights-nav" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="index.html#destinations">Destinations</a>
+                <a href="index.html#fleet">Fleet</a>
+            </nav>
+
+            <div class="flights-header-actions">
+                <a href="login.html" class="nav-login">
+                    Log in
+                </a>
+
+                <a href="my-bookings.html" class="button button-small button-outline nav-bookings">
+                    My bookings
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- =====================================================
+             BOOKINGS HEADER
+        ====================================================== -->
+
+        <section class="flights-search-section">
+
+            <div class="flights-stars" aria-hidden="true"></div>
+            <div class="flights-orbit" aria-hidden="true"></div>
+
+            <div class="container flights-search-content">
+
+                <div class="flights-search-heading">
+
+                    <div>
+                        <p class="eyebrow">
+                            Passenger account
+                        </p>
+
+                        <h1 class="flights-title">
+                            My
+                            <span>bookings.</span>
+                        </h1>
+                    </div>
+
+                    <p class="flights-search-description">
+                        View and manage your upcoming and past YSpace
+                        flight bookings.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             BOOKINGS LIST
+        ====================================================== -->
+
+        <section class="flights-results-section">
+
+            <div class="container">
+
+                <div class="flights-results-header">
+
+                    <div>
+                        <p class="flights-results-kicker">
+                            YOUR BOOKINGS
+                        </p>
+
+                        <h2 id="bookings-count">Loading...</h2>
+                    </div>
+
+                </div>
+
+                <div class="flight-list" id="bookings-list">
+                </div>
+
+                <div class="flights-results-footer">
+
+                    <div>
+                        <span class="status-indicator"></span>
+
+                        <p>
+                            Booking status is updated in real time
+                            across the YSpace passenger network.
+                        </p>
+                    </div>
+
+                    <a href="index.html#booking-search-form">
+                        Book a new flight
+                        <span aria-hidden="true">→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-main">
+
+                <div class="footer-brand">
+
+                    <a href="index.html" class="brand">
+                        <span class="brand-mark">Y</span>
+                        <span class="brand-name">YSPACE</span>
+                    </a>
+
+                    <p>
+                        Passenger travel beyond Earth.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <div>
+                        <span>Explore</span>
+                        <a href="index.html#destinations">Destinations</a>
+                        <a href="index.html#journey">The journey</a>
+                        <a href="index.html#fleet">Fleet</a>
+                    </div>
+
+                    <div>
+                        <span>Account</span>
+                        <a href="login.html" class="nav-login">Log in</a>
+                        <a href="register.html">Create account</a>
+                        <a href="my-bookings.html" class="nav-bookings">My bookings</a>
+                    </div>
+
+                    <div>
+                        <span>YSpace</span>
+                        <a href="#">About</a>
+                        <a href="#">Safety</a>
+                        <a href="#">Contact</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 YSpace Industries
+                </p>
+
+                <p class="footer-status">
+                    <span></span>
+                    Passenger network operational
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

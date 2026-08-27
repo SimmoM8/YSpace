@@ -194,7 +194,7 @@
 
     align-items: stretch;
 
-    overflow: visible;
+    overflow: hidden;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-medium);
@@ -381,22 +381,6 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-.flights-results-message {
-    padding: 32px;
-
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-medium);
-
-    background: var(--color-white);
-    color: var(--color-text-muted);
-
-    text-align: center;
-}
-
-.flights-results-error {
-    color: #9d2f2f;
 }
 
 
@@ -816,7 +800,7 @@
         display: none;
     }
 
-    .flights-search-date-field {
+    .flights-search-field:nth-of-type(3) {
         grid-column: 1 / 3;
 
         border-top: 1px solid var(--color-border);
@@ -877,7 +861,11 @@
         border-bottom: 1px solid var(--color-border);
     }
 
-    .flights-search-date-field {
+    .flights-search-arrow {
+        display: none;
+    }
+
+    .flights-search-field:nth-of-type(3) {
         grid-column: auto;
 
         border-top: 0;
@@ -987,4 +975,23 @@
         border-left: 0;
     }
 
+}
+
+.flights-loading,
+.flights-empty {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.flights-loading p,
+.flights-empty p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.search-options-loading {
+    color: var(--color-text-muted);
+    font-style: italic;
+    pointer-events: none;
 }
