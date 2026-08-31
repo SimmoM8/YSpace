@@ -23,21 +23,41 @@ const routes = {
         view: "views/routes.html",
         title: "Routes"
     },
+    "create-route": {
+        view: "views/create-route.html",
+        title: "Create Route"
+    },
     spaceports: {
         view: "views/spaceports.html",
         title: "Spaceports"
+    },
+    "create-spaceport": {
+        view: "views/create-spaceport.html",
+        title: "Add Spaceport"
     },
     spacecrafts: {
         view: "views/spacecrafts.html",
         title: "Spacecraft"
     },
+    "create-spacecraft": {
+        view: "views/create-spacecraft.html",
+        title: "Add Spacecraft"
+    },
     bookings: {
         view: "views/bookings.html",
         title: "Bookings"
     },
+    "create-booking": {
+        view: "views/create-booking.html",
+        title: "Create Booking"
+    },
     passengers: {
         view: "views/passengers.html",
         title: "Passengers"
+    },
+    "create-passenger": {
+        view: "views/create-passenger.html",
+        title: "Add Passenger"
     }
 };
 
@@ -133,10 +153,7 @@ async function loadView(route) {
 }
 
 function updateNavigation(page) {
-    const navigationPage =
-        page === "flight" || page === "create-flight"
-            ? "flights"
-            : page;
+    const navigationPage = getNavigationPage(page);
 
     document.querySelectorAll(".admin-nav-item").forEach((link) => {
         link.classList.remove("admin-nav-item-active");
@@ -147,6 +164,20 @@ function updateNavigation(page) {
             link.setAttribute("aria-current", "page");
         }
     });
+}
+
+function getNavigationPage(page) {
+    const parentPages = {
+        flight: "flights",
+        "create-flight": "flights",
+        "create-route": "routes",
+        "create-spaceport": "spaceports",
+        "create-spacecraft": "spacecrafts",
+        "create-booking": "bookings",
+        "create-passenger": "passengers"
+    };
+
+    return parentPages[page] ?? page;
 }
 
 function updatePageTitle(title) {
@@ -162,9 +193,7 @@ function updateTopbarTitle(title) {
 }
 
 function showLoading() {
-    adminContent.innerHTML = `
-        <div class="admin-view-loading">Loading...</div>
-    `;
+    adminContent.innerHTML = '<div class="admin-view-loading">Loading...</div>';
 }
 
 function showFatalError(message) {

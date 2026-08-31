@@ -1,0 +1,124 @@
+<section class="admin-page-header admin-create-flight-header">
+    <div>
+        <p class="admin-page-kicker">FLEET OPERATIONS</p>
+        <h1>Add <span>spacecraft.</span></h1>
+        <p class="admin-page-description">Register a spacecraft in the YSpace fleet, assign its model and define its operational passenger capacity.</p>
+    </div>
+    <div class="admin-page-header-actions">
+        <a href="#spacecrafts" class="admin-button admin-button-secondary">Cancel</a>
+    </div>
+</section>
+
+<section class="admin-create-flight-layout">
+    <form id="create-spacecraft-form" class="admin-panel admin-flight-form">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">NEW FLEET ASSET</p>
+                <h2>Spacecraft details</h2>
+            </div>
+        </header>
+        <div class="admin-flight-form-body">
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">01</span>
+                    <div>
+                        <h3>Identity</h3>
+                        <p>Give the individual spacecraft its operational name.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="spacecraft-name">Spacecraft name</label>
+                    <input type="text" id="spacecraft-name" name="name" maxlength="45" placeholder="Helios XR-08" required>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">02</span>
+                    <div>
+                        <h3>Model</h3>
+                        <p>Assign the spacecraft model that defines its manufacturer and performance.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="spacecraft-model">Model</label>
+                    <select id="spacecraft-model" name="modelId" required>
+                        <option value="">Select model</option>
+                        <option value="1">Helios XR · YSpace Aerospace</option>
+                        <option value="2">Asteria LX · Orbital Dynamics</option>
+                        <option value="3">Odyssey CX · Nova Transit</option>
+                    </select>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">03</span>
+                    <div>
+                        <h3>Capacity</h3>
+                        <p>Set the total passenger seating capacity of this craft.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="spacecraft-capacity">Seat capacity</label>
+                    <input type="number" id="spacecraft-capacity" name="seatCapacity" min="1" step="1" placeholder="84" required>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">04</span>
+                    <div>
+                        <h3>Initial state</h3>
+                        <p>Set the craft's starting fleet status and operational availability.</p>
+                    </div>
+                </div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-field">
+                        <label for="spacecraft-status">Status</label>
+                        <select id="spacecraft-status" name="status" required>
+                            <option value="PARKED">Parked</option>
+                            <option value="UNDER_MAINTENANCE">Under maintenance</option>
+                            <option value="RETIRED">Retired</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-field">
+                        <label for="spacecraft-operational">Operational</label>
+                        <select id="spacecraft-operational" name="operational" required>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="admin-flight-form-footer">
+            <div>
+                <strong>Ready to add the spacecraft?</strong>
+                <span>Operational spacecraft can later be assigned to scheduled flights.</span>
+            </div>
+            <div class="admin-flight-form-actions">
+                <a href="#spacecrafts" class="admin-button admin-button-secondary">Cancel</a>
+                <button type="submit" class="admin-button admin-button-primary"><span>+</span>Add spacecraft</button>
+            </div>
+        </footer>
+    </form>
+    <aside class="admin-panel admin-flight-preview">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">PREVIEW</p>
+                <h2>Fleet asset</h2>
+            </div>
+        </header>
+        <div class="admin-flight-preview-body">
+            <div class="admin-entity-preview-code">Y</div>
+            <div class="admin-flight-preview-details">
+                <div><span>Name</span><strong>Not set</strong></div>
+                <div><span>Model</span><strong>Not assigned</strong></div>
+                <div><span>Capacity</span><strong>Not set</strong></div>
+                <div><span>Operational</span><strong>Yes</strong></div>
+            </div>
+            <div class="admin-flight-preview-status">
+                <span class="admin-status admin-status-scheduled">Parked</span>
+                <p>This preview will become dynamic when page JavaScript is added.</p>
+            </div>
+        </div>
+    </aside>
+</section>

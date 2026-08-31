@@ -1,0 +1,119 @@
+<section class="admin-page-header admin-create-flight-header">
+    <div>
+        <p class="admin-page-kicker">PASSENGER MANAGEMENT</p>
+        <h1>Add <span>passenger.</span></h1>
+        <p class="admin-page-description">Create a YSpace passenger account with the identity and sign-in details required for future bookings.</p>
+    </div>
+    <div class="admin-page-header-actions">
+        <a href="#passengers" class="admin-button admin-button-secondary">Cancel</a>
+    </div>
+</section>
+
+<section class="admin-create-flight-layout">
+    <form id="create-passenger-form" class="admin-panel admin-flight-form">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">NEW CUSTOMER</p>
+                <h2>Passenger details</h2>
+            </div>
+        </header>
+        <div class="admin-flight-form-body">
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">01</span>
+                    <div>
+                        <h3>Identity</h3>
+                        <p>Enter the passenger's personal name details.</p>
+                    </div>
+                </div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-field">
+                        <label for="passenger-first-name">First name</label>
+                        <input type="text" id="passenger-first-name" name="firstName" maxlength="45" placeholder="Amelia" required>
+                    </div>
+                    <div class="admin-form-field">
+                        <label for="passenger-last-name">Last name</label>
+                        <input type="text" id="passenger-last-name" name="lastName" maxlength="45" placeholder="Carter" required>
+                    </div>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">02</span>
+                    <div>
+                        <h3>Account</h3>
+                        <p>Set the email address used to identify the passenger account.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="passenger-email">Email</label>
+                    <input type="email" id="passenger-email" name="email" placeholder="amelia@example.com" required>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">03</span>
+                    <div>
+                        <h3>Password</h3>
+                        <p>Set the initial password for the passenger account.</p>
+                    </div>
+                </div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-field">
+                        <label for="passenger-password">Password</label>
+                        <input type="password" id="passenger-password" name="password" autocomplete="new-password" required>
+                    </div>
+                    <div class="admin-form-field">
+                        <label for="passenger-password-confirm">Confirm password</label>
+                        <input type="password" id="passenger-password-confirm" name="passwordConfirm" autocomplete="new-password" required>
+                    </div>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">04</span>
+                    <div>
+                        <h3>Role</h3>
+                        <p>Administrative passenger creation should default to a standard space tourist account.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="passenger-role">Account role</label>
+                    <select id="passenger-role" name="role" disabled>
+                        <option value="SPACE_TOURIST" selected>Space tourist</option>
+                    </select>
+                </div>
+            </section>
+        </div>
+        <footer class="admin-flight-form-footer">
+            <div>
+                <strong>Ready to create the account?</strong>
+                <span>The passenger will be available for future booking operations.</span>
+            </div>
+            <div class="admin-flight-form-actions">
+                <a href="#passengers" class="admin-button admin-button-secondary">Cancel</a>
+                <button type="submit" class="admin-button admin-button-primary"><span>+</span>Add passenger</button>
+            </div>
+        </footer>
+    </form>
+    <aside class="admin-panel admin-flight-preview">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">PREVIEW</p>
+                <h2>Passenger account</h2>
+            </div>
+        </header>
+        <div class="admin-flight-preview-body">
+            <div class="admin-passenger-preview-avatar">ST</div>
+            <div class="admin-flight-preview-details">
+                <div><span>Name</span><strong>Not set</strong></div>
+                <div><span>Email</span><strong>Not set</strong></div>
+                <div><span>Role</span><strong>Space tourist</strong></div>
+            </div>
+            <div class="admin-flight-preview-status">
+                <span class="admin-status admin-status-confirmed">Passenger</span>
+                <p>This preview will become dynamic when page JavaScript is added.</p>
+            </div>
+        </div>
+    </aside>
+</section>

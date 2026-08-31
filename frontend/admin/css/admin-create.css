@@ -1,0 +1,88 @@
+/* ================================================================
+   GENERIC ADMIN CREATE FORMS
+================================================================ */
+
+.admin-form-field textarea {
+    width: 100%;
+    min-height: 132px;
+
+    padding: 13px 14px;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    outline: 0;
+
+    resize: vertical;
+
+    background: #fafaf8;
+    color: var(--admin-text);
+
+    font: inherit;
+    font-size: 0.68rem;
+    line-height: 1.6;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.admin-form-field textarea:hover {
+    border-color: #b7bbb7;
+}
+
+.admin-form-field textarea:focus {
+    border-color: #858a85;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(21, 24, 27, 0.05);
+}
+
+.admin-form-field input:disabled,
+.admin-form-field select:disabled,
+.admin-form-field textarea:disabled {
+    opacity: 0.58;
+
+    cursor: not-allowed;
+}
+
+.admin-entity-preview-code {
+    display: grid;
+
+    width: 112px;
+    height: 112px;
+
+    margin: 2px auto 30px;
+
+    place-items: center;
+
+    border: 1px solid var(--admin-border);
+    border-radius: 50%;
+
+    background: #eeeeeb;
+    color: var(--admin-text);
+
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.admin-passenger-preview-avatar {
+    display: grid;
+
+    width: 96px;
+    height: 96px;
+
+    margin: 2px auto 30px;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--admin-text);
+    color: var(--color-accent);
+
+    font-size: 1.2rem;
+    font-weight: 800;
+}

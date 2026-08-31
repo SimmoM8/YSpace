@@ -1,0 +1,127 @@
+<section class="admin-page-header admin-create-flight-header">
+    <div>
+        <p class="admin-page-kicker">NETWORK OPERATIONS</p>
+        <h1>Create <span>route.</span></h1>
+        <p class="admin-page-description">Add a passenger route between two existing YSpace spaceports and define its operational distance and description.</p>
+    </div>
+    <div class="admin-page-header-actions">
+        <a href="#routes" class="admin-button admin-button-secondary">Cancel</a>
+    </div>
+</section>
+
+<section class="admin-create-flight-layout">
+    <form id="create-route-form" class="admin-panel admin-flight-form">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">NEW NETWORK LINK</p>
+                <h2>Route details</h2>
+            </div>
+        </header>
+        <div class="admin-flight-form-body">
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">01</span>
+                    <div>
+                        <h3>Identity</h3>
+                        <p>Give the route a clear operational name.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="route-name">Route name</label>
+                    <input type="text" id="route-name" name="name" maxlength="45" placeholder="Earth — Luna Express" required>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">02</span>
+                    <div>
+                        <h3>Spaceports</h3>
+                        <p>Select the origin and destination for this route.</p>
+                    </div>
+                </div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-field">
+                        <label for="route-origin">Origin</label>
+                        <select id="route-origin" name="originSpaceportId" required>
+                            <option value="">Select origin</option>
+                            <option value="1">EOH · Earth Orbital Hub</option>
+                            <option value="2">LBO · Luna Base One</option>
+                            <option value="3">MGW · Mars Gateway</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-field">
+                        <label for="route-destination">Destination</label>
+                        <select id="route-destination" name="destinationSpaceportId" required>
+                            <option value="">Select destination</option>
+                            <option value="1">EOH · Earth Orbital Hub</option>
+                            <option value="2">LBO · Luna Base One</option>
+                            <option value="3">MGW · Mars Gateway</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">03</span>
+                    <div>
+                        <h3>Distance</h3>
+                        <p>Set the route distance used for operational planning.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="route-distance">Distance</label>
+                    <input type="number" id="route-distance" name="distance" min="0.01" step="0.01" placeholder="384400" required>
+                    <p class="admin-field-meta">Distance in kilometres.</p>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">04</span>
+                    <div>
+                        <h3>Description</h3>
+                        <p>Add useful operational context for administrators.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="route-description">Description</label>
+                    <textarea id="route-description" name="description" rows="6" placeholder="Direct passenger corridor between Earth orbit and Luna."></textarea>
+                </div>
+            </section>
+        </div>
+        <footer class="admin-flight-form-footer">
+            <div>
+                <strong>Ready to create the route?</strong>
+                <span>The route will become available for future flight scheduling.</span>
+            </div>
+            <div class="admin-flight-form-actions">
+                <a href="#routes" class="admin-button admin-button-secondary">Cancel</a>
+                <button type="submit" class="admin-button admin-button-primary"><span>+</span>Create route</button>
+            </div>
+        </footer>
+    </form>
+    <aside class="admin-panel admin-flight-preview">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">PREVIEW</p>
+                <h2>Network link</h2>
+            </div>
+        </header>
+        <div class="admin-flight-preview-body">
+            <div class="admin-flight-preview-route">
+                <strong>—</strong>
+                <div><span>→</span><small>ROUTE</small></div>
+                <strong>—</strong>
+            </div>
+            <div class="admin-flight-preview-details">
+                <div><span>Name</span><strong>Not set</strong></div>
+                <div><span>Origin</span><strong>Not set</strong></div>
+                <div><span>Destination</span><strong>Not set</strong></div>
+                <div><span>Distance</span><strong>Not set</strong></div>
+            </div>
+            <div class="admin-flight-preview-status">
+                <span class="admin-status admin-status-scheduled">New route</span>
+                <p>This preview will become dynamic when page JavaScript is added.</p>
+            </div>
+        </div>
+    </aside>
+</section>

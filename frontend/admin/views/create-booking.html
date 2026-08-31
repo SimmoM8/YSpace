@@ -1,0 +1,123 @@
+<section class="admin-page-header admin-create-flight-header">
+    <div>
+        <p class="admin-page-kicker">COMMERCIAL OPERATIONS</p>
+        <h1>Create <span>booking.</span></h1>
+        <p class="admin-page-description">Create a passenger reservation by selecting an existing customer and an available scheduled YSpace flight.</p>
+    </div>
+    <div class="admin-page-header-actions">
+        <a href="#bookings" class="admin-button admin-button-secondary">Cancel</a>
+    </div>
+</section>
+
+<section class="admin-create-flight-layout">
+    <form id="create-booking-form" class="admin-panel admin-flight-form">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">NEW RESERVATION</p>
+                <h2>Booking details</h2>
+            </div>
+        </header>
+        <div class="admin-flight-form-body">
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">01</span>
+                    <div>
+                        <h3>Passenger</h3>
+                        <p>Select the registered passenger who owns this booking.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="booking-passenger">Passenger</label>
+                    <select id="booking-passenger" name="userId" required>
+                        <option value="">Select passenger</option>
+                        <option value="184">Amelia Carter · amelia@example.com</option>
+                        <option value="231">Oliver Hayes · oliver@example.com</option>
+                        <option value="296">Sophia Bennett · sophia@example.com</option>
+                    </select>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">02</span>
+                    <div>
+                        <h3>Flight</h3>
+                        <p>Select the scheduled service to reserve for the passenger.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="booking-flight">Flight</label>
+                    <select id="booking-flight" name="flightId" required>
+                        <option value="">Select flight</option>
+                        <option value="204">YS-204 · EOH → LBO · 02 Sep 2026 14:30</option>
+                        <option value="301">YS-301 · EOH → MGW · 18 Sep 2026 07:20</option>
+                        <option value="207">YS-207 · LBO → EOH · 21 Sep 2026 18:15</option>
+                    </select>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">03</span>
+                    <div>
+                        <h3>Fare</h3>
+                        <p>The current booking model uses the selected flight's base price.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="booking-price">Booking price</label>
+                    <input type="text" id="booking-price" value="Calculated from selected flight" disabled>
+                    <p class="admin-field-meta">This field becomes dynamic when booking JavaScript is implemented.</p>
+                </div>
+            </section>
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">04</span>
+                    <div>
+                        <h3>Status</h3>
+                        <p>New bookings are initially created as open.</p>
+                    </div>
+                </div>
+                <div class="admin-form-field">
+                    <label for="booking-status">Initial status</label>
+                    <select id="booking-status" disabled>
+                        <option value="OPEN" selected>Open</option>
+                    </select>
+                </div>
+            </section>
+        </div>
+        <footer class="admin-flight-form-footer">
+            <div>
+                <strong>Ready to create the booking?</strong>
+                <span>The reservation will be associated with the selected passenger and flight.</span>
+            </div>
+            <div class="admin-flight-form-actions">
+                <a href="#bookings" class="admin-button admin-button-secondary">Cancel</a>
+                <button type="submit" class="admin-button admin-button-primary"><span>+</span>Create booking</button>
+            </div>
+        </footer>
+    </form>
+    <aside class="admin-panel admin-flight-preview">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">PREVIEW</p>
+                <h2>Reservation</h2>
+            </div>
+        </header>
+        <div class="admin-flight-preview-body">
+            <div class="admin-flight-preview-route">
+                <strong>—</strong>
+                <div><span>→</span><small>FLIGHT</small></div>
+                <strong>—</strong>
+            </div>
+            <div class="admin-flight-preview-details">
+                <div><span>Passenger</span><strong>Not selected</strong></div>
+                <div><span>Flight</span><strong>Not selected</strong></div>
+                <div><span>Departure</span><strong>Not set</strong></div>
+                <div><span>Price</span><strong>Not set</strong></div>
+            </div>
+            <div class="admin-flight-preview-status">
+                <span class="admin-status admin-status-confirmed">Open</span>
+                <p>This preview will become dynamic when page JavaScript is added.</p>
+            </div>
+        </div>
+    </aside>
+</section>
