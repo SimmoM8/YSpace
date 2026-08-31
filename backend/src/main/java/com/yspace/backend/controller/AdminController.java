@@ -1,9 +1,6 @@
 package com.yspace.backend.controller;
 
-import com.yspace.backend.dto.admin.AdminBookingResponseDto;
-import com.yspace.backend.dto.admin.AdminSpacecraftResponseDto;
-import com.yspace.backend.dto.admin.AdminSpaceportResponseDto;
-import com.yspace.backend.dto.admin.AdminUserResponseDto;
+import com.yspace.backend.dto.admin.*;
 import com.yspace.backend.dto.flight.AdminFlightResponseDto;
 import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
 import com.yspace.backend.dto.flight.ScheduleFlightRequestDto;
@@ -11,6 +8,7 @@ import com.yspace.backend.dto.flight.UpdateFlightRequestDto;
 import com.yspace.backend.dto.route.AdminRouteResponseDto;
 import com.yspace.backend.dto.route.CreateRouteRequestDto;
 import com.yspace.backend.dto.route.RouteAdminResponseDto;
+import com.yspace.backend.dto.spacecraft.CreateSpacecraftRequestDto;
 import com.yspace.backend.dto.spaceport.CreateSpaceportRequestDto;
 import com.yspace.backend.model.Flight;
 import com.yspace.backend.service.AdminService;
@@ -54,13 +52,6 @@ public class AdminController {
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(routeService.createRoute(request));
-    }
-
-    @GetMapping("/spacecraft")
-    public ResponseEntity<List<AdminSpacecraftResponseDto>> getSpacecraft() {
-        return ResponseEntity.ok(
-                spacecraftService.getAdminSpacecraft()
-        );
     }
 
     @GetMapping("/flights")
@@ -134,5 +125,28 @@ public class AdminController {
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(adminService.createSpaceport(request));
+    }
+
+    @GetMapping("/spacecraft")
+    public ResponseEntity<List<AdminSpacecraftResponseDto>> getSpacecraft() {
+        return ResponseEntity.ok(
+                spacecraftService.getAdminSpacecraft()
+        );
+    }
+
+    @GetMapping("/spacecraft-models")
+    public ResponseEntity<List<AdminSpacecraftModelResponseDto>>
+    getSpacecraftModels() {
+        return ResponseEntity.ok(
+                spacecraftService.getAdminSpacecraftModels()
+        );
+    }
+
+    @PostMapping("/spacecraft")
+    public ResponseEntity<AdminSpacecraftResponseDto> createSpacecraft(
+            @Valid @RequestBody CreateSpacecraftRequestDto request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(spacecraftService.createSpacecraft(request));
     }
 }

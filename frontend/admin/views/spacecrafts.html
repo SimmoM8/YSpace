@@ -1,25 +1,166 @@
 <section class="admin-page-header">
-    <div>
-        <p class="admin-page-kicker">FLEET OPERATIONS</p>
-        <h1>Manage <span>spacecraft.</span></h1>
-        <p class="admin-page-description">Review spacecraft availability, operational condition and fleet specifications across YSpace passenger operations.</p>
-    </div>
-    <div class="admin-page-header-actions"><a href="#create-spacecraft" class="admin-button admin-button-primary"><span>+</span>Add spacecraft</a></div>
+  <div>
+    <p class="admin-page-kicker">FLEET OPERATIONS</p>
+
+    <h1>
+      Manage
+      <span>spacecraft.</span>
+    </h1>
+
+    <p class="admin-page-description">
+      Review spacecraft availability, operational condition and fleet
+      specifications across YSpace passenger operations.
+    </p>
+  </div>
+
+  <div class="admin-page-header-actions">
+    <a href="#create-spacecraft" class="admin-button admin-button-primary">
+      <span>+</span>
+      Add spacecraft
+    </a>
+  </div>
 </section>
+
+<!-- =============================================================
+     SUMMARY
+============================================================== -->
+
 <section class="admin-flight-stats" aria-label="Fleet overview">
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Fleet size</span><strong>14</strong><small>Registered spacecraft</small></article>
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Operational</span><strong>11</strong><small>Available to the network</small></article>
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">In service</span><strong>07</strong><small>Currently assigned</small></article>
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Maintenance</span><strong>03</strong><small>Unavailable spacecraft</small></article>
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label"> Fleet size </span>
+
+    <strong data-spacecraft-stat="total"> — </strong>
+
+    <small> Registered spacecraft </small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label"> Operational </span>
+
+    <strong data-spacecraft-stat="operational"> — </strong>
+
+    <small> Available to the network </small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label"> In service </span>
+
+    <strong data-spacecraft-stat="service"> — </strong>
+
+    <small> Currently operating </small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label"> Maintenance </span>
+
+    <strong data-spacecraft-stat="maintenance"> — </strong>
+
+    <small> Under maintenance </small>
+  </article>
 </section>
-<section class="admin-flight-toolbar"><form class="admin-flight-filters">
-    <div class="admin-filter-search"><label for="spacecraft-search">Search</label><input type="search" id="spacecraft-search" name="search" placeholder="Spacecraft, model or manufacturer"></div>
-    <div class="admin-filter-group"><label for="spacecraft-status-filter">Status</label><select id="spacecraft-status-filter" name="status"><option value="">All statuses</option><option value="PARKED">Parked</option><option value="BOARDING">Boarding</option><option value="CRUISING">Cruising</option><option value="UNDER_MAINTENANCE">Under maintenance</option><option value="RETIRED">Retired</option></select></div>
-    <div class="admin-filter-group"><label for="spacecraft-operation-filter">Operation</label><select id="spacecraft-operation-filter" name="operational"><option value="">All spacecraft</option><option value="true">Operational</option><option value="false">Unavailable</option></select></div>
-    <button type="submit" class="admin-button admin-button-secondary admin-filter-button">Apply filters</button>
-</form></section>
-<section class="admin-panel admin-flight-management-panel"><header class="admin-panel-header admin-flight-table-header"><div><p class="admin-panel-kicker">FLEET</p><h2>Spacecraft</h2></div><div class="admin-table-result-count">14 spacecraft</div></header><div class="admin-table-wrapper"><table class="admin-table admin-flight-table"><thead><tr><th>Spacecraft</th><th>Model</th><th>Manufacturer</th><th>Capacity</th><th>Status</th><th>Operational</th><th></th></tr></thead><tbody>
-<tr><td><strong>Helios XR-04</strong><small>Craft ID 04</small></td><td><strong>Helios XR</strong></td><td><span>YSpace Aerospace</span></td><td><strong>84</strong><small>Passenger seats</small></td><td><span class="admin-status admin-status-active">Boarding</span></td><td><span class="admin-status admin-status-confirmed">Operational</span></td><td><button type="button" class="admin-row-action" aria-label="View Helios XR-04">→</button></td></tr>
-<tr><td><strong>Helios XR-07</strong><small>Craft ID 07</small></td><td><strong>Helios XR</strong></td><td><span>YSpace Aerospace</span></td><td><strong>84</strong><small>Passenger seats</small></td><td><span class="admin-status admin-status-scheduled">Parked</span></td><td><span class="admin-status admin-status-confirmed">Operational</span></td><td><button type="button" class="admin-row-action" aria-label="View Helios XR-07">→</button></td></tr>
-<tr><td><strong>Asteria LX-02</strong><small>Craft ID 11</small></td><td><strong>Asteria LX</strong></td><td><span>Orbital Dynamics</span></td><td><strong>126</strong><small>Passenger seats</small></td><td><span class="admin-status admin-status-cancelled">Under maintenance</span></td><td><span class="admin-status admin-status-cancelled">Unavailable</span></td><td><button type="button" class="admin-row-action" aria-label="View Asteria LX-02">→</button></td></tr>
-</tbody></table></div></section>
+
+<!-- =============================================================
+     FILTERS
+============================================================== -->
+
+<section class="admin-flight-toolbar">
+  <form class="admin-flight-filters">
+    <div class="admin-filter-search">
+      <label for="spacecraft-search"> Search </label>
+
+      <input
+        type="search"
+        id="spacecraft-search"
+        name="search"
+        placeholder="Spacecraft, model or manufacturer"
+      />
+    </div>
+
+    <div class="admin-filter-group">
+      <label for="spacecraft-status-filter"> Status </label>
+
+      <select id="spacecraft-status-filter" name="status">
+        <option value="">All statuses</option>
+
+        <option value="UNDER_MAINTENANCE">Under maintenance</option>
+
+        <option value="RETIRED">Retired</option>
+
+        <option value="LAUNCHING">Launching</option>
+
+        <option value="EXITING">Exiting</option>
+
+        <option value="ORBITING">Orbiting</option>
+
+        <option value="CRUISING">Cruising</option>
+
+        <option value="ENTERING">Entering</option>
+
+        <option value="LANDING">Landing</option>
+
+        <option value="PARKING">Parking</option>
+
+        <option value="PARKED">Parked</option>
+
+        <option value="BOARDING">Boarding</option>
+      </select>
+    </div>
+
+    <div class="admin-filter-group">
+      <label for="spacecraft-operation-filter"> Operation </label>
+
+      <select id="spacecraft-operation-filter" name="operational">
+        <option value="">All spacecraft</option>
+
+        <option value="true">Operational</option>
+
+        <option value="false">Unavailable</option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="admin-button admin-button-secondary admin-filter-button"
+    >
+      Apply filters
+    </button>
+  </form>
+</section>
+
+<!-- =============================================================
+     SPACECRAFT TABLE
+============================================================== -->
+
+<section class="admin-panel admin-flight-management-panel">
+  <header class="admin-panel-header admin-flight-table-header">
+    <div>
+      <p class="admin-panel-kicker">FLEET</p>
+
+      <h2>Spacecraft</h2>
+    </div>
+
+    <div class="admin-table-result-count">Loading...</div>
+  </header>
+
+  <div class="admin-table-wrapper">
+    <table class="admin-table admin-flight-table">
+      <thead>
+        <tr>
+          <th>Spacecraft</th>
+          <th>Model</th>
+          <th>Manufacturer</th>
+          <th>Capacity</th>
+          <th>Status</th>
+          <th>Operational</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td colspan="7" class="admin-table-empty">Loading spacecraft...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
