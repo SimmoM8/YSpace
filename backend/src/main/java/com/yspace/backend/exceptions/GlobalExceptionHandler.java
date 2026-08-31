@@ -6,9 +6,31 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+        @ExceptionHandler(MissingServletRequestParameterException.class)
+        public ResponseEntity<String> handleMissingRequestParameter(
+                        MissingServletRequestParameterException exception
+        ) {
+                return new ResponseEntity<>(
+                                "Missing required parameter: " + exception.getParameterName(),
+                                HttpStatus.BAD_REQUEST
+                );
+        }
+
+        @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+        public ResponseEntity<String> handleInvalidRequestParameter(
+                        MethodArgumentTypeMismatchException exception
+        ) {
+                return new ResponseEntity<>(
+                                "Invalid value for parameter: " + exception.getName(),
+                                HttpStatus.BAD_REQUEST
+                );
+        }
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<String> handleBadCredentialsException(
             BadCredentialsException e

@@ -94,8 +94,7 @@ searchForm.addEventListener("submit", (event) => {
 function performSearch() {
     const originId = originHiddenInput.value;
     const destinationId = destinationHiddenInput.value;
-    const dateInput = searchForm.querySelector('[name="departure-date"]');
-    const date = dateInput ? dateInput.value : "";
+    const date = dateInput.value;
 
     if (!originId || !destinationId) {
         return;
@@ -104,7 +103,7 @@ function performSearch() {
     const params = new URLSearchParams();
     params.set("originId", originId);
     params.set("destinationId", destinationId);
-    if (date) params.set("date", date);
+    params.set("date", date);
 
     window.location.href = `/flights.html?${params.toString()}`;
 }
@@ -122,17 +121,6 @@ async function fetchSpaceports(keyword) {
     } catch (error) {
         console.error("Error loading spaceports:", error);
         return "";
-    }
-}
-
-async function fetchRoutes() {
-    try {
-        const base = "http://localhost:8081";
-        const response = await fetch(`${base}/routes`);
-        return await response.json();
-    } catch (error) {
-        console.error("Error loading routes:", error);
-        return [];
     }
 }
 
