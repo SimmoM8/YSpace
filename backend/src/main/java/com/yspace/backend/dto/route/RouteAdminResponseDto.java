@@ -1,4 +1,4 @@
-package com.yspace.backend.dto;
+package com.yspace.backend.dto.route;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

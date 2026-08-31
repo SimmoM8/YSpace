@@ -1,0 +1,252 @@
+<section class="admin-page-header admin-create-flight-header">
+    <div>
+        <p class="admin-page-kicker">FLIGHT OPERATIONS</p>
+
+        <h1>
+            Schedule
+            <span>flight.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            Create a scheduled passenger service by assigning a route, spacecraft,
+            timetable and passenger fare.
+        </p>
+    </div>
+
+    <div class="admin-page-header-actions">
+        <a href="#flights" class="admin-button admin-button-secondary">
+            Cancel
+        </a>
+    </div>
+</section>
+
+<section class="admin-create-flight-layout">
+    <form id="schedule-flight-form" class="admin-panel admin-flight-form">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">NEW OPERATION</p>
+                <h2>Flight details</h2>
+            </div>
+        </header>
+
+        <div class="admin-flight-form-body">
+      <!-- =================================================
+                 ROUTE
+            ================================================== -->
+
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">01</span>
+
+                    <div>
+                        <h3>Route</h3>
+                        <p>Select the YSpace route this flight will operate.</p>
+                    </div>
+                </div>
+
+                <div class="admin-form-field">
+                    <label for="schedule-route">Route</label>
+
+                    <select id="schedule-route" name="routeId" required>
+                        <option value="">Loading routes...</option>
+                    </select>
+
+                    <p class="admin-field-meta" id="schedule-route-meta">
+                        Select an available route.
+                    </p>
+                </div>
+            </section>
+
+      <!-- =================================================
+                 SPACECRAFT
+            ================================================== -->
+
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">02</span>
+
+                    <div>
+                        <h3>Spacecraft</h3>
+                        <p>Assign the spacecraft that will operate this service.</p>
+                    </div>
+                </div>
+
+                <div class="admin-form-field">
+                    <label for="schedule-spacecraft">Spacecraft</label>
+
+                    <select id="schedule-spacecraft" name="spacecraftId" required>
+                        <option value="">Loading spacecraft...</option>
+                    </select>
+
+                    <p class="admin-field-meta" id="schedule-spacecraft-meta">
+                        Select an operational spacecraft.
+                    </p>
+                </div>
+            </section>
+
+      <!-- =================================================
+                 SCHEDULE
+            ================================================== -->
+
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">03</span>
+
+                    <div>
+                        <h3>Schedule</h3>
+                        <p>Define the planned departure and arrival times.</p>
+                    </div>
+                </div>
+
+                <div class="admin-form-grid">
+                    <div class="admin-form-field">
+                        <label for="schedule-departure">Departure</label>
+
+                        <input
+                            type="datetime-local"
+                            id="schedule-departure"
+                            name="departureTime"
+                            required
+                        >
+                    </div>
+
+                    <div class="admin-form-field">
+                        <label for="schedule-arrival">Arrival</label>
+
+                        <input
+                            type="datetime-local"
+                            id="schedule-arrival"
+                            name="arrivalTime"
+                            required
+                        >
+                    </div>
+                </div>
+            </section>
+
+      <!-- =================================================
+                 MESSAGE
+            ================================================== -->
+
+            <section class="admin-form-section">
+                <div class="admin-form-section-heading">
+                    <span class="admin-form-section-number">04</span>
+
+                    <div>
+                        <h3>Fare</h3>
+                        <p>Set the base passenger price for this flight.</p>
+                    </div>
+                </div>
+
+                <div class="admin-form-field">
+                    <label for="schedule-base-price">Base price</label>
+
+                    <input
+                        type="number"
+                        id="schedule-base-price"
+                        name="basePrice"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                        required
+                    >
+
+                    <p class="admin-field-meta">
+                        Price per passenger in SEK.
+                    </p>
+                </div>
+            </section>
+
+            <div
+                id="schedule-flight-message"
+                class="admin-form-message"
+                role="alert"
+                aria-live="polite"
+            ></div>
+        </div>
+
+        <footer class="admin-flight-form-footer">
+            <div>
+                <strong>Ready to schedule?</strong>
+                <span>The flight will initially be created as scheduled.</span>
+            </div>
+
+            <div class="admin-flight-form-actions">
+                <a href="#flights" class="admin-button admin-button-secondary">
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="admin-button admin-button-primary"
+                    id="schedule-flight-submit"
+                >
+                    <span>+</span>
+                    Schedule flight
+                </button>
+            </div>
+        </footer>
+    </form>
+
+  <!-- =========================================================
+         SUMMARY
+    ========================================================== -->
+
+    <aside class="admin-panel admin-flight-preview">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">PREVIEW</p>
+                <h2>Operation</h2>
+            </div>
+        </header>
+
+        <div class="admin-flight-preview-body">
+            <div class="admin-flight-preview-route">
+                <strong id="preview-origin-code">—</strong>
+
+                <div>
+                    <span>→</span>
+                    <small>ROUTE</small>
+                </div>
+
+                <strong id="preview-destination-code">—</strong>
+            </div>
+
+            <div class="admin-flight-preview-details">
+                <div>
+                    <span>Departure</span>
+                    <strong id="preview-departure">Not set</strong>
+                </div>
+
+                <div>
+                    <span>Arrival</span>
+                    <strong id="preview-arrival">Not set</strong>
+                </div>
+
+                <div>
+                    <span>Spacecraft</span>
+                    <strong id="preview-spacecraft">Not assigned</strong>
+                </div>
+
+                <div>
+                    <span>Capacity</span>
+                    <strong id="preview-capacity">—</strong>
+                </div>
+
+                <div>
+                    <span>Base price</span>
+                    <strong id="preview-base-price">Not set</strong>
+                </div>
+            </div>
+
+            <div class="admin-flight-preview-status">
+                <span class="admin-status admin-status-scheduled">
+                    Scheduled
+                </span>
+
+                <p>
+                    Flight number will be assigned when the operation is created.
+                </p>
+            </div>
+        </div>
+    </aside>
+</section>
