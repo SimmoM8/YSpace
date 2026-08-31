@@ -17,6 +17,14 @@ import {
 } from "./pages/spacecraft.js";
 import { initBookingsPage } from "./pages/bookings.js";
 import { initUsersPage } from "./pages/users.js";
+import {
+    bindFlightEditor,
+    bindRouteEditor,
+    bindSpaceportEditor,
+    bindSpacecraftEditor,
+    bindBookingEditor,
+    bindUserEditor,
+} from "./components/admin-entity-editors.js";
 
 const adminContent = document.getElementById("admin-content");
 
@@ -95,10 +103,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    bindEntityEditors();
+
     window.addEventListener("hashchange", handleRoute);
 
     await Promise.all([handleRoute(), loadNavigationCounts()]);
 });
+
+function bindEntityEditors() {
+    bindFlightEditor();
+    bindRouteEditor();
+    bindSpaceportEditor();
+    bindSpacecraftEditor();
+    bindBookingEditor();
+    bindUserEditor();
+}
 
 async function loadNavigationCounts() {
     try {

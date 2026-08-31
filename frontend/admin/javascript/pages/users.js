@@ -15,6 +15,7 @@ export async function initUsersPage() {
         return;
     }
 
+    ensureActionColumn();
     bindUserFilters();
     await loadUsers();
 }
@@ -118,6 +119,22 @@ function matchesBookingFilter(user, filter) {
    USER TABLE
 ================================================================ */
 
+function ensureActionColumn() {
+    const headerRow = document.querySelector(
+        ".admin-flight-table thead tr",
+    );
+
+    if (!headerRow || headerRow.querySelector("[data-user-action-column]")) {
+        return;
+    }
+
+    const header = document.createElement("th");
+    header.dataset.userActionColumn = "";
+    header.setAttribute("aria-label", "Actions");
+
+    headerRow.append(header);
+}
+
 function renderUsers(userList) {
     const tableBody = document.querySelector(
         ".admin-flight-table tbody",
@@ -142,7 +159,7 @@ function renderUsers(userList) {
     if (userList.length === 0) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="admin-table-empty">
+                <td colspan="7" class="admin-table-empty">
                     No members found.
                 </td>
             </tr>
@@ -194,9 +211,9 @@ function createUserRow(user) {
 
                 <small>
                     ${bookingCount === 1
-            ? "Total booking"
-            : "Total bookings"
-        }
+                        ? "Total booking"
+                        : "Total bookings"
+                    }
                 </small>
             </td>
 
@@ -214,6 +231,17 @@ function createUserRow(user) {
                 <strong>
                     ${formatDate(user.createdAt)}
                 </strong>
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="admin-row-action"
+                    aria-label="View ${escapeHtml(getFullName(user))}"
+                    data-user-id="${escapeHtml(user.id)}"
+                >
+                    →
+                </button>
             </td>
         </tr>
     `;
@@ -298,7 +326,7 @@ function showUsersError(message) {
     if (tableBody) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="admin-table-empty">
+                <td colspan="7" class="admin-table-empty">
                     ${escapeHtml(message)}
                 </td>
             </tr>
