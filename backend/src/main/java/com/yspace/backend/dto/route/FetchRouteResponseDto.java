@@ -1,4 +1,4 @@
-package com.yspace.backend.dto;
+package com.yspace.backend.dto.route;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

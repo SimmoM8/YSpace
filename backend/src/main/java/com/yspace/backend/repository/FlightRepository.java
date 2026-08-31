@@ -29,5 +29,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("startOfNextDay") LocalDateTime startOfNextDay
     );
 
+    List<Flight> findAllByOrderByDepartureTimeDesc();
+
     boolean existsByCode(String code);
 }

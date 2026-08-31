@@ -554,6 +554,98 @@ h3 {
     box-shadow: 0 0 16px rgba(217, 255, 67, 0.6);
 }
 
+/* ================================================================
+   SEARCH OPTIONS
+================================================================ */
+
+.search-input-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+.search-options-list {
+    position: absolute;
+    z-index: 1000;
+    top: calc(100% + 12px);
+    right: 0;
+    left: 0;
+
+    max-height: 260px;
+
+    margin: 0;
+    padding: 6px;
+
+    overflow-y: auto;
+
+    list-style: none;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+
+    background: var(--color-white);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.14),
+        0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.search-options-list:empty {
+    display: none;
+}
+
+.search-options-list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 44px;
+
+    padding: 9px 11px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    color: var(--color-text);
+
+    font-size: 0.82rem;
+    line-height: 1.35;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.search-options-list-item:hover,
+.search-options-list-item:focus-visible,
+.search-options-list-item[aria-selected="true"] {
+    outline: none;
+
+    background: var(--color-off-white);
+}
+
+.search-options-code {
+    flex: 0 0 42px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.search-options-name {
+    min-width: 0;
+
+    overflow: hidden;
+
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 
 /* ================================================================
    FLIGHT SEARCH
@@ -594,13 +686,15 @@ h3 {
 }
 
 .search-fields {
+    position: relative;
+
     display: grid;
     grid-template-columns:
         minmax(170px, 1fr) 1px minmax(190px, 1fr) 1px minmax(160px, 0.7fr) auto;
 
     align-items: stretch;
 
-    overflow: hidden;
+    overflow: visible;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-small);
@@ -609,10 +703,13 @@ h3 {
 }
 
 .search-field {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
 
+    min-width: 0;
     min-height: 94px;
 
     padding: 18px 24px;
@@ -629,8 +726,42 @@ h3 {
     text-transform: uppercase;
 }
 
-.search-field strong {
+.search-input-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+.search-input-wrapper>input[type="text"],
+.search-field>input[type="date"] {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    height: auto;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+
+    background: transparent;
+    color: var(--color-text);
+
     font-size: 0.94rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.search-input-wrapper>input[type="text"]::placeholder {
+    color: #9b9fa3;
+    opacity: 1;
+}
+
+.search-input-wrapper>input[type="text"]:focus,
+.search-field>input[type="date"]:focus {
+    outline: none;
 }
 
 .search-field small {
@@ -650,11 +781,50 @@ h3 {
     background: var(--color-border);
 }
 
+.search-reverse-button {
+    width: 34px;
+    height: 34px;
+
+    align-self: center;
+    justify-self: center;
+
+    padding: 0;
+
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+
+    background: var(--color-white);
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    font-size: 1rem;
+    line-height: 1;
+
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.search-reverse-button:hover,
+.search-reverse-button:focus-visible {
+    border-color: var(--color-text);
+    outline: none;
+
+    color: var(--color-text);
+    transform: rotate(180deg);
+}
+
 .button-search {
     margin: 8px;
 
+    border: 0;
+
     background: var(--color-space);
     color: var(--color-white);
+
+    cursor: pointer;
 }
 
 
@@ -1956,6 +2126,28 @@ h3 {
     margin-bottom: 0;
 
     font-size: 0.76rem;
+}
+
+.auth-form-message--error {
+    display: block;
+
+    color: #ff4d4d;
+    margin-top: 8px;
+}
+
+.register-message {
+    display: none;
+
+    margin-bottom: 0;
+
+    font-size: 0.76rem;
+}
+
+.register-message--error {
+    display: block;
+
+    color: #ff4d4d;
+    margin-top: 8px;
 }
 
 

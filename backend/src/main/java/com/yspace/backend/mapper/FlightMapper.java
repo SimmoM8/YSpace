@@ -1,5 +1,6 @@
 package com.yspace.backend.mapper;
 
+import com.yspace.backend.dto.flight.AdminFlightResponseDto;
 import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
 import com.yspace.backend.dto.flight.FlightSearchResponseDto;
 import com.yspace.backend.model.Flight;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FlightMapper {
-
 
     public FlightSearchResponseDto toSearchDto(Flight flight) {
         return new FlightSearchResponseDto(
@@ -27,6 +27,7 @@ public class FlightMapper {
                 flight.getArrivalTime()
         );
     }
+
 
     public FlightDetailsResponseDto toDetailsDto(Flight flight) {
         return new FlightDetailsResponseDto(
@@ -55,6 +56,49 @@ public class FlightMapper {
                 flight.getSpacecraft().getModel().getManufacturer(),
 
                 flight.getBasePrice(),
+                flight.getDepartureTime(),
+                flight.getArrivalTime()
+        );
+    }
+
+
+    public AdminFlightResponseDto toAdminDto(
+            Flight flight,
+            long bookedSeats
+    ) {
+        int seatCapacity = flight.getAvailableSeats();
+
+        long remainingSeats = Math.max(
+                seatCapacity - bookedSeats,
+                0
+        );
+
+        return new AdminFlightResponseDto(
+                flight.getId(),
+                flight.getCode(),
+
+                flight.getStatus().name(),
+                flight.getDelayed(),
+
+                flight.getRoute().getName(),
+
+                flight.getRoute().getOriginSpaceport().getName(),
+
+                flight.getRoute().getOriginSpaceport().getCode(),
+
+                flight.getRoute().getDestinationSpaceport().getName(),
+
+                flight.getRoute().getDestinationSpaceport().getCode(),
+
+                flight.getSpacecraft().getName(),
+                flight.getSpacecraft().getModel().getName(),
+
+                seatCapacity,
+                bookedSeats,
+                remainingSeats,
+
+                flight.getBasePrice(),
+
                 flight.getDepartureTime(),
                 flight.getArrivalTime()
         );

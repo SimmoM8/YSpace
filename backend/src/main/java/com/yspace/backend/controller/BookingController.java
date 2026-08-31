@@ -3,7 +3,7 @@ package com.yspace.backend.controller;
 import com.yspace.backend.dto.booking.BookingDetailsResponseDto;
 import com.yspace.backend.dto.booking.BookingRowDetailsResponseDto;
 import com.yspace.backend.dto.booking.BookingSummaryResponseDto;
-import com.yspace.backend.dto.CreateBookingRequestDto;
+import com.yspace.backend.dto.booking.CreateBookingRequestDto;
 import com.yspace.backend.service.BookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
