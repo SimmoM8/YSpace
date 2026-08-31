@@ -23,7 +23,6 @@ import java.util.Locale;
 @Service
 @RequiredArgsConstructor
 public class AdminService {
-
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final SpaceportRepository spaceportRepository;

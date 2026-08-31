@@ -1,8 +1,6 @@
 const API_BASE = "http://localhost:8081/api";
 
-
 export class ApiError extends Error {
-
     constructor(message, status, code) {
         super(message);
 
@@ -26,15 +24,12 @@ async function apiFetch(url, options = {}) {
             }
         });
 
-
         if (!response.ok) {
-
             const errorMessage = await readErrorMessage(response);
 
             if (response.status === 401 && token !== null) {
                 localStorage.removeItem("token");
             }
-
 
             throw new ApiError(
                 errorMessage,
@@ -42,7 +37,6 @@ async function apiFetch(url, options = {}) {
                 getErrorCode(response.status)
             );
         }
-
 
         return response;
     } catch (error) {
@@ -57,7 +51,6 @@ async function apiFetch(url, options = {}) {
         );
     }
 }
-
 
 async function readErrorMessage(response) {
     const contentType = response.headers.get("content-type") || "";
@@ -109,7 +102,6 @@ function getErrorCode(status) {
     }
 }
 
-
 /* ================================================================
    AUTHENTICATED REQUESTS
 ================================================================ */
@@ -123,7 +115,6 @@ export function apiGet(url) {
     );
 }
 
-
 export function apiPost(url, data) {
     return apiFetch(
         url,
@@ -134,7 +125,6 @@ export function apiPost(url, data) {
     );
 }
 
-
 export function apiPut(url, data) {
     return apiFetch(
         url,
@@ -144,7 +134,6 @@ export function apiPut(url, data) {
         }
     );
 }
-
 
 export function apiPatch(url, data) {
     return apiFetch(
@@ -158,7 +147,6 @@ export function apiPatch(url, data) {
         }
     );
 }
-
 
 export function apiDelete(url) {
     return apiFetch(

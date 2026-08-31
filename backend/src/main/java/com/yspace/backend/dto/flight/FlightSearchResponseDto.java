@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlightSearchResponseDto {
-
     private Integer id;
     private String code;
 

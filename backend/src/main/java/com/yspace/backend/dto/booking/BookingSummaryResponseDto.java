@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingSummaryResponseDto {
-
     private Integer bookingId;
     private String status;
 

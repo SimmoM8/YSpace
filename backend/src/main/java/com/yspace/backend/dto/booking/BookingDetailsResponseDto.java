@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDetailsResponseDto {
-
     private Integer bookingId;
     private String status;
 

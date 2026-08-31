@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping("/api/routes")
 @RequiredArgsConstructor
 public class RouteController {
-
     private final RouteService routeService;
 
     @GetMapping

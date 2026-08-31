@@ -1953,7 +1953,6 @@ body.admin-page {
     text-align: center;
 }
 
-
 .admin-view-error {
     padding: 40px;
 
@@ -1963,13 +1962,11 @@ body.admin-page {
     background: var(--admin-surface);
 }
 
-
 .admin-view-error h2 {
     margin-bottom: 14px;
 
     font-size: 2rem;
 }
-
 
 .admin-view-error>p:last-child {
     max-width: 520px;
@@ -1981,7 +1978,6 @@ body.admin-page {
     line-height: 1.7;
 }
 
-
 .admin-table-empty {
     height: 120px !important;
 
@@ -1989,7 +1985,6 @@ body.admin-page {
 
     text-align: center;
 }
-
 
 .admin-table-error {
     color: var(--admin-danger);
@@ -2003,7 +1998,6 @@ body.admin-page {
     margin-bottom: 32px;
 }
 
-
 .admin-create-flight-layout {
     display: grid;
     grid-template-columns:
@@ -2013,7 +2007,6 @@ body.admin-page {
     align-items: start;
 }
 
-
 /* ================================================================
    FORM
 ================================================================ */
@@ -2022,11 +2015,9 @@ body.admin-page {
     overflow: hidden;
 }
 
-
 .admin-flight-form-body {
     padding-inline: 24px;
 }
-
 
 .admin-form-section {
     display: grid;
@@ -2041,18 +2032,15 @@ body.admin-page {
         1px solid var(--admin-border);
 }
 
-
 .admin-form-section:last-of-type {
     border-bottom: 0;
 }
-
 
 .admin-form-section-heading {
     display: grid;
     grid-template-columns: 32px minmax(0, 1fr);
     gap: 10px;
 }
-
 
 .admin-form-section-number {
     padding-top: 3px;
@@ -2064,14 +2052,12 @@ body.admin-page {
     letter-spacing: 0.1em;
 }
 
-
 .admin-form-section-heading h3 {
     margin-bottom: 8px;
 
     font-size: 1rem;
     letter-spacing: -0.02em;
 }
-
 
 .admin-form-section-heading p {
     max-width: 240px;
@@ -2083,18 +2069,15 @@ body.admin-page {
     line-height: 1.6;
 }
 
-
 .admin-form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
-
 .admin-form-field {
     min-width: 0;
 }
-
 
 .admin-form-field label {
     display: block;
@@ -2108,7 +2091,6 @@ body.admin-page {
     letter-spacing: 0.05em;
     text-transform: uppercase;
 }
-
 
 .admin-form-field input,
 .admin-form-field select {
@@ -2133,12 +2115,10 @@ body.admin-page {
         background var(--transition-fast);
 }
 
-
 .admin-form-field input:hover,
 .admin-form-field select:hover {
     border-color: #b7bbb7;
 }
-
 
 .admin-form-field input:focus,
 .admin-form-field select:focus {
@@ -2150,13 +2130,11 @@ body.admin-page {
         0 0 0 3px rgba(21, 24, 27, 0.05);
 }
 
-
 .admin-form-field select:disabled {
     opacity: 0.55;
 
     cursor: not-allowed;
 }
-
 
 .admin-field-meta {
     margin: 8px 2px 0;
@@ -2166,7 +2144,6 @@ body.admin-page {
     font-size: 0.54rem;
     line-height: 1.5;
 }
-
 
 /* ================================================================
    FORM MESSAGE
@@ -2184,7 +2161,6 @@ body.admin-page {
     line-height: 1.5;
 }
 
-
 .admin-form-message-error {
     display: block;
 
@@ -2193,7 +2169,6 @@ body.admin-page {
     background: #f4e9e7;
     color: var(--admin-danger);
 }
-
 
 /* ================================================================
    FORM FOOTER
@@ -2215,12 +2190,10 @@ body.admin-page {
     background: #eeeeeb;
 }
 
-
 .admin-flight-form-footer>div:first-child {
     display: flex;
     flex-direction: column;
 }
-
 
 .admin-flight-form-footer strong {
     margin-bottom: 3px;
@@ -2228,19 +2201,16 @@ body.admin-page {
     font-size: 0.62rem;
 }
 
-
 .admin-flight-form-footer>div:first-child span {
     color: var(--admin-muted);
 
     font-size: 0.54rem;
 }
 
-
 .admin-flight-form-actions {
     display: flex;
     gap: 8px;
 }
-
 
 .admin-flight-form button:disabled {
     opacity: 0.55;
@@ -2249,7 +2219,6 @@ body.admin-page {
 
     transform: none;
 }
-
 
 /* ================================================================
    FLIGHT PREVIEW
@@ -2260,11 +2229,9 @@ body.admin-page {
     top: calc(var(--admin-topbar-height) + 20px);
 }
 
-
 .admin-flight-preview-body {
     padding: 28px 24px 24px;
 }
-
 
 .admin-flight-preview-route {
     display: grid;
@@ -2281,13 +2248,11 @@ body.admin-page {
     text-align: center;
 }
 
-
 .admin-flight-preview-route>strong {
     font-size: 1.55rem;
     font-weight: 600;
     letter-spacing: -0.04em;
 }
-
 
 .admin-flight-preview-route>div {
     display: flex;
@@ -2298,11 +2263,9 @@ body.admin-page {
     color: #979b97;
 }
 
-
 .admin-flight-preview-route>div span {
     font-size: 1rem;
 }
-
 
 .admin-flight-preview-route small {
     font-size: 0.46rem;
@@ -2310,11 +2273,9 @@ body.admin-page {
     letter-spacing: 0.12em;
 }
 
-
 .admin-flight-preview-details {
     margin-bottom: 28px;
 }
-
 
 .admin-flight-preview-details>div {
     display: flex;
@@ -2328,19 +2289,16 @@ body.admin-page {
         1px solid var(--admin-border);
 }
 
-
 .admin-flight-preview-details span {
     color: var(--admin-muted);
 
     font-size: 0.54rem;
 }
 
-
 .admin-flight-preview-details strong {
     font-size: 0.59rem;
     text-align: right;
 }
-
 
 .admin-flight-preview-status {
     padding: 17px;
@@ -2352,7 +2310,6 @@ body.admin-page {
     background: #eeeeeb;
 }
 
-
 .admin-flight-preview-status p {
     margin: 11px 0 0;
 
@@ -2361,7 +2318,6 @@ body.admin-page {
     font-size: 0.54rem;
     line-height: 1.55;
 }
-
 
 /* ================================================================
    SCHEDULE FLIGHT RESPONSIVE
@@ -2373,13 +2329,11 @@ body.admin-page {
         grid-template-columns: 1fr;
     }
 
-
     .admin-flight-preview {
         position: static;
     }
 
 }
-
 
 @media (max-width: 750px) {
 
@@ -2388,27 +2342,22 @@ body.admin-page {
         gap: 22px;
     }
 
-
     .admin-form-section-heading p {
         max-width: none;
     }
 
-
     .admin-form-grid {
         grid-template-columns: 1fr;
     }
-
 
     .admin-flight-form-footer {
         align-items: stretch;
         flex-direction: column;
     }
 
-
     .admin-flight-form-actions {
         width: 100%;
     }
-
 
     .admin-flight-form-actions .admin-button {
         flex: 1;

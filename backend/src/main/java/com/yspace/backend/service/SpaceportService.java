@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class SpaceportService {
-
     private final SpaceportRepository spaceportRepository;
     private final SpaceportMapper spaceportMapper;
 

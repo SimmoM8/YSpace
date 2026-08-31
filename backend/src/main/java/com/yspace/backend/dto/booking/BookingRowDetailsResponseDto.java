@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingRowDetailsResponseDto {
-
     private Integer bookingRowId;
     private BigDecimal bookedPrice;
 

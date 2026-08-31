@@ -30,7 +30,6 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class FlightService {
-
     private final FlightRepository flightRepository;
     private final FlightMapper flightMapper;
     private final RouteRepository routeRepository;

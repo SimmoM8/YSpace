@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FetchRouteResponseDto {
-
     @NotBlank
     private String routeName;
 

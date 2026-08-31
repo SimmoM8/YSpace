@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FetchSpaceportResponseDto {
-
     private Integer spaceportId;
 
     private String spaceportCode;

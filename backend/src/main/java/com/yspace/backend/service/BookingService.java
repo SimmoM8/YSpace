@@ -24,7 +24,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookingService {
-
     private final BookingRepository bookingRepository;
     private final BookingRowRepository bookingRowRepository;
     private final FlightRepository flightRepository;
@@ -157,7 +156,6 @@ public class BookingService {
     }
 
     private void validateFlightCanBeBooked(Flight flight) {
-
         if (flight.getStatus() == Flight.FlightStatus.CANCELLED) {
             throw new FlightNotBookableException(
                     "Cancelled flights cannot be booked"
@@ -194,7 +192,6 @@ public class BookingService {
     }
 
     private void validateBookingCanBeCancelled(Booking booking) {
-
         if (booking.getStatus() != Booking.BookingStatus.OPEN) {
             throw new BookingNotCancellableException(
                     "Only open bookings can be cancelled"

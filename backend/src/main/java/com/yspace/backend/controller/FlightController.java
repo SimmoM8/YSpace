@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/api/flights")
 @RequiredArgsConstructor
 public class FlightController {
-
     private final FlightService flightService;
 
     @GetMapping("/search")

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class RegisterRequestDto {
-
     @Email
     @NotBlank
     private String email;
@@ -22,5 +21,4 @@ public class RegisterRequestDto {
     @NotBlank
     private String lastName;
 }
-
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RouteMapper {
-
     public FetchRouteResponseDto toDto(Route route) {
         return new FetchRouteResponseDto(
                 route.getName(),

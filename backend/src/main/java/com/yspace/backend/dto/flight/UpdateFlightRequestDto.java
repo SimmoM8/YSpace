@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateFlightRequestDto {
-
     private Integer spacecraftId;
 
     @Min(1)

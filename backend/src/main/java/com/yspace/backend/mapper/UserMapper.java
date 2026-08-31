@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-
     public User toEntity(RegisterRequestDto dto) {
         User user = new User();
         user.setEmail(dto.getEmail());

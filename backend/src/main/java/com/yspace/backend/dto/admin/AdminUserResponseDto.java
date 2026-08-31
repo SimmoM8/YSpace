@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminUserResponseDto {
-
     private Integer id;
 
     private String firstName;

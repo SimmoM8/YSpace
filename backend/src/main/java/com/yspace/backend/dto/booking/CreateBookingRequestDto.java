@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateBookingRequestDto {
-
     @NotNull
     private Integer flightId;
 }

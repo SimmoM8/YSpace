@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminSpaceportResponseDto {
-
     private Integer id;
 
     private String name;

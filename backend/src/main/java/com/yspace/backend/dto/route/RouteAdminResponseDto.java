@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RouteAdminResponseDto {
-
     private Integer id;
 
     private String name;

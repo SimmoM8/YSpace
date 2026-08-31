@@ -30,7 +30,6 @@ import java.util.List;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
-
     private final RouteService routeService;
     private final SpacecraftService spacecraftService;
     private final FlightService flightService;

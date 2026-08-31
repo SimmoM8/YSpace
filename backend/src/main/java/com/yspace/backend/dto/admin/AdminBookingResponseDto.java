@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminBookingResponseDto {
-
     private Integer id;
 
     private String userName;

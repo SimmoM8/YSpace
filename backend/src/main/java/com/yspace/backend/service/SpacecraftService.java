@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SpacecraftService {
-
     private final SpacecraftRepository spacecraftRepository;
 
     @Transactional(readOnly = true)

@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
 public class BookingController {
-
     private final BookingService bookingService;
 
     @PostMapping

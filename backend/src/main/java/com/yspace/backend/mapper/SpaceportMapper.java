@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpaceportMapper {
-
     public FetchSpaceportResponseDto toDto(Spaceport spaceport) {
         return new FetchSpaceportResponseDto(
                 spaceport.getId(),

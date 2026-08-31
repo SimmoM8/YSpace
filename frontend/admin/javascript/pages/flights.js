@@ -2,69 +2,53 @@ import {
     apiGet
 } from "../../../javascript/api.js";
 
-
 let summaryFlights = [];
 
-
 export async function initFlightsPage() {
-
     const filterForm =
         document.querySelector(
             ".admin-flight-filters"
         );
 
-
     filterForm?.addEventListener(
         "submit",
         async (event) => {
-
             event.preventDefault();
 
             await loadFlights(false);
         }
     );
 
-
     await loadFlights(true);
 }
-
 
 async function loadFlights(
     updateSummary = false
 ) {
-
     const tableBody =
         document.querySelector(
             ".admin-flight-table tbody"
         );
 
-
     if (!tableBody) {
         return;
     }
 
-
     try {
-
         showLoading(tableBody);
-
 
         const query =
             buildFlightQuery();
-
 
         const response =
             await apiGet(
                 `/admin/flights${query}`
             );
 
-
         const flights =
             await response.json();
 
-
         if (updateSummary) {
-
             summaryFlights =
                 flights;
 
@@ -73,21 +57,16 @@ async function loadFlights(
             );
         }
 
-
         renderFlights(
             tableBody,
             flights
         );
 
-
         updateResultCount(
             flights.length
         );
-
     } catch (error) {
-
         console.error(error);
-
 
         showError(
             tableBody,
@@ -96,90 +75,71 @@ async function loadFlights(
     }
 }
 
-
 function buildFlightQuery() {
-
     const form =
         document.querySelector(
             ".admin-flight-filters"
         );
 
-
     if (!form) {
         return "";
     }
 
-
     const formData =
         new FormData(form);
 
-
     const params =
         new URLSearchParams();
-
 
     const search =
         formData
             .get("search")
             ?.trim();
 
-
     const status =
         formData.get(
             "status"
         );
-
 
     const date =
         formData.get(
             "date"
         );
 
-
     if (search) {
-
         params.set(
             "search",
             search
         );
     }
 
-
     if (status) {
-
         params.set(
             "status",
             status
         );
     }
 
-
     if (date) {
-
         params.set(
             "date",
             date
         );
     }
 
-
     const queryString =
         params.toString();
-
 
     return queryString
         ? `?${queryString}`
         : "";
 }
 
-
 function renderFlights(
     tableBody,
     flights
 ) {
-
     if (!flights.length) {
-
         tableBody.innerHTML = `
             <tr>
                 <td
@@ -194,27 +154,22 @@ function renderFlights(
         return;
     }
 
-
     tableBody.innerHTML =
         flights
             .map(createFlightRow)
             .join("");
 }
 
-
 function createFlightRow(flight) {
-
     const capacity =
         Number(
             flight.seatCapacity ?? 0
         );
 
-
     const bookedSeats =
         Number(
             flight.bookedSeats ?? 0
         );
-
 
     const loadPercentage =
         capacity > 0
@@ -231,12 +186,10 @@ function createFlightRow(flight) {
             )
             : 0;
 
-
     const cancelledClass =
         flight.status === "CANCELLED"
             ? "admin-flight-row-cancelled"
             : "";
-
 
     return `
         <tr class="${cancelledClass}">
@@ -256,7 +209,6 @@ function createFlightRow(flight) {
                 </div>
 
             </td>
-
 
             <td>
 
@@ -284,7 +236,6 @@ function createFlightRow(flight) {
 
             </td>
 
-
             <td>
 
                 <div class="admin-flight-schedule">
@@ -302,7 +253,6 @@ function createFlightRow(flight) {
                         </strong>
 
                     </div>
-
 
                     <div>
 
@@ -322,7 +272,6 @@ function createFlightRow(flight) {
 
             </td>
 
-
             <td>
 
                 <strong>
@@ -338,7 +287,6 @@ function createFlightRow(flight) {
                 </small>
 
             </td>
-
 
             <td>
 
@@ -358,7 +306,6 @@ function createFlightRow(flight) {
 
                     </div>
 
-
                     <div class="admin-progress">
 
                         <span
@@ -371,13 +318,11 @@ function createFlightRow(flight) {
 
             </td>
 
-
             <td>
                 ${createStatusBadge(
         flight.status
     )}
             </td>
-
 
             <td>
 
@@ -397,11 +342,8 @@ function createFlightRow(flight) {
     `;
 }
 
-
 function createStatusBadge(status) {
-
     const classMap = {
-
         SCHEDULED:
             "admin-status-scheduled",
 
@@ -421,12 +363,10 @@ function createStatusBadge(status) {
             "admin-status-cancelled"
     };
 
-
     const cssClass =
         classMap[status]
         ??
         "admin-status-scheduled";
-
 
     return `
         <span
@@ -437,18 +377,15 @@ function createStatusBadge(status) {
     `;
 }
 
-
 function updateFlightSummary(
     flights
 ) {
-
     const scheduled =
         flights.filter(
             flight =>
                 flight.status ===
                 "SCHEDULED"
         ).length;
-
 
     const inProgress =
         flights.filter(
@@ -463,7 +400,6 @@ function updateFlightSummary(
                     )
         ).length;
 
-
     const arrived =
         flights.filter(
             flight =>
@@ -471,14 +407,12 @@ function updateFlightSummary(
                 "ARRIVED"
         ).length;
 
-
     const cancelled =
         flights.filter(
             flight =>
                 flight.status ===
                 "CANCELLED"
         ).length;
-
 
     setSummaryValue(
         "scheduled",
@@ -501,20 +435,16 @@ function updateFlightSummary(
     );
 }
 
-
 function setSummaryValue(
     name,
     value
 ) {
-
     const element =
         document.querySelector(
             `[data-flight-stat="${name}"]`
         );
 
-
     if (element) {
-
         element.textContent =
             String(value)
                 .padStart(
@@ -524,19 +454,15 @@ function setSummaryValue(
     }
 }
 
-
 function updateResultCount(count) {
-
     const element =
         document.querySelector(
             ".admin-table-result-count"
         );
 
-
     if (!element) {
         return;
     }
-
 
     element.textContent =
         count === 1
@@ -544,13 +470,10 @@ function updateResultCount(count) {
             : `${count} flights`;
 }
 
-
 function formatStatus(status) {
-
     if (!status) {
         return "Unknown";
     }
-
 
     return status
         .toLowerCase()
@@ -565,13 +488,10 @@ function formatStatus(status) {
         );
 }
 
-
 function formatDateTime(value) {
-
     if (!value) {
         return "—";
     }
-
 
     /*
      * Spring sends LocalDateTime without a timezone.
@@ -584,14 +504,12 @@ function formatDateTime(value) {
         timePart
     ] = value.split("T");
 
-
     if (
         !datePart ||
         !timePart
     ) {
         return value;
     }
-
 
     const [
         year,
@@ -602,7 +520,6 @@ function formatDateTime(value) {
             .split("-")
             .map(Number);
 
-
     const [
         hour,
         minute
@@ -610,7 +527,6 @@ function formatDateTime(value) {
         timePart
             .split(":")
             .map(Number);
-
 
     const date =
         new Date(
@@ -620,7 +536,6 @@ function formatDateTime(value) {
             hour,
             minute
         );
-
 
     return new Intl.DateTimeFormat(
         "en-GB",
@@ -634,9 +549,7 @@ function formatDateTime(value) {
         .format(date);
 }
 
-
 function showLoading(tableBody) {
-
     tableBody.innerHTML = `
         <tr>
             <td
@@ -649,12 +562,10 @@ function showLoading(tableBody) {
     `;
 }
 
-
 function showError(
     tableBody,
     message
 ) {
-
     tableBody.innerHTML = `
         <tr>
             <td
@@ -672,13 +583,10 @@ function showError(
         </tr>
     `;
 
-
     updateResultCount(0);
 }
 
-
 function escapeHtml(value) {
-
     const element =
         document.createElement("div");
 

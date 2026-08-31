@@ -23,5 +23,4 @@ public class SpaceportController {
     public ResponseEntity<List<FetchSpaceportResponseDto>> getSpaceports(@RequestParam(required = true) String keyword){
         return ResponseEntity.ok(spaceportService.getSpaceportsByKeyword(keyword));
     }
-
 }

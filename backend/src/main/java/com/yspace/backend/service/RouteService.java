@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RouteService {
-
     private final RouteMapper routeMapper;
     private final RouteRepository routeRepository;
     private final SpaceportRepository spaceportRepository;

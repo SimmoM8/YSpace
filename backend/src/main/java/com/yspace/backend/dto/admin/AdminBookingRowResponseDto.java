@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminBookingRowResponseDto {
-
     private Integer id;
 
     private Integer flightId;

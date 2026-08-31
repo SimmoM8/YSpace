@@ -28,22 +28,14 @@ export function isAdmin() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-        console.log("No token found in localStorage.");
         return false;
     }
 
     try {
         const payload = decodeJwtPayload(token);
-        const roles = payload.roles || payload.role || [];
+        const role = payload.role;
 
-        console.log("Decoded JWT payload:", payload);
-
-        if (typeof roles === "string") {
-            console.log("User role:", roles);
-            return roles === "ROLE_ADMIN" || roles === "ADMIN";
-        }
-
-        return false;
+        return role === "ROLE_ADMIN" || role === "ADMIN";
     } catch {
         return false;
     }

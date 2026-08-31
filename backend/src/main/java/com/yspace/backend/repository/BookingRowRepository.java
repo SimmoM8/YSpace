@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookingRowRepository extends JpaRepository<BookingRow, Integer> {
-
     @Query("""
         SELECT COUNT(br)
         FROM BookingRow br

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BookingMapper {
-
     public BookingSummaryResponseDto toSummaryDto(Booking booking) {
-
         BookingRow firstRow = booking.getBookingRows().getFirst();
         Flight flight = firstRow.getFlight();
 

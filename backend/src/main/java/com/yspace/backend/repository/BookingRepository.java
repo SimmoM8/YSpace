@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-
     List<Booking> findAllByUserOrderByCreatedAtDesc(User user);
 
     Optional<Booking> findByIdAndUser(

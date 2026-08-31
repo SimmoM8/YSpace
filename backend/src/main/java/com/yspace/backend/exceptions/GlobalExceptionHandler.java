@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<String> handleBadCredentialsException(
             BadCredentialsException e
@@ -19,7 +18,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNAUTHORIZED
         );
     }
-
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<String> handleUsernameNotFoundException(
@@ -31,7 +29,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-
     @ExceptionHandler(FlightNotFoundException.class)
     public ResponseEntity<String> handleFlightNotFoundException(
             FlightNotFoundException e
@@ -41,7 +38,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-
 
     @ExceptionHandler(FlightNotBookableException.class)
     public ResponseEntity<String> handleFlightNotBookableException(
@@ -53,7 +49,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(
             UserNotFoundException e
@@ -63,7 +58,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-
 
     @ExceptionHandler(BookingNotFoundException.class)
     public ResponseEntity<String> handleBookingNotFoundException(
@@ -75,7 +69,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-
     @ExceptionHandler(BookingRowNotFoundException.class)
     public ResponseEntity<String> handleBookingRowNotFoundException(
             BookingRowNotFoundException e
@@ -85,7 +78,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-
 
     @ExceptionHandler(BookingNotCancellableException.class)
     public ResponseEntity<String> handleBookingNotCancellableException(
@@ -97,7 +89,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-
     @ExceptionHandler(RouteNotFoundException.class)
     public ResponseEntity<String> handleRouteNotFoundException(
             RouteNotFoundException e
@@ -107,7 +98,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-
 
     @ExceptionHandler(SpaceportNotFoundException.class)
     public ResponseEntity<String> handleSpaceportNotFoundException(
@@ -119,7 +109,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-
     @ExceptionHandler(SpacecraftNotFoundException.class)
     public ResponseEntity<String> handleSpacecraftNotFoundException(
             SpacecraftNotFoundException e
@@ -129,7 +118,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(
