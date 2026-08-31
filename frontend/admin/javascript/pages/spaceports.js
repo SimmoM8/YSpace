@@ -6,7 +6,7 @@ export async function initSpaceportsPage() {
     try {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="5"
+                <td colspan="6"
                     class="admin-table-empty"
                 >
                     Loading spaceports...
@@ -25,7 +25,7 @@ export async function initSpaceportsPage() {
         if (!spaceports.length) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="5"
+                    <td colspan="6"
                         class="admin-table-empty"
                     >
                         No spaceports found.
@@ -42,7 +42,7 @@ export async function initSpaceportsPage() {
 
         tableBody.innerHTML = `
             <tr>
-                <td colspan="5"
+                <td colspan="6"
                     class="
                         admin-table-empty
                         admin-table-error
@@ -60,12 +60,9 @@ function createSpaceportRow(spaceport) {
         <tr>
             <td>
                 <div class="admin-flight-identity">
-                    <strong>${spaceport.id}</strong>
+                    <strong>${escapeHtml(spaceport.name)}</strong>
+                    <span>Spaceport ID ${spaceport.id}</span>
                 </div>
-            </td>
-
-            <td>
-                <strong>${escapeHtml(spaceport.name)}</strong>
             </td>
 
             <td>
@@ -82,6 +79,20 @@ function createSpaceportRow(spaceport) {
                 <span class="admin-table-description">
                     ${escapeHtml(spaceport.description || "—")}
                 </span>
+            </td>
+
+            <td>
+                —
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="admin-row-action"
+                    aria-label="View ${escapeHtml(spaceport.name)}"
+                >
+                    →
+                </button>
             </td>
         </tr>
     `;

@@ -12,7 +12,7 @@ async function loadRoutes() {
     try {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td colspan="7"
                     class="admin-table-empty"
                 >
                     Loading routes...
@@ -31,7 +31,7 @@ async function loadRoutes() {
         if (!routes.length) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="6"
+                    <td colspan="7"
                         class="admin-table-empty"
                     >
                         No routes found.
@@ -48,7 +48,7 @@ async function loadRoutes() {
 
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td colspan="7"
                     class="
                         admin-table-empty
                         admin-table-error
@@ -66,41 +66,42 @@ function createRouteRow(route) {
         <tr>
             <td>
                 <div class="admin-flight-identity">
-                    <strong>${route.id}</strong>
+                    <strong>${escapeHtml(route.name)}</strong>
+                    <span>Route ID ${route.id}</span>
                 </div>
             </td>
 
             <td>
-                <strong>${escapeHtml(route.name)}</strong>
+                <strong>${escapeHtml(route.originCode)}</strong>
+                <small>${escapeHtml(route.originName)}</small>
             </td>
 
             <td>
-                <div class="admin-route">
-                    <strong>${escapeHtml(route.originSpaceportCode)}</strong>
-                    <span aria-hidden="true">·</span>
-                    <span>${escapeHtml(route.originSpaceportName)}</span>
-                </div>
+                <strong>${escapeHtml(route.destinationCode)}</strong>
+                <small>${escapeHtml(route.destinationName)}</small>
             </td>
 
             <td>
-                <div class="admin-route">
-                    <strong>${escapeHtml(route.destinationSpaceportCode)}</strong>
-                    <span aria-hidden="true">·</span>
-                    <span>${escapeHtml(route.destinationSpaceportName)}</span>
-                </div>
-            </td>
-
-            <td>
-                ${route.distance != null
+                <strong>
+                    ${route.distance != null
             ? `${formatDistance(route.distance)} km`
             : "—"
         }
+                </strong>
             </td>
 
             <td>
-                <span class="admin-table-description">
-                    ${escapeHtml(route.description || "—")}
-                </span>
+                —
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="admin-row-action"
+                    aria-label="View ${escapeHtml(route.name)}"
+                >
+                    →
+                </button>
             </td>
         </tr>
     `;

@@ -1,6 +1,6 @@
 package com.yspace.backend.service;
 
-import com.yspace.backend.dto.spacecraft.AdminSpacecraftResponseDto;
+import com.yspace.backend.dto.admin.AdminSpacecraftResponseDto;
 import com.yspace.backend.repository.SpacecraftRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,16 +15,17 @@ public class SpacecraftService {
     private final SpacecraftRepository spacecraftRepository;
 
     @Transactional(readOnly = true)
-    public List<AdminSpacecraftResponseDto> getAdminSpacecraftOptions() {
+    public List<AdminSpacecraftResponseDto> getAdminSpacecraft() {
         return spacecraftRepository.findAll()
                 .stream()
-                .filter(spacecraft -> Boolean.TRUE.equals(spacecraft.getOperational()))
                 .map(spacecraft -> new AdminSpacecraftResponseDto(
                         spacecraft.getId(),
                         spacecraft.getName(),
                         spacecraft.getModel().getName(),
                         spacecraft.getModel().getManufacturer(),
-                        spacecraft.getSeat_capacity()
+                        spacecraft.getSeat_capacity(),
+                        spacecraft.getStatus().name(),
+                        spacecraft.getOperational()
                 ))
                 .toList();
     }

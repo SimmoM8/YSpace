@@ -64,24 +64,22 @@ function createSpacecraftRow(craft) {
         <tr>
             <td>
                 <div class="admin-flight-identity">
-                    <strong>${craft.id}</strong>
+                    <strong>${escapeHtml(craft.name)}</strong>
+                    <span>Craft ID ${craft.id}</span>
                 </div>
             </td>
 
             <td>
-                <strong>${escapeHtml(craft.name)}</strong>
+                <strong>${escapeHtml(craft.model)}</strong>
             </td>
 
             <td>
-                ${escapeHtml(craft.modelName)}
-            </td>
-
-            <td>
-                ${escapeHtml(craft.modelManufacturer || "—")}
+                ${escapeHtml(craft.manufacturer || "—")}
             </td>
 
             <td>
                 <strong>${craft.seatCapacity}</strong>
+                <small>Passenger seats</small>
             </td>
 
             <td>
@@ -92,8 +90,18 @@ function createSpacecraftRow(craft) {
 
             <td>
                 <span class="admin-status ${operationalClass}">
-                    ${craft.operational ? "Operational" : "Not operational"}
+                    ${craft.operational ? "Operational" : "Unavailable"}
                 </span>
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="admin-row-action"
+                    aria-label="View ${escapeHtml(craft.name)}"
+                >
+                    →
+                </button>
             </td>
         </tr>
     `;

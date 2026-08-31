@@ -1,64 +1,93 @@
 import { apiGet } from "../../javascript/api.js";
-import { initCreateFlightPage } from "./pages/create-flight.js";
+
+import { initDashboardPage } from "./pages/dashboard.js";
 import { initFlightsPage } from "./pages/flights.js";
+import { initCreateFlightPage } from "./pages/create-flight.js";
+import {
+    initRoutesPage,
+    initCreateRoutePage,
+} from "./pages/routes.js";
+import { initSpaceportsPage } from "./pages/spaceports.js";
+import { initSpacecraftPage } from "./pages/spacecraft.js";
+import { initBookingsPage } from "./pages/bookings.js";
+import { initUsersPage } from "./pages/users.js";
 
 const adminContent = document.getElementById("admin-content");
 
 const routes = {
     dashboard: {
         view: "views/dashboard.html",
-        title: "Dashboard"
+        title: "Dashboard",
+        init: initDashboardPage,
     },
+
     flights: {
         view: "views/flights.html",
         title: "Flights",
-        init: initFlightsPage
+        init: initFlightsPage,
     },
+
     "create-flight": {
         view: "views/create-flight.html",
         title: "Schedule Flight",
-        init: initCreateFlightPage
+        init: initCreateFlightPage,
     },
+
     routes: {
         view: "views/routes.html",
-        title: "Routes"
+        title: "Routes",
+        init: initRoutesPage,
     },
+
     "create-route": {
         view: "views/create-route.html",
-        title: "Create Route"
+        title: "Create Route",
+        init: initCreateRoutePage,
     },
+
     spaceports: {
         view: "views/spaceports.html",
-        title: "Spaceports"
+        title: "Spaceports",
+        init: initSpaceportsPage,
     },
+
     "create-spaceport": {
         view: "views/create-spaceport.html",
-        title: "Add Spaceport"
+        title: "Add Spaceport",
     },
+
     spacecrafts: {
         view: "views/spacecrafts.html",
-        title: "Spacecraft"
+        title: "Spacecraft",
+        init: initSpacecraftPage,
     },
+
     "create-spacecraft": {
         view: "views/create-spacecraft.html",
-        title: "Add Spacecraft"
+        title: "Add Spacecraft",
     },
+
     bookings: {
         view: "views/bookings.html",
-        title: "Bookings"
+        title: "Bookings",
+        init: initBookingsPage,
     },
+
     "create-booking": {
         view: "views/create-booking.html",
-        title: "Create Booking"
+        title: "Create Booking",
     },
+
     passengers: {
         view: "views/passengers.html",
-        title: "Passengers"
+        title: "Passengers",
+        init: initUsersPage,
     },
+
     "create-passenger": {
         view: "views/create-passenger.html",
-        title: "Add Passenger"
-    }
+        title: "Add Passenger",
+    },
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -69,6 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     window.addEventListener("hashchange", handleRoute);
+
     await handleRoute();
 });
 
@@ -82,6 +112,7 @@ async function protectAdminPage() {
 
     try {
         await apiGet("/admin/check");
+
         return true;
     } catch (error) {
         console.error("Admin access rejected:", error);
@@ -89,43 +120,39 @@ async function protectAdminPage() {
         if (error.status === 401) {
             localStorage.removeItem("token");
             redirectToLogin();
+
             return false;
         }
 
         if (error.status === 403) {
-            window.location.href = "/index.html";
+            window.location.href = "../index.html";
+
             return false;
         }
 
         showFatalError("Could not verify administrator access.");
+
         return false;
     }
 }
 
 function redirectToLogin() {
     const redirect = encodeURIComponent("/admin/");
-    window.location.href = `/login.html?redirect=${redirect}`;
+
+    window.location.href = `../login.html?redirect=${redirect}`;
 }
 
 async function handleRoute() {
-    const { page, id } = getRoute();
-
-    if (page === "flight" && id) {
-        window.location.hash = "flights";
-        return;
-    }
-
+    const page = getPage();
     const route = routes[page] ?? routes.dashboard;
 
     updateNavigation(page);
+
     await loadView(route);
 }
 
-function getRoute() {
-    const hash = window.location.hash.substring(1) || "dashboard";
-    const [page, id] = hash.split("/");
-
-    return { page, id };
+function getPage() {
+    return window.location.hash.substring(1) || "dashboard";
 }
 
 async function loadView(route) {
@@ -148,6 +175,7 @@ async function loadView(route) {
         }
     } catch (error) {
         console.error(error);
+
         showFatalError(error.message || "Unable to load page.");
     }
 }
@@ -156,25 +184,26 @@ function updateNavigation(page) {
     const navigationPage = getNavigationPage(page);
 
     document.querySelectorAll(".admin-nav-item").forEach((link) => {
-        link.classList.remove("admin-nav-item-active");
-        link.removeAttribute("aria-current");
+        const active = link.getAttribute("href") === `#${navigationPage}`;
 
-        if (link.getAttribute("href") === `#${navigationPage}`) {
-            link.classList.add("admin-nav-item-active");
+        link.classList.toggle("admin-nav-item-active", active);
+
+        if (active) {
             link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
         }
     });
 }
 
 function getNavigationPage(page) {
     const parentPages = {
-        flight: "flights",
         "create-flight": "flights",
         "create-route": "routes",
         "create-spaceport": "spaceports",
         "create-spacecraft": "spacecrafts",
         "create-booking": "bookings",
-        "create-passenger": "passengers"
+        "create-passenger": "passengers",
     };
 
     return parentPages[page] ?? page;
@@ -185,7 +214,9 @@ function updatePageTitle(title) {
 }
 
 function updateTopbarTitle(title) {
-    const titleElement = document.querySelector(".admin-topbar-context strong");
+    const titleElement = document.querySelector(
+        ".admin-topbar-context strong",
+    );
 
     if (titleElement) {
         titleElement.textContent = title;
@@ -193,7 +224,11 @@ function updateTopbarTitle(title) {
 }
 
 function showLoading() {
-    adminContent.innerHTML = '<div class="admin-view-loading">Loading...</div>';
+    adminContent.innerHTML = `
+        <div class="admin-view-loading">
+            Loading...
+        </div>
+    `;
 }
 
 function showFatalError(message) {
@@ -208,6 +243,8 @@ function showFatalError(message) {
 
 function escapeHtml(value) {
     const element = document.createElement("div");
+
     element.textContent = value ?? "";
+
     return element.innerHTML;
 }

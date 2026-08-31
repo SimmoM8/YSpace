@@ -31,7 +31,7 @@ async function loadBookings() {
     try {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td colspan="7"
                     class="admin-table-empty"
                 >
                     Loading bookings...
@@ -50,7 +50,7 @@ async function loadBookings() {
         if (!bookings.length) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="6"
+                    <td colspan="7"
                         class="admin-table-empty"
                     >
                         No bookings found.
@@ -67,7 +67,7 @@ async function loadBookings() {
 
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td colspan="7"
                     class="
                         admin-table-empty
                         admin-table-error
@@ -81,23 +81,33 @@ async function loadBookings() {
 }
 
 function createBookingRow(booking) {
-    const flights =
+    const journey =
         (booking.rows || [])
             .map(
                 (row) => `
-                ${escapeHtml(row.originCode)}
-                → ${escapeHtml(row.destinationCode)}
-                (${escapeHtml(row.flightCode)})
-            `,
+                    <div class="admin-route">
+                        <strong>${escapeHtml(row.originCode)}</strong>
+                        <span aria-hidden="true">→</span>
+                        <strong>${escapeHtml(row.destinationCode)}</strong>
+                    </div>
+                    <small>
+                        ${escapeHtml(row.routeName)}
+                        · ${escapeHtml(row.flightCode)}
+                    </small>
+                `
             )
-            .join("<br/>") || "—";
+            .join("") || "—";
+
+    const cancelledClass =
+        booking.status === "CANCELLED"
+            ? "admin-flight-row-cancelled"
+            : "";
 
     return `
-        <tr>
+        <tr class="${cancelledClass}">
             <td>
-                <div class="admin-flight-identity">
-                    <strong>#${booking.id}</strong>
-                </div>
+                <strong>#${booking.id}</strong>
+                <small>Created ${formatDateTime(booking.createdAt)}</small>
             </td>
 
             <td>
@@ -106,19 +116,29 @@ function createBookingRow(booking) {
             </td>
 
             <td>
-                ${flights}
+                ${journey}
             </td>
 
             <td>
-                <strong>$${formatPrice(booking.totalPrice)}</strong>
+                <strong>${formatDateTime(booking.departureTime)}</strong>
             </td>
 
             <td>
-                ${formatDateTime(booking.createdAt)}
+                <strong>${formatPrice(booking.totalPrice)} kr</strong>
             </td>
 
             <td>
                 ${createStatusBadge(booking.status)}
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="admin-row-action"
+                    aria-label="View booking ${booking.id}"
+                >
+                    →
+                </button>
             </td>
         </tr>
     `;

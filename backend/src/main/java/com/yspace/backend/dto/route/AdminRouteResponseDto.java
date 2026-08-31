@@ -19,4 +19,5 @@ public class AdminRouteResponseDto {
     private String destinationCode;
 
     private Double distance;
+    private String description;
 }

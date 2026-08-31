@@ -10,6 +10,7 @@ import com.yspace.backend.model.BookingRow;
 import com.yspace.backend.model.Flight;
 import com.yspace.backend.model.User;
 import com.yspace.backend.repository.BookingRepository;
+import com.yspace.backend.repository.BookingRowRepository;
 import com.yspace.backend.repository.FlightRepository;
 import com.yspace.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import java.util.List;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final BookingRowRepository bookingRowRepository;
     private final FlightRepository flightRepository;
     private final UserRepository userRepository;
     private final BookingMapper bookingMapper;
@@ -162,11 +164,31 @@ public class BookingService {
             );
         }
 
-        if (flight.getDepartureTime()
-                .isBefore(LocalDateTime.now())) {
+        if (flight.getStatus() != Flight.FlightStatus.SCHEDULED) {
+            throw new FlightNotBookableException(
+                    "Only scheduled flights can be booked"
+            );
+        }
 
+        if (
+                flight.getDepartureTime() == null
+                        || !flight.getDepartureTime()
+                        .isAfter(LocalDateTime.now())
+        ) {
             throw new FlightNotBookableException(
                     "Flights that have already departed cannot be booked"
+            );
+        }
+
+        long bookedSeats =
+                bookingRowRepository.countBookedSeatsByFlightId(
+                        flight.getId(),
+                        Booking.BookingStatus.CANCELLED
+                );
+
+        if (bookedSeats >= flight.getAvailableSeats()) {
+            throw new FlightNotBookableException(
+                    "This flight is fully booked"
             );
         }
     }

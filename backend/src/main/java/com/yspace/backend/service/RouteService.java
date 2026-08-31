@@ -55,7 +55,8 @@ public class RouteService {
                         route.getOriginSpaceport().getCode(),
                         route.getDestinationSpaceport().getName(),
                         route.getDestinationSpaceport().getCode(),
-                        route.getDistance()
+                        route.getDistance(),
+                        route.getDescription()
                 ))
                 .toList();
     }

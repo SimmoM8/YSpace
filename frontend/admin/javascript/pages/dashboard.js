@@ -60,7 +60,7 @@ function renderUpcomingFlights(data) {
     if (!flights.length) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="admin-table-empty">
+                <td colspan="7" class="admin-table-empty">
                     No upcoming flights.
                 </td>
             </tr>

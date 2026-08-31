@@ -31,7 +31,7 @@ async function loadUsers() {
     try {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td colspan="7"
                     class="admin-table-empty"
                 >
                     Loading passengers...
@@ -50,7 +50,7 @@ async function loadUsers() {
         if (!users.length) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="6"
+                    <td colspan="7"
                         class="admin-table-empty"
                     >
                         No passengers found.
@@ -67,7 +67,7 @@ async function loadUsers() {
 
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td colspan="7"
                     class="
                         admin-table-empty
                         admin-table-error
@@ -81,18 +81,17 @@ async function loadUsers() {
 }
 
 function createUserRow(user) {
-    const isAdmin = user.role === "ADMIN";
-
     return `
         <tr>
             <td>
-                <div class="admin-flight-identity">
-                    <strong>${user.id}</strong>
-                </div>
-            </td>
+                <strong>
+                    ${escapeHtml(user.firstName)}
+                    ${escapeHtml(user.lastName)}
+                </strong>
 
-            <td>
-                <strong>${escapeHtml(user.firstName)} ${escapeHtml(user.lastName)}</strong>
+                <small>
+                    Passenger ID ${user.id}
+                </small>
             </td>
 
             <td>
@@ -100,18 +99,37 @@ function createUserRow(user) {
             </td>
 
             <td>
-                <span class="admin-status ${isAdmin ? "admin-status-completed" : "admin-status-scheduled"
-        }">
-                    ${formatRole(user.role)}
+                <strong>${user.bookingCount}</strong>
+                <small>Total bookings</small>
+            </td>
+
+            <td>
+                <strong>${user.openBookingCount}</strong>
+                <small>
+                    ${user.openBookingCount === 1
+            ? "Current booking"
+            : "Current bookings"}
+                </small>
+            </td>
+
+            <td>
+                <strong>${formatDateTime(user.createdAt)}</strong>
+            </td>
+
+            <td>
+                <span class="admin-status admin-status-completed">
+                    Passenger
                 </span>
             </td>
 
             <td>
-                <strong>${user.bookingCount}</strong>
-            </td>
-
-            <td>
-                ${formatDateTime(user.createdAt)}
+                <button
+                    type="button"
+                    class="admin-row-action"
+                    aria-label="View ${escapeHtml(user.firstName)} ${escapeHtml(user.lastName)}"
+                >
+                    →
+                </button>
             </td>
         </tr>
     `;
