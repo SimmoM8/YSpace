@@ -1,0 +1,261 @@
+
+          <!-- =================================================
+                     PAGE HEADER
+                ================================================== -->
+
+          <section class="admin-page-header">
+            <div>
+              <p class="admin-page-kicker">NETWORK OVERVIEW</p>
+
+              <h1>
+                Operations
+                <span>dashboard.</span>
+              </h1>
+
+              <p class="admin-page-description">
+                Monitor YSpace passenger operations, scheduled departures and
+                network activity across the system.
+              </p>
+            </div>
+
+            <div class="admin-page-header-actions">
+              <a href="#flights" class="admin-button admin-button-secondary">
+                View flights
+              </a>
+
+              <a
+                href="#create-flight"
+                class="admin-button admin-button-primary"
+              >
+                <span>+</span>
+                Schedule flight
+              </a>
+            </div>
+          </section>
+
+          <!-- =================================================
+                     KPI GRID
+                ================================================== -->
+
+          <section class="admin-stats-grid" aria-label="Operations overview">
+            <article class="admin-stat-card">
+              <div class="admin-stat-card-header">
+                <span>Scheduled flights</span>
+
+                <span class="admin-stat-code"> FLT </span>
+              </div>
+
+              <strong class="admin-stat-value" data-stat="scheduled"> — </strong>
+
+              <div class="admin-stat-footer">
+                <span class="admin-stat-positive"> +3 </span>
+
+                <span>since yesterday</span>
+              </div>
+            </article>
+
+            <article class="admin-stat-card">
+              <div class="admin-stat-card-header">
+                <span>Open bookings</span>
+
+                <span class="admin-stat-code"> BKG </span>
+              </div>
+
+              <strong class="admin-stat-value" data-stat="bookings"> — </strong>
+
+              <div class="admin-stat-footer">
+                <span class="admin-stat-positive"> +12 </span>
+
+                <span>this week</span>
+              </div>
+            </article>
+
+            <article class="admin-stat-card">
+              <div class="admin-stat-card-header">
+                <span>Passengers</span>
+
+                <span class="admin-stat-code"> PAX </span>
+              </div>
+
+              <strong class="admin-stat-value" data-stat="passengers"> — </strong>
+
+              <div class="admin-stat-footer">
+                <span class="admin-stat-positive"> +28 </span>
+
+                <span>this month</span>
+              </div>
+            </article>
+
+            <article class="admin-stat-card">
+              <div class="admin-stat-card-header">
+                <span>Network load</span>
+
+                <span class="admin-stat-code"> NET </span>
+              </div>
+
+              <strong class="admin-stat-value"> 68<span>%</span> </strong>
+
+              <div class="admin-stat-footer">
+                <span class="admin-stat-neutral"> Normal </span>
+
+                <span>operating range</span>
+              </div>
+            </article>
+          </section>
+
+          <!-- =================================================
+                     PRIMARY GRID
+                ================================================== -->
+
+          <section class="admin-dashboard-grid">
+            <!-- =============================================
+                         UPCOMING FLIGHTS
+                    ============================================== -->
+
+            <article class="admin-panel admin-flights-panel">
+              <header class="admin-panel-header">
+                <div>
+                  <p class="admin-panel-kicker">FLIGHT OPERATIONS</p>
+
+                  <h2>Upcoming departures</h2>
+                </div>
+
+                <a href="#flights" class="admin-panel-link">
+                  All flights
+                  <span aria-hidden="true">→</span>
+                </a>
+              </header>
+
+              <div class="admin-table-wrapper">
+                <table class="admin-table" id="dashboard-upcoming-flights">
+                  <thead>
+                    <tr>
+                      <th>Flight</th>
+                      <th>Route</th>
+                      <th>Departure</th>
+                      <th>Craft</th>
+                      <th>Load</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td colspan="6" class="admin-table-empty">Loading flights...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <!-- =============================================
+                         NETWORK PANEL
+                    ============================================== -->
+
+            <article class="admin-panel admin-network-panel">
+              <header class="admin-panel-header">
+                <div>
+                  <p class="admin-panel-kicker">SYSTEM</p>
+
+                  <h2>Network health</h2>
+                </div>
+              </header>
+
+              <div class="admin-network-status">
+                <div class="admin-network-orbit" aria-hidden="true">
+                  <span class="admin-network-centre"> Y </span>
+
+                  <span
+                    class="admin-network-node admin-network-node-one"
+                  ></span>
+
+                  <span
+                    class="admin-network-node admin-network-node-two"
+                  ></span>
+
+                  <span
+                    class="admin-network-node admin-network-node-three"
+                  ></span>
+                </div>
+
+                <div class="admin-network-message">
+                  <span class="admin-status-dot"></span>
+
+                  <div>
+                    <strong> All systems operational </strong>
+
+                    <p>No critical network incidents detected.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="admin-network-metrics">
+                <div>
+                  <span>Active routes</span>
+                  <strong data-network-metric="routes">—</strong>
+                </div>
+
+                <div>
+                  <span>Spaceports</span>
+                  <strong data-network-metric="spaceports">—</strong>
+                </div>
+
+                <div>
+                  <span>Fleet active</span>
+                  <strong data-network-metric="fleet">—</strong>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <!-- =================================================
+                     SECONDARY GRID
+                ================================================== -->
+
+          <section class="admin-secondary-grid">
+            <!-- Recent bookings -->
+
+            <article class="admin-panel">
+              <header class="admin-panel-header">
+                <div>
+                  <p class="admin-panel-kicker">COMMERCIAL</p>
+
+                  <h2>Recent bookings</h2>
+                </div>
+
+                <a href="#bookings" class="admin-panel-link">
+                  All bookings
+                  <span aria-hidden="true">→</span>
+                </a>
+              </header>
+
+              <div class="admin-booking-list" id="dashboard-recent-bookings">
+                <div class="admin-booking-row">
+                  <span class="admin-table-empty">Loading bookings...</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Activity -->
+
+            <article class="admin-panel">
+              <header class="admin-panel-header">
+                <div>
+                  <p class="admin-panel-kicker">ACTIVITY</p>
+
+                  <h2>Operations log</h2>
+                </div>
+              </header>
+
+              <div class="admin-activity-list">
+                <div class="admin-activity-empty">
+                  <strong>Activity feed not available yet.</strong>
+
+                  <p>
+                    Live operations logging will appear here once events are
+                    recorded against flights and bookings.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </section>

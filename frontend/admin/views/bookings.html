@@ -1,0 +1,69 @@
+
+<section class="admin-page-header">
+    <div>
+        <p class="admin-page-kicker">COMMERCIAL</p>
+
+        <h1>
+            Manage
+            <span>bookings.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            Review passenger bookings, search by reference or passenger
+            and manage booking status across the network.
+        </p>
+    </div>
+</section>
+
+
+<section class="admin-flight-toolbar">
+    <form class="admin-flight-filters" id="bookings-filter-form">
+        <div class="admin-filter-search">
+            <label for="booking-search">Search</label>
+            <input
+                type="search"
+                id="booking-search"
+                name="search"
+                placeholder="Booking ID, passenger name, email, flight code or route"
+            />
+        </div>
+
+        <button
+            type="submit"
+            class="admin-button admin-button-secondary admin-filter-button"
+        >
+            Search
+        </button>
+    </form>
+</section>
+
+
+<section class="admin-panel">
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">BOOKINGS</p>
+            <h2>All bookings</h2>
+        </div>
+        <div class="admin-table-result-count" id="bookings-count">Loading...</div>
+    </header>
+
+    <div class="admin-table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Passenger</th>
+                    <th>Flight(s)</th>
+                    <th>Total</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="bookings-tbody">
+                <tr>
+                    <td colspan="6" class="admin-table-empty">Loading bookings...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

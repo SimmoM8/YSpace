@@ -1,0 +1,105 @@
+
+<section class="admin-page-header">
+    <div>
+        <p class="admin-page-kicker">NETWORK CONFIGURATION</p>
+
+        <h1>
+            Manage
+            <span>routes.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            View and create travel routes connecting spaceports across the
+            YSpace network.
+        </p>
+    </div>
+
+    <div class="admin-page-header-actions">
+        <button
+            class="admin-button admin-button-primary"
+            id="show-create-route-btn"
+        >
+            <span>+</span>
+            Create route
+        </button>
+    </div>
+</section>
+
+
+<section class="admin-panel" id="create-route-panel" style="display:none;">
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">NEW ROUTE</p>
+            <h2>Route details</h2>
+        </div>
+    </header>
+
+    <form class="admin-form" id="create-route-form">
+        <div class="admin-form-grid">
+            <div class="admin-form-group">
+                <label for="cr-name">Route name</label>
+                <input type="text" id="cr-name" name="name" placeholder="Earth to Luna Express" required />
+            </div>
+
+            <div class="admin-form-group">
+                <label for="cr-origin">Origin spaceport</label>
+                <select id="cr-origin" name="originSpaceportId" required>
+                    <option value="">Select origin...</option>
+                </select>
+            </div>
+
+            <div class="admin-form-group">
+                <label for="cr-destination">Destination spaceport</label>
+                <select id="cr-destination" name="destinationSpaceportId" required>
+                    <option value="">Select destination...</option>
+                </select>
+            </div>
+
+            <div class="admin-form-group">
+                <label for="cr-distance">Distance (km)</label>
+                <input type="number" id="cr-distance" name="distance" min="0" step="0.1" placeholder="384400" />
+            </div>
+
+            <div class="admin-form-group admin-form-group-full">
+                <label for="cr-description">Description</label>
+                <textarea id="cr-description" name="description" rows="3" placeholder="Optional route description"></textarea>
+            </div>
+        </div>
+
+        <div class="admin-form-actions">
+            <button type="button" class="admin-button admin-button-secondary" id="cancel-create-route">Cancel</button>
+            <button type="submit" class="admin-button admin-button-primary">Create route</button>
+        </div>
+    </form>
+</section>
+
+
+<section class="admin-panel admin-routes-panel">
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">NETWORK</p>
+            <h2>All routes</h2>
+        </div>
+        <div class="admin-table-result-count" id="routes-count">Loading...</div>
+    </header>
+
+    <div class="admin-table-wrapper">
+        <table class="admin-table" id="routes-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Distance</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6" class="admin-table-empty">Loading routes...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

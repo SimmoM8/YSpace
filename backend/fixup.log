@@ -1,0 +1,278 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.6)
+
+2026-08-31T13:28:35.479+02:00  INFO 25660 --- [backend] [           main] com.yspace.backend.BackendApplication    : Starting BackendApplication using Java 26.0.1 with PID 25660 (C:\Users\malco\Desktop\YSPACE\YSpace-main\YSpace-main\backend\target\classes started by malco in C:\Users\malco\Desktop\YSPACE\YSpace-main\YSpace-main\backend)
+2026-08-31T13:28:35.483+02:00  INFO 25660 --- [backend] [           main] com.yspace.backend.BackendApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-08-31T13:28:36.020+02:00  INFO 25660 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-31T13:28:36.080+02:00  INFO 25660 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 10 JPA repository interfaces.
+2026-08-31T13:28:36.453+02:00  INFO 25660 --- [backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8081 (http)
+2026-08-31T13:28:36.463+02:00  INFO 25660 --- [backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-31T13:28:36.463+02:00  INFO 25660 --- [backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-08-31T13:28:36.510+02:00  INFO 25660 --- [backend] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 980 ms
+2026-08-31T13:28:36.602+02:00  INFO 25660 --- [backend] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-31T13:28:36.642+02:00  INFO 25660 --- [backend] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-08-31T13:28:37.011+02:00  INFO 25660 --- [backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-31T13:28:37.037+02:00  INFO 25660 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-31T13:28:37.529+02:00  INFO 25660 --- [backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4a58e0e9
+2026-08-31T13:28:37.530+02:00  INFO 25660 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-31T13:28:37.623+02:00  WARN 25660 --- [backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-31T13:28:37.658+02:00  INFO 25660 --- [backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://mysql-309b449a-deskthings.c.aivencloud.com:12541/yspace_db?sslMode=REQUIRED]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.45
+	Default catalog/schema: yspace_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-31T13:28:38.698+02:00  INFO 25660 --- [backend] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-31T13:28:38.863+02:00  INFO 25660 --- [backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-31T13:28:38.920+02:00  INFO 25660 --- [backend] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-08-31T13:28:39.831+02:00  INFO 25660 --- [backend] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-08-31T13:28:39.876+02:00  WARN 25660 --- [backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-31T13:28:40.869+02:00  INFO 25660 --- [backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8081 (http) with context path '/'
+2026-08-31T13:28:40.874+02:00  INFO 25660 --- [backend] [           main] com.yspace.backend.BackendApplication    : Started BackendApplication in 5.72 seconds (process running for 6.034)
+2026-08-31T13:29:23.299+02:00  INFO 25660 --- [backend] [nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-31T13:29:23.299+02:00  INFO 25660 --- [backend] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-08-31T13:29:23.301+02:00  INFO 25660 --- [backend] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 order by f1_0.departure_time desc
+Hibernate: select b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at,b1_0.user_id from bookings b1_0
+Hibernate: select count(*) from users u1_0
+Hibernate: select count(*) from routes r1_0
+Hibernate: select count(*) from spaceports s1_0
+Hibernate: select count(*) from spacecrafts s1_0
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select count(br1_0.id) from booking_rows br1_0 join bookings b1_0 on b1_0.id=br1_0.booking_id where br1_0.flight_id=? and b1_0.status<>?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at,b1_0.user_id from bookings b1_0
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select br1_0.booking_id,br1_0.id,br1_0.flight_id,br1_0.price from booking_rows br1_0 where br1_0.booking_id=?
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 where f1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select b1_0.user_id,b1_0.id,b1_0.created_at,b1_0.status,b1_0.total_price,b1_0.updated_at from bookings b1_0 where b1_0.user_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select sm1_0.id,sm1_0.description,sm1_0.lifespan,sm1_0.manufacturer,sm1_0.max_range,sm1_0.name,sm1_0.velocity from spacecraft_models sm1_0 where sm1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where lower(s1_0.name) like lower(concat('%',?,'%')) escape '' or lower(s1_0.description) like lower(concat('%',?,'%')) escape '' or lower(s1_0.code) like lower(concat('%',?,'%')) escape ''
+Hibernate: select f1_0.id,f1_0.arrival_time,f1_0.available_seats,f1_0.base_price,f1_0.code,f1_0.created_at,f1_0.is_delayed,f1_0.departure_time,f1_0.route_id,f1_0.spacecraft_id,f1_0.status,f1_0.updated_at from flights f1_0 join routes r1_0 on r1_0.id=f1_0.route_id where r1_0.origin_spaceport_id=? and r1_0.destination_spaceport_id=? and f1_0.departure_time>=? and f1_0.departure_time<? and f1_0.status<>'CANCELLED' order by f1_0.departure_time
+Hibernate: select r1_0.id,r1_0.created_at,r1_0.description,r1_0.destination_spaceport_id,r1_0.distance,r1_0.name,r1_0.origin_spaceport_id,r1_0.updated_at from routes r1_0 where r1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.code,s1_0.description,s1_0.image_url,s1_0.name,s1_0.type from spaceports s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+Hibernate: select s1_0.id,s1_0.created_at,s1_0.model_id,s1_0.name,s1_0.is_operational,s1_0.seat_capacity,s1_0.status,s1_0.updated_at from spacecrafts s1_0 where s1_0.id=?
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:4.0.6:run (default-cli) on project backend: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
