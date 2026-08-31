@@ -97,8 +97,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     window.addEventListener("hashchange", handleRoute);
 
-    await handleRoute();
+    await Promise.all([handleRoute(), loadNavigationCounts()]);
 });
+
+async function loadNavigationCounts() {
+    try {
+        const [flightsResponse, bookingsResponse] = await Promise.all([
+            apiGet("/admin/flights"),
+            apiGet("/admin/bookings"),
+        ]);
+
+        const flights = await flightsResponse.json();
+        const bookings = await bookingsResponse.json();
+
+        document.getElementById("nav-flight-count").textContent =
+            flights.length;
+        document.getElementById("nav-booking-count").textContent =
+            bookings.length;
+    } catch (error) {
+        console.error("Could not load navigation counts:", error);
+    }
+}
 
 async function protectAdminPage() {
     const token = localStorage.getItem("token");
