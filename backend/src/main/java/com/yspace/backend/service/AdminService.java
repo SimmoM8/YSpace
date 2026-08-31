@@ -43,7 +43,6 @@ public class AdminService {
     public List<AdminUserResponseDto> getUsers(String search) {
         return userRepository.findAll()
                 .stream()
-                .filter(user -> user.getRole() == Role.SPACE_TOURIST)
                 .filter(user -> matchesUserSearch(user, search))
                 .map(this::toUserDto)
                 .toList();

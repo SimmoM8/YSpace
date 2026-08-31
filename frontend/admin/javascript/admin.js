@@ -2,7 +2,7 @@ import { apiGet } from "../../javascript/api.js";
 
 import { initDashboardPage } from "./pages/dashboard.js";
 import { initFlightsPage } from "./pages/flights.js";
-import { initCreateFlightPage } from "./pages/create-flight.js";
+import { initCreateFlightPage } from "./pages/schedule-flight.js";
 import {
     initRoutesPage,
     initCreateRoutePage,
@@ -81,20 +81,10 @@ const routes = {
         init: initBookingsPage,
     },
 
-    "create-booking": {
-        view: "views/create-booking.html",
-        title: "Create Booking",
-    },
-
     passengers: {
         view: "views/passengers.html",
         title: "Passengers",
         init: initUsersPage,
-    },
-
-    "create-passenger": {
-        view: "views/create-passenger.html",
-        title: "Add Passenger",
     },
 };
 
@@ -206,12 +196,10 @@ function updateNavigation(page) {
 
 function getNavigationPage(page) {
     const parentPages = {
-        "create-flight": "flights",
+        "schedule-flight": "flights",
         "create-route": "routes",
         "create-spaceport": "spaceports",
         "create-spacecraft": "spacecrafts",
-        "create-booking": "bookings",
-        "create-passenger": "passengers",
     };
 
     return parentPages[page] ?? page;
