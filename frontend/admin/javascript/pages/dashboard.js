@@ -1,88 +1,200 @@
 import { apiGet } from "../../../javascript/api.js";
 
+/* ================================================================
+   DASHBOARD PAGE
+================================================================ */
+
 export async function initDashboardPage() {
-    const statsGrid = document.querySelector(".admin-stats-grid");
-
     try {
-        const response = await apiGet("/admin/dashboard");
+        const dashboardData = await loadDashboardData();
 
-        const data = await response.json();
-
-        renderStats(data);
-
-        renderUpcomingFlights(data);
-
-        renderRecentBookings(data);
-
-        renderNetworkMetrics(data);
+        renderDashboardStats(dashboardData);
+        renderUpcomingFlights(dashboardData.flights);
+        renderNetworkOverview(dashboardData);
+        renderRecentBookings(dashboardData.bookings);
+        renderUserOverview(dashboardData.users);
     } catch (error) {
-        console.error(error);
+        console.error("Could not load dashboard:", error);
 
-        statsGrid?.setAttribute("class", "admin-stats-grid admin-view-error");
-
-        if (statsGrid) {
-            statsGrid.innerHTML = `
-                <p class="admin-page-kicker">ADMIN ERROR</p>
-                <h2>Could not load dashboard</h2>
-                <p>${escapeHtml(error.message || "Unknown error.")}</p>
-            `;
-        }
+        showDashboardError(
+            error.message || "Could not load dashboard data.",
+        );
     }
 }
 
-function renderStats(data) {
-    const statCards = document.querySelectorAll(".admin-stat-value[data-stat]");
+/* ================================================================
+   DATA
+================================================================ */
 
-    const values = {
-        scheduled: data.scheduledFlights,
-        bookings: data.openBookings,
-        passengers: data.totalPassengers,
+async function loadDashboardData() {
+    const [
+        flightResponse,
+        bookingResponse,
+        userResponse,
+        routeResponse,
+        spaceportResponse,
+        spacecraftResponse,
+    ] = await Promise.all([
+        apiGet("/admin/flights"),
+        apiGet("/admin/bookings"),
+        apiGet("/admin/users"),
+        apiGet("/admin/routes"),
+        apiGet("/admin/spaceports"),
+        apiGet("/admin/spacecraft"),
+    ]);
+
+    const [
+        flights,
+        bookings,
+        users,
+        routes,
+        spaceports,
+        spacecraft,
+    ] = await Promise.all([
+        flightResponse.json(),
+        bookingResponse.json(),
+        userResponse.json(),
+        routeResponse.json(),
+        spaceportResponse.json(),
+        spacecraftResponse.json(),
+    ]);
+
+    return {
+        flights,
+        bookings,
+        users,
+        routes,
+        spaceports,
+        spacecraft,
     };
-
-    statCards.forEach((card) => {
-        const key = card.getAttribute("data-stat");
-
-        if (values[key] !== undefined) {
-            card.innerHTML = String(values[key]);
-        }
-    });
 }
 
-function renderUpcomingFlights(data) {
-    const tableBody = document.querySelector("#dashboard-upcoming-flights tbody");
+/* ================================================================
+   DASHBOARD STATISTICS
+================================================================ */
+
+function renderDashboardStats(data) {
+    const scheduledFlights = data.flights.filter(
+        (flight) =>
+            flight.status === "SCHEDULED",
+    ).length;
+
+    const openBookings = data.bookings.filter(
+        (booking) =>
+            booking.status === "OPEN",
+    ).length;
+
+    const passengers = data.users.filter(
+        (user) =>
+            user.role === "SPACE_TOURIST",
+    ).length;
+
+    const operationalSpacecraft = data.spacecraft.filter(
+        (spacecraft) =>
+            spacecraft.operational === true,
+    ).length;
+
+    const fleetAvailability =
+        calculatePercentage(
+            operationalSpacecraft,
+            data.spacecraft.length,
+        );
+
+    setDashboardStat(
+        "scheduled-flights",
+        scheduledFlights,
+    );
+
+    setDashboardStat(
+        "open-bookings",
+        openBookings,
+    );
+
+    setDashboardStat(
+        "passengers",
+        passengers,
+    );
+
+    setDashboardStat(
+        "fleet-availability",
+        `${fleetAvailability}%`,
+    );
+}
+
+function setDashboardStat(name, value) {
+    const element = document.querySelector(
+        `[data-dashboard-stat="${name}"]`,
+    );
+
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+/* ================================================================
+   UPCOMING FLIGHTS
+================================================================ */
+
+function renderUpcomingFlights(flights) {
+    const tableBody = document.getElementById(
+        "dashboard-upcoming-flights",
+    );
 
     if (!tableBody) {
         return;
     }
 
-    const flights = data.upcomingFlights || [];
+    const now = new Date();
 
-    if (!flights.length) {
+    const upcomingFlights = flights
+        .filter((flight) =>
+            isUpcomingFlight(flight, now),
+        )
+        .sort(
+            (first, second) =>
+                new Date(first.departureTime) -
+                new Date(second.departureTime),
+        )
+        .slice(0, 4);
+
+    if (upcomingFlights.length === 0) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="7" class="admin-table-empty">
-                    No upcoming flights.
+                <td colspan="6" class="admin-table-empty">
+                    No upcoming departures.
                 </td>
             </tr>
         `;
+
         return;
     }
 
-    tableBody.innerHTML = flights.map(createFlightRow).join("");
+    tableBody.innerHTML = upcomingFlights
+        .map(createUpcomingFlightRow)
+        .join("");
 }
 
-function createFlightRow(flight) {
-    const capacity = Number(flight.seatCapacity ?? 0);
+function isUpcomingFlight(flight, now) {
+    if (!flight.departureTime) {
+        return false;
+    }
 
-    const booked = Number(flight.bookedSeats ?? 0);
+    const activeStatuses = [
+        "SCHEDULED",
+        "BOARDING",
+    ];
 
-    const load =
-        capacity > 0 ? Math.min(100, Math.round((booked / capacity) * 100)) : 0;
+    return (
+        activeStatuses.includes(flight.status) &&
+        new Date(flight.departureTime) >= now
+    );
+}
 
-    const statusClass =
-        flight.status === "BOARDING"
-            ? "admin-status-active"
-            : "admin-status-scheduled";
+function createUpcomingFlightRow(flight) {
+    const loadPercentage = calculatePercentage(
+        Number(flight.bookedSeats) || 0,
+        Number(flight.seatCapacity) || 0,
+    );
 
     return `
         <tr>
@@ -94,118 +206,313 @@ function createFlightRow(flight) {
 
             <td>
                 <div class="admin-route">
-                    <strong>${escapeHtml(flight.originCode)}</strong>
-                    <span aria-hidden="true">→</span>
-                    <strong>${escapeHtml(flight.destinationCode)}</strong>
+                    <strong>
+                        ${escapeHtml(flight.originCode)}
+                    </strong>
+
+                    <span>→</span>
+
+                    <strong>
+                        ${escapeHtml(flight.destinationCode)}
+                    </strong>
                 </div>
-                <small>${escapeHtml(flight.originName)} · ${escapeHtml(flight.destinationName)}</small>
+
+                <small>
+                    ${escapeHtml(flight.routeName)}
+                </small>
             </td>
 
             <td>
-                <strong>${formatDateTime(flight.departureTime)}</strong>
+                <strong>
+                    ${formatTime(flight.departureTime)}
+                </strong>
+
+                <small>
+                    ${formatDate(flight.departureTime)}
+                </small>
             </td>
 
             <td>
-                <span>${escapeHtml(flight.spacecraftName)}</span>
+                <span>
+                    ${escapeHtml(flight.spacecraftName)}
+                </span>
+
+                <small>
+                    ${escapeHtml(flight.spacecraftModel)}
+                </small>
             </td>
 
             <td>
                 <div class="admin-load">
-                    <span>${load}%</span>
+                    <span>
+                        ${loadPercentage}%
+                    </span>
+
                     <div class="admin-progress">
-                        <span style="width: ${load}%"></span>
+                        <span
+                            style="width: ${loadPercentage}%"
+                        ></span>
                     </div>
                 </div>
             </td>
 
             <td>
-                <span class="admin-status ${statusClass}">
-                    ${formatStatus(flight.status)}
+                <span class="${getFlightStatusClass(flight.status)}">
+                    ${escapeHtml(formatStatus(flight.status))}
                 </span>
             </td>
         </tr>
     `;
 }
 
-function renderRecentBookings(data) {
-    const container = document.querySelector("#dashboard-recent-bookings");
+/* ================================================================
+   NETWORK OVERVIEW
+================================================================ */
+
+function renderNetworkOverview(data) {
+    const operationalSpacecraft = data.spacecraft.filter(
+        (spacecraft) =>
+            spacecraft.operational === true,
+    ).length;
+
+    setNetworkMetric(
+        "routes",
+        data.routes.length,
+    );
+
+    setNetworkMetric(
+        "spaceports",
+        data.spaceports.length,
+    );
+
+    setNetworkMetric(
+        "fleet",
+        `${operationalSpacecraft} / ${data.spacecraft.length}`,
+    );
+}
+
+function setNetworkMetric(name, value) {
+    const element = document.querySelector(
+        `[data-dashboard-network="${name}"]`,
+    );
+
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+/* ================================================================
+   RECENT BOOKINGS
+================================================================ */
+
+function renderRecentBookings(bookings) {
+    const container = document.getElementById(
+        "dashboard-recent-bookings",
+    );
 
     if (!container) {
         return;
     }
 
-    const bookings = data.recentBookings || [];
+    const recentBookings = [...bookings]
+        .sort(
+            (first, second) =>
+                new Date(second.createdAt) -
+                new Date(first.createdAt),
+        )
+        .slice(0, 4);
 
-    if (!bookings.length) {
+    if (recentBookings.length === 0) {
         container.innerHTML = `
-            <div class="admin-booking-row">
-                <span class="admin-table-empty">No recent bookings.</span>
+            <div class="admin-table-empty">
+                No bookings have been created yet.
             </div>
         `;
+
         return;
     }
 
-    container.innerHTML = bookings.map(createBookingRow).join("");
+    container.innerHTML = recentBookings
+        .map(createRecentBookingRow)
+        .join("");
 }
 
-function createBookingRow(booking) {
+function createRecentBookingRow(booking) {
+    const journey = getBookingJourney(booking);
+
     return `
         <div class="admin-booking-row">
             <div class="admin-booking-reference">
-                <strong>#${booking.id}</strong>
-                <span>${escapeHtml(booking.userName)}</span>
+                <strong>
+                    ${formatBookingReference(booking.id)}
+                </strong>
+
+                <span>
+                    ${escapeHtml(booking.userName)}
+                </span>
             </div>
 
             <div class="admin-booking-route">
                 <strong>
-                    ${escapeHtml(booking.originCode || "—")}
-                    → ${escapeHtml(booking.destinationCode || "—")}
+                    ${escapeHtml(journey.label)}
                 </strong>
-                <span>Flight ${escapeHtml(booking.flightCode || "—")}</span>
+
+                <span>
+                    ${escapeHtml(journey.details)}
+                </span>
             </div>
 
             <div class="admin-booking-date">
-                <strong>$${Number(booking.totalPrice ?? 0).toFixed(2)}</strong>
-                <span>${booking.createdAt}</span>
+                <strong>
+                    ${formatShortDate(booking.createdAt)}
+                </strong>
+
+                <span>
+                    ${formatTime(booking.createdAt)}
+                </span>
             </div>
 
-            ${createStatusBadge(booking.status)}
+            <span class="${getBookingStatusClass(booking.status)}">
+                ${escapeHtml(formatStatus(booking.status))}
+            </span>
         </div>
     `;
 }
 
-function renderNetworkMetrics(data) {
-    const metrics = document.querySelectorAll("[data-network-metric]");
+function getBookingJourney(booking) {
+    if (!booking.rows?.length) {
+        return {
+            label: "No journey",
+            details: "No flight information",
+        };
+    }
 
-    const values = {
-        routes: data.activeRoutes,
-        spaceports: data.activeSpaceports,
-        fleet: data.activeSpacecraft,
+    const firstRow = booking.rows[0];
+    const lastRow =
+        booking.rows[booking.rows.length - 1];
+
+    const label =
+        `${firstRow.originCode ?? "—"} → ` +
+        `${lastRow.destinationCode ?? "—"}`;
+
+    if (booking.rows.length === 1) {
+        return {
+            label,
+            details: `Flight ${firstRow.flightCode}`,
+        };
+    }
+
+    return {
+        label,
+        details:
+            `${booking.rows.length} flight segments`,
     };
-
-    metrics.forEach((metric) => {
-        const key = metric.getAttribute("data-network-metric");
-
-        if (values[key] !== undefined) {
-            metric.textContent = String(values[key]);
-        }
-    });
 }
 
-function createStatusBadge(status) {
-    const classMap = {
-        OPEN: "admin-status-active",
-        CLOSED: "admin-status-completed",
-        CANCELLED: "admin-status-cancelled",
-    };
+/* ================================================================
+   USER OVERVIEW
+================================================================ */
 
-    const cssClass = classMap[status] ?? "admin-status-scheduled";
+function renderUserOverview(users) {
+    const passengers = users.filter(
+        (user) =>
+            user.role === "SPACE_TOURIST",
+    ).length;
 
-    return `
-        <span class="admin-status ${cssClass}">
-            ${formatStatus(status)}
-        </span>
-    `;
+    const admins = users.filter(
+        (user) =>
+            user.role === "ADMIN",
+    ).length;
+
+    const activeMembers = users.filter(
+        (user) =>
+            Number(user.openBookingCount) > 0,
+    ).length;
+
+    setUserMetric(
+        "total",
+        users.length,
+    );
+
+    setUserMetric(
+        "passengers",
+        passengers,
+    );
+
+    setUserMetric(
+        "admins",
+        admins,
+    );
+
+    setUserMetric(
+        "active",
+        activeMembers,
+    );
+}
+
+function setUserMetric(name, value) {
+    const element = document.querySelector(
+        `[data-dashboard-user="${name}"]`,
+    );
+
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+/* ================================================================
+   ERROR HANDLING
+================================================================ */
+
+function showDashboardError(message) {
+    const flightTable = document.getElementById(
+        "dashboard-upcoming-flights",
+    );
+
+    const bookingList = document.getElementById(
+        "dashboard-recent-bookings",
+    );
+
+    if (flightTable) {
+        flightTable.innerHTML = `
+            <tr>
+                <td colspan="6" class="admin-table-empty">
+                    ${escapeHtml(message)}
+                </td>
+            </tr>
+        `;
+    }
+
+    if (bookingList) {
+        bookingList.innerHTML = `
+            <div class="admin-table-empty">
+                ${escapeHtml(message)}
+            </div>
+        `;
+    }
+}
+
+/* ================================================================
+   FORMATTING
+================================================================ */
+
+function calculatePercentage(value, total) {
+    if (!total || total <= 0) {
+        return 0;
+    }
+
+    return Math.min(
+        100,
+        Math.round((value / total) * 100),
+    );
+}
+
+function formatBookingReference(id) {
+    if (id == null) {
+        return "Booking";
+    }
+
+    return `YSB-${String(id).padStart(6, "0")}`;
 }
 
 function formatStatus(status) {
@@ -216,34 +523,117 @@ function formatStatus(status) {
     return status
         .toLowerCase()
         .replaceAll("_", " ")
-        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+        .replace(/\b\w/g, (letter) =>
+            letter.toUpperCase(),
+        );
 }
 
-function formatDateTime(value) {
-    if (!value) {
+function getFlightStatusClass(status) {
+    const classes = {
+        SCHEDULED:
+            "admin-status admin-status-scheduled",
+
+        BOARDING:
+            "admin-status admin-status-active",
+
+        DEPARTED:
+            "admin-status admin-status-active",
+
+        IN_FLIGHT:
+            "admin-status admin-status-active",
+
+        ARRIVED:
+            "admin-status admin-status-confirmed",
+
+        CANCELLED:
+            "admin-status admin-status-cancelled",
+    };
+
+    return (
+        classes[status] ??
+        "admin-status admin-status-scheduled"
+    );
+}
+
+function getBookingStatusClass(status) {
+    const classes = {
+        OPEN:
+            "admin-status admin-status-confirmed",
+
+        CLOSED:
+            "admin-status admin-status-scheduled",
+
+        CANCELLED:
+            "admin-status admin-status-cancelled",
+    };
+
+    return (
+        classes[status] ??
+        "admin-status admin-status-scheduled"
+    );
+}
+
+function formatDate(value) {
+    const date = parseDate(value);
+
+    if (!date) {
         return "—";
     }
 
-    const parts = value.split(" ");
+    return new Intl.DateTimeFormat(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+        },
+    ).format(date);
+}
 
-    if (parts.length !== 2) {
-        return value;
+function formatShortDate(value) {
+    const date = parseDate(value);
+
+    if (!date) {
+        return "—";
     }
 
-    const [datePart, timePart] = parts;
+    return new Intl.DateTimeFormat(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+        },
+    ).format(date);
+}
 
-    const [year, month, day] = datePart.split("-").map(Number);
+function formatTime(value) {
+    const date = parseDate(value);
 
-    const [hour, minute] = timePart.split(":").map(Number);
+    if (!date) {
+        return "—";
+    }
 
-    const date = new Date(year, month - 1, day, hour, minute);
+    return new Intl.DateTimeFormat(
+        "en-GB",
+        {
+            hour: "2-digit",
+            minute: "2-digit",
+        },
+    ).format(date);
+}
 
-    return new Intl.DateTimeFormat("en-GB", {
-        day: "2-digit",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-    }).format(date);
+function parseDate(value) {
+    if (!value) {
+        return null;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    return date;
 }
 
 function escapeHtml(value) {

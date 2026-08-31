@@ -1994,11 +1994,11 @@ body.admin-page {
    SCHEDULE FLIGHT
 ================================================================ */
 
-.admin-create-flight-header {
+.admin-schedule-flight-header {
     margin-bottom: 32px;
 }
 
-.admin-create-flight-layout {
+.admin-schedule-flight-layout {
     display: grid;
     grid-template-columns:
         minmax(0, 1fr) minmax(280px, 360px);
@@ -2325,7 +2325,7 @@ body.admin-page {
 
 @media (max-width: 1100px) {
 
-    .admin-create-flight-layout {
+    .admin-schedule-flight-layout {
         grid-template-columns: 1fr;
     }
 

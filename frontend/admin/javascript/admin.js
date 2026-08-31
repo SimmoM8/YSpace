@@ -33,8 +33,8 @@ const routes = {
         init: initFlightsPage,
     },
 
-    "create-flight": {
-        view: "views/create-flight.html",
+    "schedule-flight": {
+        view: "views/schedule-flight.html",
         title: "Schedule Flight",
         init: initCreateFlightPage,
     },

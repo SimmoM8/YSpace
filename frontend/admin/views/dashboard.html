@@ -1,519 +1,446 @@
+<!-- =============================================================
+     PAGE HEADER
+============================================================== -->
 
-          <!-- =================================================
-                     PAGE HEADER
-                ================================================== -->
+<section class="admin-page-header">
+    <div>
+        <p class="admin-page-kicker">
+            NETWORK OVERVIEW
+        </p>
 
-          <section class="admin-page-header">
+        <h1>
+            Operations
+            <span>dashboard.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            Monitor YSpace passenger operations, scheduled departures,
+            commercial activity and network resources across the system.
+        </p>
+    </div>
+
+    <div class="admin-page-header-actions">
+        <a
+            href="#flights"
+            class="admin-button admin-button-secondary"
+        >
+            View flights
+        </a>
+
+        <a
+            href="#schedule-flight"
+            class="admin-button admin-button-primary"
+        >
+            <span>+</span>
+            Schedule flight
+        </a>
+    </div>
+</section>
+
+<!-- =============================================================
+     KPI GRID
+============================================================== -->
+
+<section
+    class="admin-stats-grid"
+    aria-label="Operations overview"
+>
+    <article class="admin-stat-card">
+        <div class="admin-stat-card-header">
+            <span>Scheduled flights</span>
+
+            <span class="admin-stat-code">
+                FLT
+            </span>
+        </div>
+
+        <strong
+            class="admin-stat-value"
+            data-dashboard-stat="scheduled-flights"
+        >
+            —
+        </strong>
+
+        <div class="admin-stat-footer">
+            <span class="admin-stat-neutral">
+                Upcoming
+            </span>
+
+            <span>
+                scheduled services
+            </span>
+        </div>
+    </article>
+
+    <article class="admin-stat-card">
+        <div class="admin-stat-card-header">
+            <span>Open bookings</span>
+
+            <span class="admin-stat-code">
+                BKG
+            </span>
+        </div>
+
+        <strong
+            class="admin-stat-value"
+            data-dashboard-stat="open-bookings"
+        >
+            —
+        </strong>
+
+        <div class="admin-stat-footer">
+            <span class="admin-stat-neutral">
+                Current
+            </span>
+
+            <span>
+                passenger bookings
+            </span>
+        </div>
+    </article>
+
+    <article class="admin-stat-card">
+        <div class="admin-stat-card-header">
+            <span>Passengers</span>
+
+            <span class="admin-stat-code">
+                PAX
+            </span>
+        </div>
+
+        <strong
+            class="admin-stat-value"
+            data-dashboard-stat="passengers"
+        >
+            —
+        </strong>
+
+        <div class="admin-stat-footer">
+            <span class="admin-stat-neutral">
+                Registered
+            </span>
+
+            <span>
+                space tourists
+            </span>
+        </div>
+    </article>
+
+    <article class="admin-stat-card">
+        <div class="admin-stat-card-header">
+            <span>Fleet availability</span>
+
+            <span class="admin-stat-code">
+                FLT
+            </span>
+        </div>
+
+        <strong
+            class="admin-stat-value"
+            data-dashboard-stat="fleet-availability"
+        >
+            —
+        </strong>
+
+        <div class="admin-stat-footer">
+            <span class="admin-stat-neutral">
+                Operational
+            </span>
+
+            <span>
+                spacecraft
+            </span>
+        </div>
+    </article>
+</section>
+
+<!-- =============================================================
+     PRIMARY GRID
+============================================================== -->
+
+<section class="admin-dashboard-grid">
+
+    <!-- =========================================================
+         UPCOMING FLIGHTS
+    ========================================================== -->
+
+    <article class="admin-panel admin-flights-panel">
+        <header class="admin-panel-header">
             <div>
-              <p class="admin-page-kicker">NETWORK OVERVIEW</p>
+                <p class="admin-panel-kicker">
+                    FLIGHT OPERATIONS
+                </p>
 
-              <h1>
-                Operations
-                <span>dashboard.</span>
-              </h1>
-
-              <p class="admin-page-description">
-                Monitor YSpace passenger operations, scheduled departures and
-                network activity across the system.
-              </p>
+                <h2>
+                    Upcoming departures
+                </h2>
             </div>
 
-            <div class="admin-page-header-actions">
-              <a href="#flights" class="admin-button admin-button-secondary">
-                View flights
-              </a>
+            <a
+                href="#flights"
+                class="admin-panel-link"
+            >
+                All flights
+                <span aria-hidden="true">→</span>
+            </a>
+        </header>
 
-              <a
-                href="#create-flight"
-                class="admin-button admin-button-primary"
-              >
-                <span>+</span>
-                Schedule flight
-              </a>
+        <div class="admin-table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Flight</th>
+                        <th>Route</th>
+                        <th>Departure</th>
+                        <th>Craft</th>
+                        <th>Load</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="dashboard-upcoming-flights">
+                    <tr>
+                        <td
+                            colspan="6"
+                            class="admin-table-empty"
+                        >
+                            Loading departures...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+
+    <!-- =========================================================
+         NETWORK
+    ========================================================== -->
+
+    <article class="admin-panel admin-network-panel">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">
+                    SYSTEM
+                </p>
+
+                <h2>
+                    Network overview
+                </h2>
             </div>
-          </section>
-
-          <!-- =================================================
-                     KPI GRID
-                ================================================== -->
-
-          <section class="admin-stats-grid" aria-label="Operations overview">
-            <article class="admin-stat-card">
-              <div class="admin-stat-card-header">
-                <span>Scheduled flights</span>
-
-                <span class="admin-stat-code"> FLT </span>
-              </div>
-
-              <strong class="admin-stat-value"> 24 </strong>
-
-              <div class="admin-stat-footer">
-                <span class="admin-stat-positive"> +3 </span>
-
-                <span>since yesterday</span>
-              </div>
-            </article>
-
-            <article class="admin-stat-card">
-              <div class="admin-stat-card-header">
-                <span>Open bookings</span>
-
-                <span class="admin-stat-code"> BKG </span>
-              </div>
-
-              <strong class="admin-stat-value"> 138 </strong>
-
-              <div class="admin-stat-footer">
-                <span class="admin-stat-positive"> +12 </span>
-
-                <span>this week</span>
-              </div>
-            </article>
-
-            <article class="admin-stat-card">
-              <div class="admin-stat-card-header">
-                <span>Passengers</span>
-
-                <span class="admin-stat-code"> PAX </span>
-              </div>
-
-              <strong class="admin-stat-value"> 412 </strong>
-
-              <div class="admin-stat-footer">
-                <span class="admin-stat-positive"> +28 </span>
-
-                <span>this month</span>
-              </div>
-            </article>
-
-            <article class="admin-stat-card">
-              <div class="admin-stat-card-header">
-                <span>Network load</span>
-
-                <span class="admin-stat-code"> NET </span>
-              </div>
-
-              <strong class="admin-stat-value"> 68<span>%</span> </strong>
-
-              <div class="admin-stat-footer">
-                <span class="admin-stat-neutral"> Normal </span>
-
-                <span>operating range</span>
-              </div>
-            </article>
-          </section>
-
-          <!-- =================================================
-                     PRIMARY GRID
-                ================================================== -->
-
-          <section class="admin-dashboard-grid">
-            <!-- =============================================
-                         UPCOMING FLIGHTS
-                    ============================================== -->
-
-            <article class="admin-panel admin-flights-panel">
-              <header class="admin-panel-header">
-                <div>
-                  <p class="admin-panel-kicker">FLIGHT OPERATIONS</p>
-
-                  <h2>Upcoming departures</h2>
-                </div>
-
-                <a href="#flights" class="admin-panel-link">
-                  All flights
-                  <span aria-hidden="true">→</span>
-                </a>
-              </header>
-
-              <div class="admin-table-wrapper">
-                <table class="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Flight</th>
-                      <th>Route</th>
-                      <th>Departure</th>
-                      <th>Craft</th>
-                      <th>Load</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>
-                        <strong class="admin-flight-number"> YS-204 </strong>
-                      </td>
-
-                      <td>
-                        <div class="admin-route">
-                          <strong>EOH</strong>
-                          <span>→</span>
-                          <strong>LBO</strong>
-                        </div>
-
-                        <small> Earth Orbit · Luna </small>
-                      </td>
-
-                      <td>
-                        <strong>14:30</strong>
-                        <small>27 Aug 2026</small>
-                      </td>
-
-                      <td>
-                        <span>Helios XR-04</span>
-                      </td>
-
-                      <td>
-                        <div class="admin-load">
-                          <span>86%</span>
-
-                          <div class="admin-progress">
-                            <span style="width: 86%"></span>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td>
-                        <span class="admin-status admin-status-active">
-                          Boarding
-                        </span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <strong class="admin-flight-number"> YS-207 </strong>
-                      </td>
-
-                      <td>
-                        <div class="admin-route">
-                          <strong>LBO</strong>
-                          <span>→</span>
-                          <strong>EOH</strong>
-                        </div>
-
-                        <small> Luna · Earth Orbit </small>
-                      </td>
-
-                      <td>
-                        <strong>18:15</strong>
-                        <small>27 Aug 2026</small>
-                      </td>
-
-                      <td>
-                        <span>Helios XR-07</span>
-                      </td>
-
-                      <td>
-                        <div class="admin-load">
-                          <span>71%</span>
-
-                          <div class="admin-progress">
-                            <span style="width: 71%"></span>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td>
-                        <span class="admin-status admin-status-scheduled">
-                          Scheduled
-                        </span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <strong class="admin-flight-number"> YS-301 </strong>
-                      </td>
-
-                      <td>
-                        <div class="admin-route">
-                          <strong>EOH</strong>
-                          <span>→</span>
-                          <strong>MGW</strong>
-                        </div>
-
-                        <small> Earth Orbit · Mars </small>
-                      </td>
-
-                      <td>
-                        <strong>07:20</strong>
-                        <small>28 Aug 2026</small>
-                      </td>
-
-                      <td>
-                        <span>Asteria LX-02</span>
-                      </td>
-
-                      <td>
-                        <div class="admin-load">
-                          <span>94%</span>
-
-                          <div class="admin-progress">
-                            <span style="width: 94%"></span>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td>
-                        <span class="admin-status admin-status-scheduled">
-                          Scheduled
-                        </span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <strong class="admin-flight-number"> YS-212 </strong>
-                      </td>
-
-                      <td>
-                        <div class="admin-route">
-                          <strong>EOH</strong>
-                          <span>→</span>
-                          <strong>LBO</strong>
-                        </div>
-
-                        <small> Earth Orbit · Luna </small>
-                      </td>
-
-                      <td>
-                        <strong>11:45</strong>
-                        <small>28 Aug 2026</small>
-                      </td>
-
-                      <td>
-                        <span>Helios XR-03</span>
-                      </td>
-
-                      <td>
-                        <div class="admin-load">
-                          <span>43%</span>
-
-                          <div class="admin-progress">
-                            <span style="width: 43%"></span>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td>
-                        <span class="admin-status admin-status-scheduled">
-                          Scheduled
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
-
-            <!-- =============================================
-                         NETWORK PANEL
-                    ============================================== -->
-
-            <article class="admin-panel admin-network-panel">
-              <header class="admin-panel-header">
-                <div>
-                  <p class="admin-panel-kicker">SYSTEM</p>
-
-                  <h2>Network health</h2>
-                </div>
-              </header>
-
-              <div class="admin-network-status">
-                <div class="admin-network-orbit" aria-hidden="true">
-                  <span class="admin-network-centre"> Y </span>
-
-                  <span
-                    class="admin-network-node admin-network-node-one"
-                  ></span>
-
-                  <span
-                    class="admin-network-node admin-network-node-two"
-                  ></span>
-
-                  <span
-                    class="admin-network-node admin-network-node-three"
-                  ></span>
-                </div>
-
-                <div class="admin-network-message">
-                  <span class="admin-status-dot"></span>
-
-                  <div>
-                    <strong> All systems operational </strong>
-
-                    <p>No critical network incidents detected.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="admin-network-metrics">
-                <div>
-                  <span>Active routes</span>
-                  <strong>08</strong>
-                </div>
+        </header>
+
+        <div class="admin-network-status">
+            <div
+                class="admin-network-orbit"
+                aria-hidden="true"
+            >
+                <span class="admin-network-centre">
+                    Y
+                </span>
+
+                <span
+                    class="
+                        admin-network-node
+                        admin-network-node-one
+                    "
+                ></span>
+
+                <span
+                    class="
+                        admin-network-node
+                        admin-network-node-two
+                    "
+                ></span>
+
+                <span
+                    class="
+                        admin-network-node
+                        admin-network-node-three
+                    "
+                ></span>
+            </div>
+
+            <div class="admin-network-message">
+                <span class="admin-status-dot"></span>
 
                 <div>
-                  <span>Spaceports</span>
-                  <strong>06</strong>
+                    <strong>
+                        Network data available
+                    </strong>
+
+                    <p>
+                        Current operational resources across YSpace.
+                    </p>
                 </div>
+            </div>
+        </div>
+
+        <div class="admin-network-metrics">
+            <div>
+                <span>Routes</span>
+
+                <strong data-dashboard-network="routes">
+                    —
+                </strong>
+            </div>
+
+            <div>
+                <span>Spaceports</span>
+
+                <strong data-dashboard-network="spaceports">
+                    —
+                </strong>
+            </div>
+
+            <div>
+                <span>Fleet operational</span>
+
+                <strong data-dashboard-network="fleet">
+                    —
+                </strong>
+            </div>
+        </div>
+    </article>
+</section>
+
+<!-- =============================================================
+     SECONDARY GRID
+============================================================== -->
+
+<section class="admin-secondary-grid">
+
+    <!-- =========================================================
+         RECENT BOOKINGS
+    ========================================================== -->
+
+    <article class="admin-panel">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">
+                    COMMERCIAL
+                </p>
+
+                <h2>
+                    Recent bookings
+                </h2>
+            </div>
+
+            <a
+                href="#bookings"
+                class="admin-panel-link"
+            >
+                All bookings
+                <span aria-hidden="true">→</span>
+            </a>
+        </header>
+
+        <div
+            class="admin-booking-list"
+            id="dashboard-recent-bookings"
+        >
+            <div class="admin-table-empty">
+                Loading bookings...
+            </div>
+        </div>
+    </article>
+
+    <!-- =========================================================
+         MEMBERS
+    ========================================================== -->
+
+    <article class="admin-panel">
+        <header class="admin-panel-header">
+            <div>
+                <p class="admin-panel-kicker">
+                    MEMBERS
+                </p>
+
+                <h2>
+                    Account overview
+                </h2>
+            </div>
+
+            <a
+                href="#passengers"
+                class="admin-panel-link"
+            >
+                All members
+                <span aria-hidden="true">→</span>
+            </a>
+        </header>
+
+        <div class="admin-activity-list">
+            <div class="admin-activity-item">
+                <span class="admin-activity-marker"></span>
 
                 <div>
-                  <span>Fleet active</span>
-                  <strong>11 / 14</strong>
+                    <strong>
+                        Total registered members
+                    </strong>
+
+                    <p>
+                        All YSpace user accounts
+                    </p>
                 </div>
-              </div>
-            </article>
-          </section>
 
-          <!-- =================================================
-                     SECONDARY GRID
-                ================================================== -->
+                <strong data-dashboard-user="total">
+                    —
+                </strong>
+            </div>
 
-          <section class="admin-secondary-grid">
-            <!-- Recent bookings -->
+            <div class="admin-activity-item">
+                <span class="admin-activity-marker"></span>
 
-            <article class="admin-panel">
-              <header class="admin-panel-header">
                 <div>
-                  <p class="admin-panel-kicker">COMMERCIAL</p>
+                    <strong>
+                        Space tourists
+                    </strong>
 
-                  <h2>Recent bookings</h2>
+                    <p>
+                        Passenger accounts
+                    </p>
                 </div>
 
-                <a href="#bookings" class="admin-panel-link">
-                  All bookings
-                  <span aria-hidden="true">→</span>
-                </a>
-              </header>
+                <strong data-dashboard-user="passengers">
+                    —
+                </strong>
+            </div>
 
-              <div class="admin-booking-list">
-                <div class="admin-booking-row">
-                  <div class="admin-booking-reference">
-                    <strong>YSB-843921</strong>
-                    <span>2 passengers</span>
-                  </div>
+            <div class="admin-activity-item">
+                <span class="admin-activity-marker"></span>
 
-                  <div class="admin-booking-route">
-                    <strong>EOH → LBO</strong>
-                    <span>Flight YS-212</span>
-                  </div>
-
-                  <div class="admin-booking-date">
-                    <strong>27 Aug</strong>
-                    <span>12:42</span>
-                  </div>
-
-                  <span class="admin-status admin-status-confirmed">
-                    Confirmed
-                  </span>
-                </div>
-
-                <div class="admin-booking-row">
-                  <div class="admin-booking-reference">
-                    <strong>YSB-843917</strong>
-                    <span>1 passenger</span>
-                  </div>
-
-                  <div class="admin-booking-route">
-                    <strong>EOH → MGW</strong>
-                    <span>Flight YS-301</span>
-                  </div>
-
-                  <div class="admin-booking-date">
-                    <strong>27 Aug</strong>
-                    <span>12:31</span>
-                  </div>
-
-                  <span class="admin-status admin-status-confirmed">
-                    Confirmed
-                  </span>
-                </div>
-
-                <div class="admin-booking-row">
-                  <div class="admin-booking-reference">
-                    <strong>YSB-843902</strong>
-                    <span>3 passengers</span>
-                  </div>
-
-                  <div class="admin-booking-route">
-                    <strong>LBO → EOH</strong>
-                    <span>Flight YS-207</span>
-                  </div>
-
-                  <div class="admin-booking-date">
-                    <strong>27 Aug</strong>
-                    <span>11:58</span>
-                  </div>
-
-                  <span class="admin-status admin-status-confirmed">
-                    Confirmed
-                  </span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Activity -->
-
-            <article class="admin-panel">
-              <header class="admin-panel-header">
                 <div>
-                  <p class="admin-panel-kicker">ACTIVITY</p>
+                    <strong>
+                        Administrators
+                    </strong>
 
-                  <h2>Operations log</h2>
-                </div>
-              </header>
-
-              <div class="admin-activity-list">
-                <div class="admin-activity-item">
-                  <span class="admin-activity-marker"></span>
-
-                  <div>
-                    <strong> Flight YS-204 boarding opened </strong>
-
-                    <p>Earth Orbital Hub · Gate 04</p>
-                  </div>
-
-                  <time>12:58</time>
+                    <p>
+                        Administrative accounts
+                    </p>
                 </div>
 
-                <div class="admin-activity-item">
-                  <span class="admin-activity-marker"></span>
+                <strong data-dashboard-user="admins">
+                    —
+                </strong>
+            </div>
 
-                  <div>
-                    <strong> New booking YSB-843921 </strong>
+            <div class="admin-activity-item">
+                <span class="admin-activity-marker"></span>
 
-                    <p>2 passengers · EOH → LBO</p>
-                  </div>
+                <div>
+                    <strong>
+                        Members travelling
+                    </strong>
 
-                  <time>12:42</time>
+                    <p>
+                        Accounts with open bookings
+                    </p>
                 </div>
 
-                <div class="admin-activity-item">
-                  <span class="admin-activity-marker"></span>
-
-                  <div>
-                    <strong> Helios XR-07 assigned </strong>
-
-                    <p>Flight YS-207</p>
-                  </div>
-
-                  <time>12:21</time>
-                </div>
-
-                <div class="admin-activity-item">
-                  <span class="admin-activity-marker"></span>
-
-                  <div>
-                    <strong> Flight YS-198 completed </strong>
-
-                    <p>74 passengers arrived at EOH</p>
-                  </div>
-
-                  <time>11:48</time>
-                </div>
-              </div>
-            </article>
-          </section>
+                <strong data-dashboard-user="active">
+                    —
+                </strong>
+            </div>
+        </div>
+    </article>
+</section>
