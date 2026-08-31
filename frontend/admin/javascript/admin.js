@@ -7,7 +7,10 @@ import {
     initRoutesPage,
     initCreateRoutePage,
 } from "./pages/routes.js";
-import { initSpaceportsPage } from "./pages/spaceports.js";
+import {
+    initSpaceportsPage,
+    initCreateSpaceportPage,
+} from "./pages/spaceports.js";
 import { initSpacecraftPage } from "./pages/spacecraft.js";
 import { initBookingsPage } from "./pages/bookings.js";
 import { initUsersPage } from "./pages/users.js";
@@ -54,6 +57,7 @@ const routes = {
     "create-spaceport": {
         view: "views/create-spaceport.html",
         title: "Add Spaceport",
+        init: initCreateSpaceportPage,
     },
 
     spacecrafts: {

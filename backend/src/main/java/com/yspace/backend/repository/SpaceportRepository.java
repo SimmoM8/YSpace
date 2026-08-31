@@ -9,12 +9,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SpaceportRepository extends JpaRepository<Spaceport, Integer> {
+public interface SpaceportRepository
+        extends JpaRepository<Spaceport, Integer> {
+
     @Query("""
         SELECT s FROM Spaceport s
         WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(s.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(s.code) LIKE LOWER(CONCAT('%', :keyword, '%'))
     """)
-    List<Spaceport> findAllByKeyword(@Param("keyword") String keyword);
+    List<Spaceport> findAllByKeyword(
+            @Param("keyword") String keyword
+    );
+
+    boolean existsByCodeIgnoreCase(String code);
 }

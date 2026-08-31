@@ -4,11 +4,8 @@ import com.yspace.backend.dto.admin.AdminBookingResponseDto;
 import com.yspace.backend.dto.admin.AdminBookingRowResponseDto;
 import com.yspace.backend.dto.admin.AdminSpaceportResponseDto;
 import com.yspace.backend.dto.admin.AdminUserResponseDto;
-import com.yspace.backend.model.Booking;
-import com.yspace.backend.model.BookingRow;
-import com.yspace.backend.model.Role;
-import com.yspace.backend.model.Spaceport;
-import com.yspace.backend.model.User;
+import com.yspace.backend.dto.spaceport.CreateSpaceportRequestDto;
+import com.yspace.backend.model.*;
 import com.yspace.backend.repository.BookingRepository;
 import com.yspace.backend.repository.SpaceportRepository;
 import com.yspace.backend.repository.UserRepository;
@@ -58,6 +55,29 @@ public class AdminService {
                 .stream()
                 .map(this::toSpaceportDto)
                 .toList();
+    }
+
+    @Transactional
+    public AdminSpaceportResponseDto createSpaceport(
+            CreateSpaceportRequestDto request
+    ) {
+        if (spaceportRepository.existsByCodeIgnoreCase(request.getCode())) {
+            throw new IllegalArgumentException(
+                    "A spaceport with this code already exists"
+            );
+        }
+
+        Spaceport spaceport = Spaceport.builder()
+                .name(request.getName().trim())
+                .code(request.getCode().trim().toUpperCase())
+                .type(request.getType())
+                .description(request.getDescription())
+                .imageUrl(request.getImageUrl())
+                .build();
+
+        Spaceport savedSpaceport = spaceportRepository.save(spaceport);
+
+        return toSpaceportDto(savedSpaceport);
     }
 
     private AdminBookingResponseDto toBookingDto(Booking booking) {
