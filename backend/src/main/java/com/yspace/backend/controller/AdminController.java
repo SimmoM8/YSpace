@@ -1,12 +1,13 @@
 package com.yspace.backend.controller;
 
-import com.yspace.backend.dto.route.RouteAdminResponseDto;
+import com.yspace.backend.dto.admin.dashboard.AdminDashboardDto;
 import com.yspace.backend.dto.flight.AdminFlightResponseDto;
 import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
 import com.yspace.backend.dto.flight.ScheduleFlightRequestDto;
 import com.yspace.backend.dto.flight.UpdateFlightRequestDto;
 import com.yspace.backend.dto.route.AdminRouteResponseDto;
 import com.yspace.backend.dto.route.CreateRouteRequestDto;
+import com.yspace.backend.dto.route.RouteAdminResponseDto;
 import com.yspace.backend.dto.spacecraft.AdminSpacecraftResponseDto;
 import com.yspace.backend.model.Flight;
 import com.yspace.backend.service.FlightService;
@@ -30,6 +31,8 @@ public class AdminController {
     private final RouteService routeService;
     private final SpacecraftService spacecraftService;
     private final FlightService flightService;
+    private final AdminService adminService;
+
 
     @GetMapping("/check")
     public ResponseEntity<Void> checkAdminAccess() {
@@ -85,6 +88,36 @@ public class AdminController {
     public ResponseEntity<FlightDetailsResponseDto> cancelFlight(
             @PathVariable Integer id
     ) {
-        return ResponseEntity.ok(flightService.cancelFlight(id));
+        return ResponseEntity.ok(
+                flightService.cancelFlight(id)
+        );
+    }
+
+
+    @GetMapping("/bookings")
+    public ResponseEntity<List<AdminBookingResponseDto>> getBookings(
+            @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(adminService.getBookings(search));
+    }
+
+
+    @GetMapping("/users")
+    public ResponseEntity<List<AdminUserResponseDto>> getUsers(
+            @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(adminService.getUsers(search));
+    }
+
+
+    @GetMapping("/spaceports")
+    public ResponseEntity<List<AdminSpaceportResponseDto>> getSpaceports() {
+        return ResponseEntity.ok(adminService.getSpaceports());
+    }
+
+
+    @GetMapping("/spacecraft")
+    public ResponseEntity<List<AdminSpacecraftResponseDto>> getSpacecrafts() {
+        return ResponseEntity.ok(adminService.getSpacecrafts());
     }
 }
