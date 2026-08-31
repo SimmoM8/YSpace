@@ -13,13 +13,18 @@ Users can browse futuristic space trips, view destinations, and book journeys to
 
 ## Tech Stack
 
-- Frontend: 
-- Backend: 
-- Database: SQL database
+- Frontend: Vanilla HTML / CSS / JavaScript (ES modules)
+- Backend: Spring Boot 4 (Java 26), Spring Security + JWT
+- Database: MySQL (JPA / Hibernate)
 
 ## Project Status
 
-This project is currently in early development.
+Most passenger-facing flows are implemented (authentication, flight search, bookings) and the admin console covers the dashboard, flights, routes, bookings, passengers, spaceports and spacecraft.
+
+## Admin
+
+Seeded admin account: `admin@yspace.com` / `admin123`
+Seeded tourist accounts (e.g.): `luna.park@yspace.com` / `password123`
 
 ## Purpose
 

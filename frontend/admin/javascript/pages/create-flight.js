@@ -21,77 +21,101 @@ async function loadFormOptions() {
     try {
         const [routeResponse, spacecraftResponse] = await Promise.all([
             apiGet("/admin/routes"),
-            apiGet("/admin/spacecraft")
+            apiGet("/admin/spacecraft"),
         ]);
 
         routes = await routeResponse.json();
-        spacecraft = await spacecraftResponse.json();
 
-        renderRoutes(routeSelect, routes);
-        renderSpacecraft(spacecraftSelect, spacecraft);
+        const allSpacecraft = await spacecraftResponse.json();
+
+        spacecraft = getAvailableSpacecraft(allSpacecraft);
+
+        renderRoutes(routeSelect);
+        renderSpacecraft(spacecraftSelect);
     } catch (error) {
         console.error("Could not load scheduling options:", error);
 
-        showMessage(
-            error.message || "Could not load scheduling options."
-        );
+        showMessage(error.message || "Could not load scheduling options.");
 
-        if (routeSelect) {
-            routeSelect.innerHTML =
-                '<option value="">Routes unavailable</option>';
-            routeSelect.disabled = true;
-        }
-
-        if (spacecraftSelect) {
-            spacecraftSelect.innerHTML =
-                '<option value="">Spacecraft unavailable</option>';
-            spacecraftSelect.disabled = true;
-        }
+        disableSelect(routeSelect, "Routes unavailable");
+        disableSelect(spacecraftSelect, "Spacecraft unavailable");
     }
 }
 
-function renderRoutes(select, routeOptions) {
+function getAvailableSpacecraft(spacecraftOptions) {
+    return spacecraftOptions.filter((craft) => {
+        if (craft.operational === false) {
+            return false;
+        }
+
+        return craft.status !== "RETIRED" && craft.status !== "UNDER_MAINTENANCE";
+    });
+}
+
+function renderRoutes(select) {
     if (!select) {
         return;
     }
 
-    if (!routeOptions.length) {
-        select.innerHTML =
-            '<option value="">No routes available</option>';
-        select.disabled = true;
+    if (!routes.length) {
+        disableSelect(select, "No routes available");
         return;
     }
+
+    select.disabled = false;
 
     select.innerHTML = `
         <option value="">Select route</option>
-        ${routeOptions.map((route) => `
-            <option value="${route.id}">
-                ${escapeHtml(createRouteLabel(route))}
-            </option>
-        `).join("")}
+
+        ${routes
+            .map(
+                (route) => `
+                    <option value="${route.id}">
+                        ${escapeHtml(createRouteLabel(route))}
+                    </option>
+                `,
+            )
+            .join("")}
     `;
 }
 
-function renderSpacecraft(select, spacecraftOptions) {
+function renderSpacecraft(select) {
     if (!select) {
         return;
     }
 
-    if (!spacecraftOptions.length) {
-        select.innerHTML =
-            '<option value="">No operational spacecraft available</option>';
-        select.disabled = true;
+    if (!spacecraft.length) {
+        disableSelect(select, "No operational spacecraft available");
+        return;
+    }
+
+    select.disabled = false;
+
+    select.innerHTML = `
+        <option value="">Select spacecraft</option>
+
+        ${spacecraft
+            .map(
+                (craft) => `
+                    <option value="${craft.id}">
+                        ${escapeHtml(createSpacecraftLabel(craft))}
+                    </option>
+                `,
+            )
+            .join("")}
+    `;
+}
+
+function disableSelect(select, message) {
+    if (!select) {
         return;
     }
 
     select.innerHTML = `
-        <option value="">Select spacecraft</option>
-        ${spacecraftOptions.map((craft) => `
-            <option value="${craft.id}">
-                ${escapeHtml(createSpacecraftLabel(craft))}
-            </option>
-        `).join("")}
+        <option value="">${escapeHtml(message)}</option>
     `;
+
+    select.disabled = true;
 }
 
 function bindFormEvents(form) {
@@ -122,9 +146,7 @@ async function handleSubmit(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const submitButton = document.getElementById(
-        "schedule-flight-submit"
-    );
+    const submitButton = document.getElementById("schedule-flight-submit");
 
     clearMessage();
 
@@ -132,31 +154,35 @@ async function handleSubmit(event) {
         return;
     }
 
-    const formData = new FormData(form);
-
-    const request = {
-        routeId: Number(formData.get("routeId")),
-        spacecraftId: Number(formData.get("spacecraftId")),
-        basePrice: Number(formData.get("basePrice")),
-        departureTime: formData.get("departureTime"),
-        arrivalTime: formData.get("arrivalTime")
-    };
+    const request = createFlightRequest(form);
 
     try {
         setSubmitting(submitButton, true);
 
-        await apiPost("/admin/flights", request);
+        const response = await apiPost("/admin/flights", request);
+
+        await response.json();
 
         window.location.hash = "flights";
     } catch (error) {
         console.error("Could not schedule flight:", error);
 
-        showMessage(
-            error.message || "Could not schedule flight."
-        );
+        showMessage(error.message || "Could not schedule flight.");
     } finally {
         setSubmitting(submitButton, false);
     }
+}
+
+function createFlightRequest(form) {
+    const formData = new FormData(form);
+
+    return {
+        routeId: Number(formData.get("routeId")),
+        spacecraftId: Number(formData.get("spacecraftId")),
+        basePrice: Number(formData.get("basePrice")),
+        departureTime: formData.get("departureTime"),
+        arrivalTime: formData.get("arrivalTime"),
+    };
 }
 
 function validateFlight(form) {
@@ -167,29 +193,32 @@ function validateFlight(form) {
     const formData = new FormData(form);
 
     const departure = new Date(formData.get("departureTime"));
+
     const arrival = new Date(formData.get("arrivalTime"));
+
     const basePrice = Number(formData.get("basePrice"));
 
-    if (
-        Number.isNaN(departure.getTime()) ||
-        Number.isNaN(arrival.getTime())
-    ) {
+    if (Number.isNaN(departure.getTime()) || Number.isNaN(arrival.getTime())) {
         showMessage("Enter a valid departure and arrival time.");
+
         return false;
     }
 
     if (departure <= new Date()) {
         showMessage("Departure time must be in the future.");
+
         return false;
     }
 
     if (arrival <= departure) {
         showMessage("Arrival time must be after departure time.");
+
         return false;
     }
 
     if (!Number.isFinite(basePrice) || basePrice < 0) {
         showMessage("Base price must be zero or greater.");
+
         return false;
     }
 
@@ -197,17 +226,13 @@ function validateFlight(form) {
 }
 
 function updateRoutePreview() {
-    const select = document.getElementById("schedule-route");
+    const routeId = Number(document.getElementById("schedule-route")?.value);
 
-    const route = routes.find(
-        (item) => item.id === Number(select?.value)
-    );
+    const route = routes.find((item) => item.id === routeId);
 
     setText("preview-origin-code", route?.originCode ?? "—");
-    setText(
-        "preview-destination-code",
-        route?.destinationCode ?? "—"
-    );
+
+    setText("preview-destination-code", route?.destinationCode ?? "—");
 
     const meta = document.getElementById("schedule-route-meta");
 
@@ -219,25 +244,20 @@ function updateRoutePreview() {
 }
 
 function updateSpacecraftPreview() {
-    const select = document.getElementById("schedule-spacecraft");
-
-    const craft = spacecraft.find(
-        (item) => item.id === Number(select?.value)
+    const spacecraftId = Number(
+        document.getElementById("schedule-spacecraft")?.value,
     );
+
+    const craft = spacecraft.find((item) => item.id === spacecraftId);
 
     setText(
         "preview-spacecraft",
-        craft ? createSpacecraftLabel(craft) : "Not assigned"
+        craft ? createSpacecraftLabel(craft) : "Not assigned",
     );
 
-    setText(
-        "preview-capacity",
-        craft?.seatCapacity ?? "—"
-    );
+    setText("preview-capacity", craft?.seatCapacity ?? "—");
 
-    const meta = document.getElementById(
-        "schedule-spacecraft-meta"
-    );
+    const meta = document.getElementById("schedule-spacecraft-meta");
 
     if (meta) {
         meta.textContent = craft
@@ -247,32 +267,24 @@ function updateSpacecraftPreview() {
 }
 
 function updateSchedulePreview() {
-    const departure = document.getElementById(
-        "schedule-departure"
-    )?.value;
+    const departure = document.getElementById("schedule-departure")?.value;
 
-    const arrival = document.getElementById(
-        "schedule-arrival"
-    )?.value;
+    const arrival = document.getElementById("schedule-arrival")?.value;
 
     setText(
         "preview-departure",
-        departure ? formatDateTime(departure) : "Not set"
+        departure ? formatDateTime(departure) : "Not set",
     );
 
-    setText(
-        "preview-arrival",
-        arrival ? formatDateTime(arrival) : "Not set"
-    );
+    setText("preview-arrival", arrival ? formatDateTime(arrival) : "Not set");
 }
 
 function updatePricePreview() {
-    const value = document.getElementById(
-        "schedule-base-price"
-    )?.value;
+    const value = document.getElementById("schedule-base-price")?.value;
 
     if (value === "" || value == null) {
         setText("preview-base-price", "Not set");
+
         return;
     }
 
@@ -280,25 +292,26 @@ function updatePricePreview() {
 
     if (!Number.isFinite(price)) {
         setText("preview-base-price", "Not set");
+
         return;
     }
 
-    setText(
-        "preview-base-price",
-        new Intl.NumberFormat("sv-SE", {
-            style: "currency",
-            currency: "SEK"
-        }).format(price)
-    );
+    const formattedPrice = new Intl.NumberFormat("sv-SE", {
+        style: "currency",
+        currency: "SEK",
+    }).format(price);
+
+    setText("preview-base-price", formattedPrice);
 }
 
 function createRouteLabel(route) {
-    return `${route.originCode} → ${route.destinationCode} · ${route.name}`;
+    return (
+        `${route.originCode} → ` + `${route.destinationCode} · ` + `${route.name}`
+    );
 }
 
 function createRouteDescription(route) {
-    const description =
-        `${route.originName} → ${route.destinationName}`;
+    const description = `${route.originName} → ${route.destinationName}`;
 
     if (route.distance == null) {
         return description;
@@ -315,10 +328,10 @@ function createSpacecraftDescription(craft) {
     const parts = [
         craft.manufacturer,
         craft.model,
-        `${craft.seatCapacity} seats`
-    ].filter(Boolean);
+        craft.seatCapacity != null ? `${craft.seatCapacity} seats` : null,
+    ];
 
-    return parts.join(" · ");
+    return parts.filter(Boolean).join(" · ");
 }
 
 function formatDateTime(value) {
@@ -329,22 +342,17 @@ function formatDateTime(value) {
     }
 
     const [year, month, day] = datePart.split("-").map(Number);
+
     const [hour, minute] = timePart.split(":").map(Number);
 
-    const date = new Date(
-        year,
-        month - 1,
-        day,
-        hour,
-        minute
-    );
+    const date = new Date(year, month - 1, day, hour, minute);
 
     return new Intl.DateTimeFormat("en-GB", {
         day: "2-digit",
         month: "short",
         year: "numeric",
         hour: "2-digit",
-        minute: "2-digit"
+        minute: "2-digit",
     }).format(date);
 }
 
@@ -361,28 +369,26 @@ function setSubmitting(button, submitting) {
 }
 
 function showMessage(message) {
-    const element = document.getElementById(
-        "schedule-flight-message"
-    );
+    const element = document.getElementById("schedule-flight-message");
 
     if (!element) {
         return;
     }
 
     element.textContent = message;
+
     element.classList.add("admin-form-message-error");
 }
 
 function clearMessage() {
-    const element = document.getElementById(
-        "schedule-flight-message"
-    );
+    const element = document.getElementById("schedule-flight-message");
 
     if (!element) {
         return;
     }
 
     element.textContent = "";
+
     element.classList.remove("admin-form-message-error");
 }
 
@@ -396,6 +402,8 @@ function setText(id, value) {
 
 function escapeHtml(value) {
     const element = document.createElement("div");
+
     element.textContent = value ?? "";
+
     return element.innerHTML;
 }
