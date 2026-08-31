@@ -18,6 +18,26 @@ const routes = {
         view: "views/create-flight.html",
         title: "Schedule Flight",
         init: initCreateFlightPage
+    },
+    routes: {
+        view: "views/routes.html",
+        title: "Routes"
+    },
+    spaceports: {
+        view: "views/spaceports.html",
+        title: "Spaceports"
+    },
+    spacecrafts: {
+        view: "views/spacecrafts.html",
+        title: "Spacecraft"
+    },
+    bookings: {
+        view: "views/bookings.html",
+        title: "Bookings"
+    },
+    passengers: {
+        view: "views/passengers.html",
+        title: "Passengers"
     }
 };
 
@@ -134,9 +154,7 @@ function updatePageTitle(title) {
 }
 
 function updateTopbarTitle(title) {
-    const titleElement = document.querySelector(
-        ".admin-topbar-context strong"
-    );
+    const titleElement = document.querySelector(".admin-topbar-context strong");
 
     if (titleElement) {
         titleElement.textContent = title;

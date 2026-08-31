@@ -1,0 +1,225 @@
+<section class="admin-page-header">
+  <div>
+    <p class="admin-page-kicker">NETWORK OPERATIONS</p>
+
+    <h1>
+      Manage
+      <span>routes.</span>
+    </h1>
+
+    <p class="admin-page-description">
+      Review the passenger routes connecting YSpace spaceports and manage the
+      transport network used by scheduled flights.
+    </p>
+  </div>
+
+  <div class="admin-page-header-actions">
+    <button type="button" class="admin-button admin-button-primary">
+      <span>+</span>
+      Create route
+    </button>
+  </div>
+</section>
+
+<section class="admin-flight-stats" aria-label="Route overview">
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Total routes</span>
+    <strong>08</strong>
+    <small>Across the network</small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Spaceports connected</span>
+    <strong>06</strong>
+    <small>Passenger destinations</small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Shortest route</span>
+    <strong>384k</strong>
+    <small>Kilometres</small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Longest route</span>
+    <strong>225m</strong>
+    <small>Kilometres</small>
+  </article>
+</section>
+
+<section class="admin-flight-toolbar">
+  <form class="admin-flight-filters">
+    <div class="admin-filter-search">
+      <label for="route-search">Search</label>
+
+      <input
+        type="search"
+        id="route-search"
+        name="search"
+        placeholder="Route, origin or destination"
+      />
+    </div>
+
+    <div class="admin-filter-group">
+      <label for="route-origin-filter">Origin</label>
+
+      <select id="route-origin-filter" name="origin">
+        <option value="">All origins</option>
+        <option value="EOH">Earth Orbital Hub</option>
+        <option value="LBO">Luna Base One</option>
+        <option value="MGW">Mars Gateway</option>
+      </select>
+    </div>
+
+    <div class="admin-filter-group">
+      <label for="route-destination-filter">Destination</label>
+
+      <select id="route-destination-filter" name="destination">
+        <option value="">All destinations</option>
+        <option value="EOH">Earth Orbital Hub</option>
+        <option value="LBO">Luna Base One</option>
+        <option value="MGW">Mars Gateway</option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="admin-button admin-button-secondary admin-filter-button"
+    >
+      Apply filters
+    </button>
+  </form>
+</section>
+
+<section class="admin-panel admin-flight-management-panel">
+  <header class="admin-panel-header admin-flight-table-header">
+    <div>
+      <p class="admin-panel-kicker">NETWORK</p>
+      <h2>Routes</h2>
+    </div>
+
+    <div class="admin-table-result-count">8 routes</div>
+  </header>
+
+  <div class="admin-table-wrapper">
+    <table class="admin-table admin-flight-table">
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Distance</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>Earth — Luna Express</strong>
+            <small>Route ID 01</small>
+          </td>
+
+          <td>
+            <strong>EOH</strong>
+            <small>Earth Orbital Hub</small>
+          </td>
+
+          <td>
+            <strong>LBO</strong>
+            <small>Luna Base One</small>
+          </td>
+
+          <td>
+            <strong>384,400 km</strong>
+          </td>
+
+          <td>
+            <span>Direct passenger corridor between Earth orbit and Luna.</span>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="admin-row-action"
+              aria-label="View route"
+            >
+              →
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Earth — Mars Transit</strong>
+            <small>Route ID 02</small>
+          </td>
+
+          <td>
+            <strong>EOH</strong>
+            <small>Earth Orbital Hub</small>
+          </td>
+
+          <td>
+            <strong>MGW</strong>
+            <small>Mars Gateway</small>
+          </td>
+
+          <td>
+            <strong>225,000,000 km</strong>
+          </td>
+
+          <td>
+            <span>Long-range interplanetary passenger service to Mars.</span>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="admin-row-action"
+              aria-label="View route"
+            >
+              →
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Luna — Earth Return</strong>
+            <small>Route ID 03</small>
+          </td>
+
+          <td>
+            <strong>LBO</strong>
+            <small>Luna Base One</small>
+          </td>
+
+          <td>
+            <strong>EOH</strong>
+            <small>Earth Orbital Hub</small>
+          </td>
+
+          <td>
+            <strong>384,400 km</strong>
+          </td>
+
+          <td>
+            <span>Primary return corridor from Luna to Earth orbit.</span>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="admin-row-action"
+              aria-label="View route"
+            >
+              →
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,222 @@
+<section class="admin-page-header">
+  <div>
+    <p class="admin-page-kicker">NETWORK INFRASTRUCTURE</p>
+
+    <h1>
+      Manage
+      <span>spaceports.</span>
+    </h1>
+
+    <p class="admin-page-description">
+      Review passenger terminals, orbital stations and planetary transport hubs
+      operating across the YSpace network.
+    </p>
+  </div>
+
+  <div class="admin-page-header-actions">
+    <button type="button" class="admin-button admin-button-primary">
+      <span>+</span>
+      Add spaceport
+    </button>
+  </div>
+</section>
+
+<section class="admin-flight-stats" aria-label="Spaceport overview">
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Total spaceports</span>
+    <strong>06</strong>
+    <small>Network locations</small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Stations</span>
+    <strong>02</strong>
+    <small>Orbital facilities</small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Planetary</span>
+    <strong>03</strong>
+    <small>Surface locations</small>
+  </article>
+
+  <article class="admin-flight-stat">
+    <span class="admin-flight-stat-label">Moon bases</span>
+    <strong>01</strong>
+    <small>Lunar locations</small>
+  </article>
+</section>
+
+<section class="admin-flight-toolbar">
+  <form class="admin-flight-filters">
+    <div class="admin-filter-search">
+      <label for="spaceport-search">Search</label>
+
+      <input
+        type="search"
+        id="spaceport-search"
+        name="search"
+        placeholder="Name, code or description"
+      />
+    </div>
+
+    <div class="admin-filter-group">
+      <label for="spaceport-type-filter">Type</label>
+
+      <select id="spaceport-type-filter" name="type">
+        <option value="">All types</option>
+        <option value="PLANET">Planet</option>
+        <option value="MOON">Moon</option>
+        <option value="STATION">Station</option>
+      </select>
+    </div>
+
+    <div class="admin-filter-group">
+      <label for="spaceport-code-filter">Code</label>
+
+      <input
+        type="search"
+        id="spaceport-code-filter"
+        name="code"
+        placeholder="e.g. EOH"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="admin-button admin-button-secondary admin-filter-button"
+    >
+      Apply filters
+    </button>
+  </form>
+</section>
+
+<section class="admin-panel admin-flight-management-panel">
+  <header class="admin-panel-header admin-flight-table-header">
+    <div>
+      <p class="admin-panel-kicker">INFRASTRUCTURE</p>
+      <h2>Spaceports</h2>
+    </div>
+
+    <div class="admin-table-result-count">6 spaceports</div>
+  </header>
+
+  <div class="admin-table-wrapper">
+    <table class="admin-table admin-flight-table">
+      <thead>
+        <tr>
+          <th>Spaceport</th>
+          <th>Code</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Network</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>Earth Orbital Hub</strong>
+            <small>Spaceport ID 01</small>
+          </td>
+
+          <td>
+            <strong>EOH</strong>
+          </td>
+
+          <td>
+            <span class="admin-status admin-status-active">Station</span>
+          </td>
+
+          <td>
+            <span>Primary orbital interchange serving Earth departures.</span>
+          </td>
+
+          <td>
+            <strong>4 routes</strong>
+            <small>Primary hub</small>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="admin-row-action"
+              aria-label="View Earth Orbital Hub"
+            >
+              →
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Luna Base One</strong>
+            <small>Spaceport ID 02</small>
+          </td>
+
+          <td>
+            <strong>LBO</strong>
+          </td>
+
+          <td>
+            <span class="admin-status admin-status-scheduled">Moon</span>
+          </td>
+
+          <td>
+            <span>Passenger terminal supporting lunar surface operations.</span>
+          </td>
+
+          <td>
+            <strong>3 routes</strong>
+            <small>Lunar hub</small>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="admin-row-action"
+              aria-label="View Luna Base One"
+            >
+              →
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Mars Gateway</strong>
+            <small>Spaceport ID 03</small>
+          </td>
+
+          <td>
+            <strong>MGW</strong>
+          </td>
+
+          <td>
+            <span class="admin-status admin-status-scheduled">Planet</span>
+          </td>
+
+          <td>
+            <span>Main YSpace passenger arrival facility serving Mars.</span>
+          </td>
+
+          <td>
+            <strong>2 routes</strong>
+            <small>Deep-space hub</small>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="admin-row-action"
+              aria-label="View Mars Gateway"
+            >
+              →
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
