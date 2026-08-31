@@ -168,19 +168,3 @@ export function apiDelete(url) {
         }
     );
 }
-
-
-/* ================================================================
-   PUBLIC REQUESTS
-================================================================ */
-
-export function apiPostPublic(url, data) {
-    return apiFetch(
-        url,
-        {
-            method: "POST",
-            body: JSON.stringify(data)
-        },
-        false
-    );
-}
