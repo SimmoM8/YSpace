@@ -1,4 +1,4 @@
-import { apiPostPublic } from "./api.js";
+import { apiPost } from "./api.js";
 
 const loginForm = document.getElementById("login-form");
 const loginMessage = document.getElementById("login-message");
@@ -40,7 +40,7 @@ if (loginForm) {
 }
 
 async function login(email, password) {
-    const response = await apiPostPublic("/auth/login", {
+    const response = await apiPost("/auth/login", {
         email,
         password,
     });
