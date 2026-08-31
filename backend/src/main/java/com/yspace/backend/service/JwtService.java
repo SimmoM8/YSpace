@@ -28,6 +28,10 @@ public class JwtService {
     public String createToken(UserDetails userDetails) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
+                .claim("role", userDetails.getAuthorities().stream()
+                        .map(authority -> authority.getAuthority())
+                        .findFirst()
+                        .orElse("SPACE_TOURIST"))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(signingKey)

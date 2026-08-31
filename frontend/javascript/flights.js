@@ -13,47 +13,69 @@ const originHiddenInput = searchForm.querySelector("#origin-hidden-input");
 const destinationHiddenInput = searchForm.querySelector("#destination-hidden-input");
 const originOptions = searchForm.querySelector("#origin-options");
 const destinationOptions = searchForm.querySelector("#destination-options");
+const reverseButton = searchForm.querySelector(".search-reverse-button");
+const dateInput = searchForm.querySelector('[name="departure-date"]');
 
 originInput.addEventListener("input", async () => {
+    if (originInput.value.trim() === "") {
+        originHiddenInput.value = "";
+        originOptions.innerHTML = "";
+        return;
+    }
+    originInput.setAttribute('aria-expanded', 'true');
     originOptions.innerHTML = '<li class="search-options-list-item search-options-loading">Loading...</li>';
     originOptions.innerHTML = await fetchSpaceports(originInput.value);
 });
 
-searchForm.querySelector('.search-reverse-button').addEventListener('click', () => {
-    [originInput.value, destinationInput.value] = [destinationInput.value, originInput.value];
-    [originHiddenInput.value, destinationHiddenInput.value] = [destinationHiddenInput.value, originHiddenInput.value];
-    originInput.setCustomValidity('');
-    destinationInput.setCustomValidity('');
-    originOptions.replaceChildren();
-    destinationOptions.replaceChildren();
-    originInput.setAttribute('aria-expanded', 'false');
-    destinationInput.setAttribute('aria-expanded', 'false');
-});
+if (reverseButton) {
+    reverseButton.addEventListener('click', () => {
+        [originInput.value, destinationInput.value] = [destinationInput.value, originInput.value];
+        [originHiddenInput.value, destinationHiddenInput.value] = [destinationHiddenInput.value, originHiddenInput.value];
+        originInput.setCustomValidity('');
+        destinationInput.setCustomValidity('');
+        originOptions.innerHTML = "";
+        destinationOptions.innerHTML = "";
+        originInput.setAttribute('aria-expanded', 'false');
+        destinationInput.setAttribute('aria-expanded', 'false');
+    });
+}
 
 destinationInput.addEventListener("input", async () => {
+    if (destinationInput.value.trim() === "") {
+        destinationHiddenInput.value = "";
+        destinationOptions.innerHTML = "";
+        return;
+    }
+    destinationInput.setAttribute('aria-expanded', 'true');
     destinationOptions.innerHTML = '<li class="search-options-list-item search-options-loading">Loading...</li>';
     destinationOptions.innerHTML = await fetchSpaceports(destinationInput.value);
 });
 
 originOptions.addEventListener("click", (event) => {
     const selectedOption = event.target.closest(".search-options-list-item");
-    if (selectedOption) {
+    if (selectedOption && selectedOption.dataset.id) {
         originInput.value = selectedOption.dataset.name;
         originHiddenInput.value = selectedOption.dataset.id;
         originOptions.innerHTML = "";
-    } else {
-        originOptions.innerHTML = "";
+        originInput.setAttribute('aria-expanded', 'false');
     }
+});
+
+originOptions.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+});
+
+destinationOptions.addEventListener("mousedown", (event) => {
+    event.preventDefault();
 });
 
 destinationOptions.addEventListener("click", (event) => {
     const selectedOption = event.target.closest(".search-options-list-item");
-    if (selectedOption) {
+    if (selectedOption && selectedOption.dataset.id) {
         destinationInput.value = selectedOption.dataset.name;
         destinationHiddenInput.value = selectedOption.dataset.id;
         destinationOptions.innerHTML = "";
-    } else {
-        destinationOptions.innerHTML = "";
+        destinationInput.setAttribute('aria-expanded', 'false');
     }
 });
 

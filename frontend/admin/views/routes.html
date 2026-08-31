@@ -1,61 +1,104 @@
+
 <section class="admin-page-header">
     <div>
-        <p class="admin-page-kicker">NETWORK OPERATIONS</p>
-        <h1>Manage <span>routes.</span></h1>
-        <p class="admin-page-description">Review the passenger routes connecting YSpace spaceports and manage the transport network used by scheduled flights.</p>
+        <p class="admin-page-kicker">NETWORK CONFIGURATION</p>
+
+        <h1>
+            Manage
+            <span>routes.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            View and create travel routes connecting spaceports across the
+            YSpace network.
+        </p>
     </div>
+
     <div class="admin-page-header-actions">
-        <a href="#create-route" class="admin-button admin-button-primary"><span>+</span>Create route</a>
+        <button
+            class="admin-button admin-button-primary"
+            id="show-create-route-btn"
+        >
+            <span>+</span>
+            Create route
+        </button>
     </div>
 </section>
 
-<section class="admin-flight-stats" aria-label="Route overview">
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Total routes</span><strong>08</strong><small>Across the network</small></article>
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Spaceports connected</span><strong>06</strong><small>Passenger destinations</small></article>
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Shortest route</span><strong>384k</strong><small>Kilometres</small></article>
-    <article class="admin-flight-stat"><span class="admin-flight-stat-label">Longest route</span><strong>225m</strong><small>Kilometres</small></article>
-</section>
 
-<section class="admin-flight-toolbar">
-    <form class="admin-flight-filters">
-        <div class="admin-filter-search">
-            <label for="route-search">Search</label>
-            <input type="search" id="route-search" name="search" placeholder="Route, origin or destination">
+<section class="admin-panel" id="create-route-panel" style="display:none;">
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">NEW ROUTE</p>
+            <h2>Route details</h2>
         </div>
-        <div class="admin-filter-group">
-            <label for="route-origin-filter">Origin</label>
-            <select id="route-origin-filter" name="origin">
-                <option value="">All origins</option>
-                <option value="EOH">Earth Orbital Hub</option>
-                <option value="LBO">Luna Base One</option>
-                <option value="MGW">Mars Gateway</option>
-            </select>
+    </header>
+
+    <form class="admin-form" id="create-route-form">
+        <div class="admin-form-grid">
+            <div class="admin-form-group">
+                <label for="cr-name">Route name</label>
+                <input type="text" id="cr-name" name="name" placeholder="Earth to Luna Express" required />
+            </div>
+
+            <div class="admin-form-group">
+                <label for="cr-origin">Origin spaceport</label>
+                <select id="cr-origin" name="originSpaceportId" required>
+                    <option value="">Select origin...</option>
+                </select>
+            </div>
+
+            <div class="admin-form-group">
+                <label for="cr-destination">Destination spaceport</label>
+                <select id="cr-destination" name="destinationSpaceportId" required>
+                    <option value="">Select destination...</option>
+                </select>
+            </div>
+
+            <div class="admin-form-group">
+                <label for="cr-distance">Distance (km)</label>
+                <input type="number" id="cr-distance" name="distance" min="0" step="0.1" placeholder="384400" />
+            </div>
+
+            <div class="admin-form-group admin-form-group-full">
+                <label for="cr-description">Description</label>
+                <textarea id="cr-description" name="description" rows="3" placeholder="Optional route description"></textarea>
+            </div>
         </div>
-        <div class="admin-filter-group">
-            <label for="route-destination-filter">Destination</label>
-            <select id="route-destination-filter" name="destination">
-                <option value="">All destinations</option>
-                <option value="EOH">Earth Orbital Hub</option>
-                <option value="LBO">Luna Base One</option>
-                <option value="MGW">Mars Gateway</option>
-            </select>
+
+        <div class="admin-form-actions">
+            <button type="button" class="admin-button admin-button-secondary" id="cancel-create-route">Cancel</button>
+            <button type="submit" class="admin-button admin-button-primary">Create route</button>
         </div>
-        <button type="submit" class="admin-button admin-button-secondary admin-filter-button">Apply filters</button>
     </form>
 </section>
 
-<section class="admin-panel admin-flight-management-panel">
-    <header class="admin-panel-header admin-flight-table-header">
-        <div><p class="admin-panel-kicker">NETWORK</p><h2>Routes</h2></div>
-        <div class="admin-table-result-count">8 routes</div>
+
+<section class="admin-panel admin-routes-panel">
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">NETWORK</p>
+            <h2>All routes</h2>
+        </div>
+        <div class="admin-table-result-count" id="routes-count">Loading...</div>
     </header>
+
     <div class="admin-table-wrapper">
-        <table class="admin-table admin-flight-table">
-            <thead><tr><th>Route</th><th>Origin</th><th>Destination</th><th>Distance</th><th>Description</th><th></th></tr></thead>
+        <table class="admin-table" id="routes-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Distance</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
             <tbody>
-                <tr><td><strong>Earth — Luna Express</strong><small>Route ID 01</small></td><td><strong>EOH</strong><small>Earth Orbital Hub</small></td><td><strong>LBO</strong><small>Luna Base One</small></td><td><strong>384,400 km</strong></td><td><span>Direct passenger corridor between Earth orbit and Luna.</span></td><td><button type="button" class="admin-row-action" aria-label="View route">→</button></td></tr>
-                <tr><td><strong>Earth — Mars Transit</strong><small>Route ID 02</small></td><td><strong>EOH</strong><small>Earth Orbital Hub</small></td><td><strong>MGW</strong><small>Mars Gateway</small></td><td><strong>225,000,000 km</strong></td><td><span>Long-range interplanetary passenger service to Mars.</span></td><td><button type="button" class="admin-row-action" aria-label="View route">→</button></td></tr>
-                <tr><td><strong>Luna — Earth Return</strong><small>Route ID 03</small></td><td><strong>LBO</strong><small>Luna Base One</small></td><td><strong>EOH</strong><small>Earth Orbital Hub</small></td><td><strong>384,400 km</strong></td><td><span>Primary return corridor from Luna to Earth orbit.</span></td><td><button type="button" class="admin-row-action" aria-label="View route">→</button></td></tr>
+                <tr>
+                    <td colspan="6" class="admin-table-empty">Loading routes...</td>
+                </tr>
             </tbody>
         </table>
     </div>

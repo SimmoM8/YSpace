@@ -1,0 +1,48 @@
+
+<section class="admin-page-header">
+    <div>
+        <p class="admin-page-kicker">FLEET MANAGEMENT</p>
+
+        <h1>
+            Manage
+            <span>spacecraft.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            View the YSpace fleet, including operational status, capacity
+            and model details for each spacecraft.
+        </p>
+    </div>
+</section>
+
+
+<section class="admin-panel">
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">FLEET</p>
+            <h2>All spacecraft</h2>
+        </div>
+        <div class="admin-table-result-count" id="spacecraft-count">Loading...</div>
+    </header>
+
+    <div class="admin-table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Model</th>
+                    <th>Manufacturer</th>
+                    <th>Seats</th>
+                    <th>Status</th>
+                    <th>Operational</th>
+                </tr>
+            </thead>
+            <tbody id="spacecraft-tbody">
+                <tr>
+                    <td colspan="7" class="admin-table-empty">Loading spacecraft...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

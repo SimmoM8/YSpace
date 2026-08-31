@@ -24,8 +24,35 @@ export function getUserEmail() {
     }
 }
 
+export function isAdmin() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        return false;
+    }
+
+    try {
+        const payload = decodeJwtPayload(token);
+
+        const roles = payload.roles || payload.role || [];
+
+        if (Array.isArray(roles)) {
+            return roles.includes("ROLE_ADMIN") || roles.includes("ADMIN");
+        }
+
+        if (typeof roles === "string") {
+            return roles === "ROLE_ADMIN" || roles === "ADMIN";
+        }
+
+        return false;
+    } catch {
+        return false;
+    }
+}
+
 export function applyAuthState() {
     const loggedIn = isLoggedIn();
+    const admin = isAdmin();
 
     document.querySelectorAll(".nav-login").forEach((element) => {
         if (loggedIn) {
@@ -43,6 +70,14 @@ export function applyAuthState() {
 
     document.querySelectorAll(".nav-bookings").forEach((element) => {
         element.href = loggedIn ? "/my-bookings.html" : "/login.html";
+    });
+
+    document.querySelectorAll(".nav-admin").forEach((element) => {
+        if (loggedIn && admin) {
+            element.style.display = "";
+        } else {
+            element.style.display = "none";
+        }
     });
 }
 

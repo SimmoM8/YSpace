@@ -29,20 +29,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("startOfNextDay") LocalDateTime startOfNextDay
     );
 
-    @Query("""
-        SELECT COUNT(f)
-        FROM Flight f
-        WHERE f.spacecraft.id = :spacecraftId
-        AND f.status <> com.yspace.backend.model.Flight.FlightStatus.CANCELLED
-        AND f.departureTime < :arrivalTime
-        AND f.arrivalTime > :departureTime
-    """)
-    long countOverlappingFlights(
-            @Param("spacecraftId") Integer spacecraftId,
-            @Param("departureTime") LocalDateTime departureTime,
-            @Param("arrivalTime") LocalDateTime arrivalTime
-    );
-
     List<Flight> findAllByOrderByDepartureTimeDesc();
 
     boolean existsByCode(String code);

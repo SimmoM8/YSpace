@@ -1,7 +1,7 @@
 package com.yspace.backend.mapper;
 
 import com.yspace.backend.dto.route.FetchRouteResponseDto;
-import com.yspace.backend.dto.route.RouteAdminResponseDto;
+import com.yspace.backend.dto.RouteAdminResponseDto;
 import com.yspace.backend.model.Route;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,9 @@ public class RouteMapper {
                 route.getId(),
                 route.getName(),
                 route.getOriginSpaceport().getName(),
+                route.getOriginSpaceport().getCode(),
                 route.getDestinationSpaceport().getName(),
+                route.getDestinationSpaceport().getCode(),
                 route.getDistance(),
                 route.getDescription()
         );

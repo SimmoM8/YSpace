@@ -1,30 +1,30 @@
 
 <section class="admin-page-header">
     <div>
-        <p class="admin-page-kicker">COMMERCIAL</p>
+        <p class="admin-page-kicker">PASSENGERS</p>
 
         <h1>
             Manage
-            <span>bookings.</span>
+            <span>passengers.</span>
         </h1>
 
         <p class="admin-page-description">
-            Review passenger bookings, search by reference or passenger
-            and manage booking status across the network.
+            View registered passengers, their booking history and account
+            details across the YSpace network.
         </p>
     </div>
 </section>
 
 
 <section class="admin-flight-toolbar">
-    <form class="admin-flight-filters" id="bookings-filter-form">
+    <form class="admin-flight-filters" id="users-filter-form">
         <div class="admin-filter-search">
-            <label for="booking-search">Search</label>
+            <label for="user-search">Search</label>
             <input
                 type="search"
-                id="booking-search"
+                id="user-search"
                 name="search"
-                placeholder="Booking ID, passenger name, email, flight code or route"
+                placeholder="Name, email or role"
             />
         </div>
 
@@ -41,10 +41,10 @@
 <section class="admin-panel">
     <header class="admin-panel-header">
         <div>
-            <p class="admin-panel-kicker">BOOKINGS</p>
-            <h2>All bookings</h2>
+            <p class="admin-panel-kicker">ACCOUNTS</p>
+            <h2>All passengers</h2>
         </div>
-        <div class="admin-table-result-count" id="bookings-count">Loading...</div>
+        <div class="admin-table-result-count" id="users-count">Loading...</div>
     </header>
 
     <div class="admin-table-wrapper">
@@ -52,16 +52,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Passenger</th>
-                    <th>Flight(s)</th>
-                    <th>Total</th>
-                    <th>Created</th>
-                    <th>Status</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Bookings</th>
+                    <th>Joined</th>
                 </tr>
             </thead>
-            <tbody id="bookings-tbody">
+            <tbody id="users-tbody">
                 <tr>
-                    <td colspan="6" class="admin-table-empty">Loading bookings...</td>
+                    <td colspan="6" class="admin-table-empty">Loading passengers...</td>
                 </tr>
             </tbody>
         </table>

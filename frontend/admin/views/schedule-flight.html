@@ -1,0 +1,129 @@
+
+<section class="admin-page-header">
+    <div>
+        <p class="admin-page-kicker">FLIGHT OPERATIONS</p>
+
+        <h1>
+            Schedule a
+            <span>flight.</span>
+        </h1>
+
+        <p class="admin-page-description">
+            Create a new passenger flight by selecting a route, spacecraft
+            and scheduling departure and arrival times.
+        </p>
+    </div>
+</section>
+
+
+<section class="admin-panel admin-schedule-panel">
+
+    <header class="admin-panel-header">
+        <div>
+            <p class="admin-panel-kicker">NEW FLIGHT</p>
+            <h2>Flight details</h2>
+        </div>
+    </header>
+
+
+    <form class="admin-form admin-schedule-form" id="schedule-flight-form">
+
+        <div class="admin-form-grid">
+
+            <div class="admin-form-group">
+                <label for="sf-route">Route</label>
+                <select id="sf-route" name="routeId" required>
+                    <option value="">Select route...</option>
+                </select>
+                <small>Origin and destination spaceports</small>
+            </div>
+
+
+            <div class="admin-form-group">
+                <label for="sf-spacecraft">Spacecraft</label>
+                <select id="sf-spacecraft" name="spacecraftId" required>
+                    <option value="">Select spacecraft...</option>
+                </select>
+                <small>Available operational spacecraft</small>
+            </div>
+
+
+            <div class="admin-form-group">
+                <label for="sf-price">Base price (USD)</label>
+                <input
+                    type="number"
+                    id="sf-price"
+                    name="basePrice"
+                    min="0"
+                    step="0.01"
+                    placeholder="1499.00"
+                    required
+                />
+                <small>Passenger ticket base price</small>
+            </div>
+
+
+            <div class="admin-form-group">
+                <label for="sf-departure">Departure time</label>
+                <input
+                    type="datetime-local"
+                    id="sf-departure"
+                    name="departureTime"
+                    required
+                />
+                <small>Flight departure date and time</small>
+            </div>
+
+
+            <div class="admin-form-group">
+                <label for="sf-arrival">Arrival time</label>
+                <input
+                    type="datetime-local"
+                    id="sf-arrival"
+                    name="arrivalTime"
+                    required
+                />
+                <small>Must be after departure time</small>
+            </div>
+
+        </div>
+
+
+        <div class="admin-form-actions">
+
+            <a
+                href="#flights"
+                class="admin-button admin-button-secondary"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="admin-button admin-button-primary"
+                id="sf-submit"
+            >
+                Schedule flight
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="admin-panel" id="sf-success-panel" style="display:none;">
+    <div class="admin-form-success">
+        <strong>Flight scheduled successfully.</strong>
+        <p id="sf-success-message"></p>
+        <div class="admin-form-actions" style="margin-top:16px;">
+            <a href="#flights" class="admin-button admin-button-secondary">
+                View all flights
+            </a>
+            <a href="#create-flight" class="admin-button admin-button-primary" id="sf-schedule-another">
+                Schedule another
+            </a>
+        </div>
+    </div>
+</section>
