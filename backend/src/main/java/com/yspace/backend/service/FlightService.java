@@ -1,5 +1,6 @@
 package com.yspace.backend.service;
 
+import com.yspace.backend.dto.flight.AdminFlightDetailsResponseDto;
 import com.yspace.backend.dto.flight.AdminFlightResponseDto;
 import com.yspace.backend.dto.flight.FlightDetailsResponseDto;
 import com.yspace.backend.dto.flight.FlightSearchResponseDto;
@@ -64,10 +65,7 @@ public class FlightService {
 
     @Transactional(readOnly = true)
     public FlightDetailsResponseDto getFlightById(Integer id) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new FlightNotFoundException(id));
-
-        return flightMapper.toDetailsDto(flight);
+        return flightMapper.toDetailsDto(getFlight(id));
     }
 
     @Transactional(readOnly = true)
@@ -79,9 +77,7 @@ public class FlightService {
         return flightRepository.findAllByOrderByDepartureTimeDesc()
                 .stream()
                 .filter(flight -> matchesSearch(flight, search))
-                .filter(flight ->
-                        status == null || flight.getStatus() == status
-                )
+                .filter(flight -> status == null || flight.getStatus() == status)
                 .filter(flight ->
                         date == null ||
                                 (
@@ -91,41 +87,36 @@ public class FlightService {
                                                         .equals(date)
                                 )
                 )
-                .map(flight -> {
-                    long bookedSeats = getBookedSeats(flight.getId());
-
-                    return flightMapper.toAdminDto(flight, bookedSeats);
-                })
+                .map(flight -> flightMapper.toAdminDto(
+                        flight,
+                        getBookedSeats(flight.getId())
+                ))
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public AdminFlightDetailsResponseDto getAdminFlightById(Integer id) {
+        Flight flight = getFlight(id);
+        long bookedSeats = getBookedSeats(id);
+
+        return toAdminDetailsDto(flight, bookedSeats);
     }
 
     @Transactional
     public FlightDetailsResponseDto scheduleFlight(
             ScheduleFlightRequestDto request
     ) {
-        if (!request.getArrivalTime().isAfter(request.getDepartureTime())) {
-            throw new IllegalArgumentException(
-                    "Arrival time must be after departure time"
-            );
-        }
+        validateTimes(request.getDepartureTime(), request.getArrivalTime());
 
-        Route route = routeRepository.findById(request.getRouteId())
-                .orElseThrow(
-                        () -> new RouteNotFoundException(request.getRouteId())
-                );
-
-        Spacecraft spacecraft = spacecraftRepository.findById(request.getSpacecraftId())
-                .orElseThrow(
-                        () -> new SpacecraftNotFoundException(
-                                request.getSpacecraftId()
-                        )
-                );
+        Route route = getRoute(request.getRouteId());
+        Spacecraft spacecraft = getSpacecraft(request.getSpacecraftId());
 
         validateSpacecraftForFlight(
                 spacecraft,
                 route,
                 request.getDepartureTime(),
-                request.getArrivalTime()
+                request.getArrivalTime(),
+                null
         );
 
         Flight flight = Flight.builder()
@@ -139,93 +130,66 @@ public class FlightService {
                 .status(Flight.FlightStatus.SCHEDULED)
                 .build();
 
-        Flight savedFlight = flightRepository.save(flight);
-
-        return flightMapper.toDetailsDto(savedFlight);
+        return flightMapper.toDetailsDto(flightRepository.save(flight));
     }
 
     @Transactional
-    public FlightDetailsResponseDto updateFlight(
+    public AdminFlightDetailsResponseDto updateAdminFlight(
             Integer id,
             UpdateFlightRequestDto request
     ) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new FlightNotFoundException(id));
+        Flight flight = getFlight(id);
+        Route route = getRoute(request.getRouteId());
+        Spacecraft spacecraft = getSpacecraft(request.getSpacecraftId());
+        String code = request.getCode().trim().toUpperCase(Locale.ROOT);
 
-        validateFlightIsEditable(flight);
+        validateTimes(request.getDepartureTime(), request.getArrivalTime());
 
-        if (request.getSpacecraftId() != null) {
-            Spacecraft spacecraft = spacecraftRepository.findById(request.getSpacecraftId())
-                    .orElseThrow(
-                            () -> new SpacecraftNotFoundException(
-                                    request.getSpacecraftId()
-                            )
-                    );
-
-            flight.setSpacecraft(spacecraft);
-        }
-
-        LocalDateTime newDeparture = request.getDepartureTime() != null
-                ? request.getDepartureTime()
-                : flight.getDepartureTime();
-
-        LocalDateTime newArrival = request.getArrivalTime() != null
-                ? request.getArrivalTime()
-                : flight.getArrivalTime();
-
-        if (
-                newDeparture != null &&
-                        newArrival != null &&
-                        !newArrival.isAfter(newDeparture)
-        ) {
+        if (flightRepository.existsByCodeIgnoreCaseAndIdNot(code, id)) {
             throw new IllegalArgumentException(
-                    "Arrival time must be after departure time"
+                    "A flight with this code already exists"
             );
         }
 
-        if (request.getDepartureTime() != null) {
-            flight.setDepartureTime(request.getDepartureTime());
+        long bookedSeats = getBookedSeats(id);
+
+        if (bookedSeats > spacecraft.getSeat_capacity()) {
+            throw new IllegalArgumentException(
+                    "The selected spacecraft has fewer seats than the number already booked (" +
+                            bookedSeats + ")"
+            );
         }
 
-        if (request.getArrivalTime() != null) {
-            flight.setArrivalTime(request.getArrivalTime());
+        if (request.getStatus() != Flight.FlightStatus.CANCELLED) {
+            validateSpacecraftForFlight(
+                    spacecraft,
+                    route,
+                    request.getDepartureTime(),
+                    request.getArrivalTime(),
+                    id
+            );
         }
 
-        if (request.getBasePrice() != null) {
-            flight.setBasePrice(request.getBasePrice());
-        }
+        flight.setCode(code);
+        flight.setRoute(route);
+        flight.setSpacecraft(spacecraft);
+        flight.setStatus(request.getStatus());
+        flight.setDepartureTime(request.getDepartureTime());
+        flight.setArrivalTime(request.getArrivalTime());
+        flight.setBasePrice(request.getPrice());
 
-        if (request.getAvailableSeats() != null) {
-            long bookedSeats = getBookedSeats(flight.getId());
-
-            if (request.getAvailableSeats() < bookedSeats) {
-                throw new IllegalArgumentException(
-                        "Total seats cannot be lower than the number of already booked seats (" +
-                                bookedSeats +
-                                ")"
-                );
-            }
-
-            if (request.getAvailableSeats() > flight.getSpacecraft().getSeat_capacity()) {
-                throw new IllegalArgumentException(
-                        "Total seats cannot exceed the spacecraft capacity (" +
-                                flight.getSpacecraft().getSeat_capacity() +
-                                ")"
-                );
-            }
-
-            flight.setAvailableSeats(request.getAvailableSeats());
-        }
+        // availableSeats is used as this flight's total sellable capacity.
+        // When changing spacecraft, keep it consistent with the selected craft.
+        flight.setAvailableSeats(spacecraft.getSeat_capacity());
 
         Flight updatedFlight = flightRepository.save(flight);
 
-        return flightMapper.toDetailsDto(updatedFlight);
+        return toAdminDetailsDto(updatedFlight, bookedSeats);
     }
 
     @Transactional
     public FlightDetailsResponseDto cancelFlight(Integer id) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new FlightNotFoundException(id));
+        Flight flight = getFlight(id);
 
         if (
                 flight.getStatus() != Flight.FlightStatus.SCHEDULED &&
@@ -238,16 +202,15 @@ public class FlightService {
 
         flight.setStatus(Flight.FlightStatus.CANCELLED);
 
-        Flight cancelledFlight = flightRepository.save(flight);
-
-        return flightMapper.toDetailsDto(cancelledFlight);
+        return flightMapper.toDetailsDto(flightRepository.save(flight));
     }
 
     private void validateSpacecraftForFlight(
             Spacecraft spacecraft,
             Route route,
             LocalDateTime departureTime,
-            LocalDateTime arrivalTime
+            LocalDateTime arrivalTime,
+            Integer excludedFlightId
     ) {
         if (!Boolean.TRUE.equals(spacecraft.getOperational())) {
             throw new IllegalArgumentException(
@@ -257,6 +220,7 @@ public class FlightService {
 
         if (
                 route.getDistance() != null &&
+                        spacecraft.getModel().getMaxRange() != null &&
                         route.getDistance() > spacecraft.getModel().getMaxRange()
         ) {
             throw new IllegalArgumentException(
@@ -264,17 +228,50 @@ public class FlightService {
             );
         }
 
-        long overlappingFlights = flightRepository.countOverlappingFlights(
-                spacecraft.getId(),
-                departureTime,
-                arrivalTime
-        );
+        long overlappingFlights = excludedFlightId == null
+                ? flightRepository.countOverlappingFlights(
+                        spacecraft.getId(),
+                        departureTime,
+                        arrivalTime
+                )
+                : flightRepository.countOverlappingFlightsExcludingFlight(
+                        spacecraft.getId(),
+                        departureTime,
+                        arrivalTime,
+                        excludedFlightId
+                );
 
         if (overlappingFlights > 0) {
             throw new IllegalArgumentException(
                     "The selected spacecraft is already assigned to another flight during this time"
             );
         }
+    }
+
+    private void validateTimes(
+            LocalDateTime departureTime,
+            LocalDateTime arrivalTime
+    ) {
+        if (!arrivalTime.isAfter(departureTime)) {
+            throw new IllegalArgumentException(
+                    "Arrival time must be after departure time"
+            );
+        }
+    }
+
+    private Flight getFlight(Integer id) {
+        return flightRepository.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException(id));
+    }
+
+    private Route getRoute(Integer id) {
+        return routeRepository.findById(id)
+                .orElseThrow(() -> new RouteNotFoundException(id));
+    }
+
+    private Spacecraft getSpacecraft(Integer id) {
+        return spacecraftRepository.findById(id)
+                .orElseThrow(() -> new SpacecraftNotFoundException(id));
     }
 
     private boolean matchesSearch(Flight flight, String search) {
@@ -303,24 +300,6 @@ public class FlightService {
         return value == null ? "" : value;
     }
 
-    private void validateFlightIsEditable(Flight flight) {
-        if (flight.getStatus() == Flight.FlightStatus.CANCELLED) {
-            throw new IllegalArgumentException(
-                    "Cancelled flights cannot be edited"
-            );
-        }
-
-        if (
-                flight.getStatus() == Flight.FlightStatus.DEPARTED ||
-                        flight.getStatus() == Flight.FlightStatus.ARRIVED ||
-                        flight.getStatus() == Flight.FlightStatus.IN_FLIGHT
-        ) {
-            throw new IllegalArgumentException(
-                    "Flights that have already departed cannot be edited"
-            );
-        }
-    }
-
     private long getBookedSeats(Integer flightId) {
         return bookingRowRepository.countBookedSeatsByFlightId(
                 flightId,
@@ -328,17 +307,49 @@ public class FlightService {
         );
     }
 
+    private AdminFlightDetailsResponseDto toAdminDetailsDto(
+            Flight flight,
+            long bookedSeats
+    ) {
+        int seatCapacity = flight.getAvailableSeats();
+        long remainingSeats = Math.max(seatCapacity - bookedSeats, 0);
+
+        return new AdminFlightDetailsResponseDto(
+                flight.getId(),
+                flight.getCode(),
+                flight.getRoute().getId(),
+                flight.getRoute().getName(),
+                flight.getRoute().getDescription(),
+                flight.getRoute().getDistance(),
+                flight.getRoute().getOriginSpaceport().getName(),
+                flight.getRoute().getOriginSpaceport().getCode(),
+                flight.getRoute().getDestinationSpaceport().getName(),
+                flight.getRoute().getDestinationSpaceport().getCode(),
+                flight.getSpacecraft().getId(),
+                flight.getSpacecraft().getName(),
+                flight.getSpacecraft().getModel().getName(),
+                flight.getSpacecraft().getModel().getManufacturer(),
+                seatCapacity,
+                bookedSeats,
+                remainingSeats,
+                flight.getStatus().name(),
+                flight.getDelayed(),
+                flight.getBasePrice(),
+                flight.getDepartureTime(),
+                flight.getArrivalTime()
+        );
+    }
+
     private String generateFlightCode(Route route) {
-        String prefix = route.getOriginSpaceport().getCode() +
-                "-" +
-                route.getDestinationSpaceport().getCode();
+        String prefix = route.getOriginSpaceport().getCode()
+                + "-"
+                + route.getDestinationSpaceport().getCode();
 
         Random random = new Random();
         String candidate;
 
         do {
-            candidate = prefix + "-" +
-                    String.format("%04d", random.nextInt(10000));
+            candidate = prefix + "-" + String.format("%04d", random.nextInt(10000));
         } while (flightRepository.existsByCode(candidate));
 
         return candidate;

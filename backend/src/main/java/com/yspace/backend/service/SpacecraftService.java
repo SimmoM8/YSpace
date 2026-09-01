@@ -2,7 +2,10 @@ package com.yspace.backend.service;
 
 import com.yspace.backend.dto.admin.AdminSpacecraftModelResponseDto;
 import com.yspace.backend.dto.admin.AdminSpacecraftResponseDto;
+import com.yspace.backend.dto.spacecraft.AdminSpacecraftDetailsResponseDto;
 import com.yspace.backend.dto.spacecraft.CreateSpacecraftRequestDto;
+import com.yspace.backend.dto.spacecraft.UpdateSpacecraftRequestDto;
+import com.yspace.backend.exceptions.SpacecraftNotFoundException;
 import com.yspace.backend.model.Spacecraft;
 import com.yspace.backend.model.SpacecraftModel;
 import com.yspace.backend.repository.SpacecraftModelRepository;
@@ -28,6 +31,11 @@ public class SpacecraftService {
     }
 
     @Transactional(readOnly = true)
+    public AdminSpacecraftDetailsResponseDto getAdminSpacecraftById(Integer id) {
+        return toAdminDetailsDto(getSpacecraft(id));
+    }
+
+    @Transactional(readOnly = true)
     public List<AdminSpacecraftModelResponseDto> getAdminSpacecraftModels() {
         return spacecraftModelRepository.findAll()
                 .stream()
@@ -45,14 +53,7 @@ public class SpacecraftService {
     public AdminSpacecraftResponseDto createSpacecraft(
             CreateSpacecraftRequestDto request
     ) {
-        SpacecraftModel model = spacecraftModelRepository
-                .findById(request.getModelId())
-                .orElseThrow(
-                        () -> new IllegalArgumentException(
-                                "Spacecraft model not found with id: "
-                                        + request.getModelId()
-                        )
-                );
+        SpacecraftModel model = getModel(request.getModelId());
 
         Spacecraft spacecraft = Spacecraft.builder()
                 .name(request.getName().trim())
@@ -62,18 +63,59 @@ public class SpacecraftService {
                 .operational(request.getOperational())
                 .build();
 
-        Spacecraft savedSpacecraft =
-                spacecraftRepository.save(spacecraft);
-
-        return toAdminDto(savedSpacecraft);
+        return toAdminDto(spacecraftRepository.save(spacecraft));
     }
 
-    private AdminSpacecraftResponseDto toAdminDto(
-            Spacecraft spacecraft
+    @Transactional
+    public AdminSpacecraftDetailsResponseDto updateSpacecraft(
+            Integer id,
+            UpdateSpacecraftRequestDto request
     ) {
+        Spacecraft spacecraft = getSpacecraft(id);
+        SpacecraftModel model = getModel(request.getModelId());
+
+        spacecraft.setName(request.getName().trim());
+        spacecraft.setModel(model);
+        spacecraft.setSeat_capacity(request.getSeatCapacity());
+        spacecraft.setStatus(request.getStatus());
+        spacecraft.setOperational(request.getOperational());
+
+        return toAdminDetailsDto(spacecraftRepository.save(spacecraft));
+    }
+
+    private Spacecraft getSpacecraft(Integer id) {
+        return spacecraftRepository.findById(id)
+                .orElseThrow(() -> new SpacecraftNotFoundException(id));
+    }
+
+    private SpacecraftModel getModel(Integer id) {
+        return spacecraftModelRepository.findById(id)
+                .orElseThrow(
+                        () -> new IllegalArgumentException(
+                                "Spacecraft model not found with id: " + id
+                        )
+                );
+    }
+
+    private AdminSpacecraftResponseDto toAdminDto(Spacecraft spacecraft) {
         return new AdminSpacecraftResponseDto(
                 spacecraft.getId(),
                 spacecraft.getName(),
+                spacecraft.getModel().getName(),
+                spacecraft.getModel().getManufacturer(),
+                spacecraft.getSeat_capacity(),
+                spacecraft.getStatus().name(),
+                spacecraft.getOperational()
+        );
+    }
+
+    private AdminSpacecraftDetailsResponseDto toAdminDetailsDto(
+            Spacecraft spacecraft
+    ) {
+        return new AdminSpacecraftDetailsResponseDto(
+                spacecraft.getId(),
+                spacecraft.getName(),
+                spacecraft.getModel().getId(),
                 spacecraft.getModel().getName(),
                 spacecraft.getModel().getManufacturer(),
                 spacecraft.getSeat_capacity(),

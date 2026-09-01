@@ -8,18 +8,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminRouteResponseDto {
+public class AdminRouteDetailsResponseDto {
     private Integer id;
     private String name;
 
-    // Flat fields retained for existing flight scheduling code.
+    private Integer originSpaceportId;
     private String originName;
     private String originCode;
+    private AdminSpaceportOptionDto originSpaceport;
+
+    private Integer destinationSpaceportId;
     private String destinationName;
     private String destinationCode;
-
-    // Nested summaries support the route management UI.
-    private AdminSpaceportOptionDto originSpaceport;
     private AdminSpaceportOptionDto destinationSpaceport;
 
     private Double distance;

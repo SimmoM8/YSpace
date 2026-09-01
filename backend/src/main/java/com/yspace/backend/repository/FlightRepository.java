@@ -42,7 +42,25 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("arrivalTime") LocalDateTime arrivalTime
     );
 
+    @Query("""
+        SELECT COUNT(f)
+        FROM Flight f
+        WHERE f.spacecraft.id = :spacecraftId
+        AND f.id <> :excludedFlightId
+        AND f.status <> com.yspace.backend.model.Flight.FlightStatus.CANCELLED
+        AND f.departureTime < :arrivalTime
+        AND f.arrivalTime > :departureTime
+    """)
+    long countOverlappingFlightsExcludingFlight(
+            @Param("spacecraftId") Integer spacecraftId,
+            @Param("departureTime") LocalDateTime departureTime,
+            @Param("arrivalTime") LocalDateTime arrivalTime,
+            @Param("excludedFlightId") Integer excludedFlightId
+    );
+
     List<Flight> findAllByOrderByDepartureTimeDesc();
 
     boolean existsByCode(String code);
+
+    boolean existsByCodeIgnoreCaseAndIdNot(String code, Integer id);
 }

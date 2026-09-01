@@ -1,11 +1,12 @@
 package com.yspace.backend.dto.flight;
 
-import jakarta.validation.constraints.Min;
+import com.yspace.backend.model.Flight;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,17 +15,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateFlightRequestDto {
+    @NotBlank
+    private String code;
+
+    @NotNull
+    private Integer routeId;
+
+    @NotNull
     private Integer spacecraftId;
 
-    @Min(1)
-    private Integer availableSeats;
+    @NotNull
+    private Flight.FlightStatus status;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @NotNull
     private LocalDateTime departureTime;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @NotNull
     private LocalDateTime arrivalTime;
 
+    @NotNull
     @PositiveOrZero
-    private BigDecimal basePrice;
+    private BigDecimal price;
 }

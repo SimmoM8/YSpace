@@ -4,36 +4,53 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-        @ExceptionHandler(MissingServletRequestParameterException.class)
-        public ResponseEntity<String> handleMissingRequestParameter(
-                        MissingServletRequestParameterException exception
-        ) {
-                return new ResponseEntity<>(
-                                "Missing required parameter: " + exception.getParameterName(),
-                                HttpStatus.BAD_REQUEST
-                );
-        }
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<String> handleMissingRequestParameter(
+            MissingServletRequestParameterException exception
+    ) {
+        return ResponseEntity.badRequest().body(
+                "Missing required parameter: " + exception.getParameterName()
+        );
+    }
 
-        @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-        public ResponseEntity<String> handleInvalidRequestParameter(
-                        MethodArgumentTypeMismatchException exception
-        ) {
-                return new ResponseEntity<>(
-                                "Invalid value for parameter: " + exception.getName(),
-                                HttpStatus.BAD_REQUEST
-                );
-        }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleInvalidRequestParameter(
+            MethodArgumentTypeMismatchException exception
+    ) {
+        return ResponseEntity.badRequest().body(
+                "Invalid value for parameter: " + exception.getName()
+        );
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationException(
+            MethodArgumentNotValidException exception
+    ) {
+        String message = exception.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .distinct()
+                .collect(Collectors.joining(", "));
+
+        return ResponseEntity.badRequest().body(
+                message.isBlank() ? "Invalid request" : message
+        );
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<String> handleBadCredentialsException(
-            BadCredentialsException e
+            BadCredentialsException exception
     ) {
         return new ResponseEntity<>(
                 "Invalid email or password",
@@ -43,7 +60,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<String> handleUsernameNotFoundException(
-            UsernameNotFoundException e
+            UsernameNotFoundException exception
     ) {
         return new ResponseEntity<>(
                 "Invalid email or password",
@@ -53,101 +70,78 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FlightNotFoundException.class)
     public ResponseEntity<String> handleFlightNotFoundException(
-            FlightNotFoundException e
+            FlightNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(FlightNotBookableException.class)
     public ResponseEntity<String> handleFlightNotBookableException(
-            FlightNotBookableException e
+            FlightNotBookableException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.BAD_REQUEST
-        );
+        return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(
-            UserNotFoundException e
+            UserNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(BookingNotFoundException.class)
     public ResponseEntity<String> handleBookingNotFoundException(
-            BookingNotFoundException e
+            BookingNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(BookingRowNotFoundException.class)
     public ResponseEntity<String> handleBookingRowNotFoundException(
-            BookingRowNotFoundException e
+            BookingRowNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(BookingNotCancellableException.class)
     public ResponseEntity<String> handleBookingNotCancellableException(
-            BookingNotCancellableException e
+            BookingNotCancellableException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.BAD_REQUEST
-        );
+        return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(RouteNotFoundException.class)
     public ResponseEntity<String> handleRouteNotFoundException(
-            RouteNotFoundException e
+            RouteNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(SpaceportNotFoundException.class)
     public ResponseEntity<String> handleSpaceportNotFoundException(
-            SpaceportNotFoundException e
+            SpaceportNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(SpacecraftNotFoundException.class)
     public ResponseEntity<String> handleSpacecraftNotFoundException(
-            SpacecraftNotFoundException e
+            SpacecraftNotFoundException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.NOT_FOUND
-        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(
-            IllegalArgumentException e
+            IllegalArgumentException exception
     ) {
-        return new ResponseEntity<>(
-                e.getMessage(),
-                HttpStatus.BAD_REQUEST
-        );
+        return ResponseEntity.badRequest().body(exception.getMessage());
     }
 }
